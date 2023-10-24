@@ -24,11 +24,11 @@ const Bets = () => {
 	const pathname = useLocation().pathname
 	const gameId = pathname.split('/')[2]
 
-	const datetime = `${(new Date(game.CommenceTime)).toLocaleDateString()} ${(new Date(game.CommenceTime)).toLocaleTimeString()}`
+	const datetime = `${(new Date(game.commence_time)).toLocaleDateString()} ${(new Date(game.commence_time)).toLocaleTimeString()}`
 
 
 	useEffect(() => {
-		axios.get(`http://localhost:8080/api/games/game/${gameId}`).then(res => {
+		axios.get(`https://lemondrop-api.onrender.com/api/games/game/${gameId}`).then(res => {
 			setGame(res.data)
 		}).catch(e => { navigate("/404") })
 	}, [])
@@ -277,7 +277,7 @@ const BetSlipOption = ({ team, point, price, submit, game, gameId }) => {
 
 	const submitBet = () => {
 		console.log("submitting bet with team: " + team)
-		axios.post("http://localhost:8080/api/bets/add", {
+		axios.post("https://lemondrop-api.onrender.com/api/bets/add", {
 			user_id: user.user_id,
 			"user_email": user.email,
 			"user_balance": user.current_balance,

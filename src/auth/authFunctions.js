@@ -13,7 +13,11 @@ export const getAuth = () => {
 			},
 		};
 
-		return axios.post('http://localhost:8080/api/users/login', {}, config);
+		return axios.post(
+			'https://lemondrop-api.onrender.com/api/users/login',
+			{},
+			config
+		);
 		// .then((res) => {
 		// 	// console.log('this is auth', res.data);
 		// 	res.data;

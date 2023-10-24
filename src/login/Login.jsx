@@ -27,7 +27,7 @@ const Login = () => {
 			return
 		}
 
-		axios.post("http://localhost:8080/api/users/login", {
+		axios.post("https://lemondrop-api.onrender.com/api/users/login", {
 			email: email,
 			password: password,
 		}).then(res => {

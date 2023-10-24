@@ -6,7 +6,7 @@ const AllWheels = () => {
 	const [wheels, setWheels] = useState([])
 
 	useEffect(() => {
-		axios.get("http://localhost:8080/api/wheels/all").then(res => {
+		axios.get("https://lemondrop-api.onrender.com/api/wheels/all").then(res => {
 			setWheels(res.data)
 			console.log(res.data)
 		}).catch(e => console.log(e))
