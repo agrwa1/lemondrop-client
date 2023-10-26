@@ -79,11 +79,17 @@ export default function App() {
 
             <Route path="/games/:league" element={
               <ProtectedRoute>
-                <GamePage />
+                <GamePage key={window.location.pathname} />
               </ProtectedRoute>
             } />
 
-            <Route path="/games/:league/:game" element={
+            {/* <Route path="/games/:league/:game" element={
+              <ProtectedRoute>
+                <BetPage />
+              </ProtectedRoute>
+            } /> */}
+
+            <Route path="/game/:game" element={
               <ProtectedRoute>
                 <BetPage />
               </ProtectedRoute>

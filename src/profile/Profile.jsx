@@ -6,7 +6,7 @@ import { useAuth } from '../App'
 import { getAuth } from '../auth/authFunctions'
 
 const Profile = () => {
-	const { user } = useAuth()
+	const { user, signOut } = useAuth()
 	return (
 		<div>
 			<Header title="My Profile" subtitle="Sports and Me" />
@@ -24,6 +24,7 @@ const Profile = () => {
 					<Box sx={{ height: '30vh', border: '1px solid black' }} >
 						<Typography variant="h3">{user.first_name}</Typography>
 					</Box>
+					<Button variant='contained' onClick={signOut} >Sign out</Button>
 				</Grid>
 
 			</Grid>

@@ -13,24 +13,20 @@ const Bets = () => {
 	const [game, setGame] = useState({})
 	const [bets, setBets] = useState([])
 	const [submit, setSubmit] = useState(false)
-	const [error, setError] = useState(false)
-	const [success, setSuccess] = useState(false)
-
-	const [showSnackbar, setShowSnackbar] = useState(false)
-
+	const [gameId, setGameId] = useState(window.location.pathname.split('/')[2])
 	const navigate = useNavigate()
 
 	// improve parsing
-	const pathname = useLocation().pathname
-	const gameId = pathname.split('/')[2]
-
 	const datetime = `${(new Date(game.commence_time)).toLocaleDateString()} ${(new Date(game.commence_time)).toLocaleTimeString()}`
 
-
 	useEffect(() => {
-		axios.get(`https://lemondrop-api.onrender.com/api/games/game/${gameId}`).then(res => {
+		const url = `https://lemondrop-api.onrender.com/api/games/game/${gameId}`
+		console.log(url)
+		axios.get(url).then(res => {
+			console.log(res.data)
 			setGame(res.data)
 		}).catch(e => { navigate("/404") })
+
 	}, [])
 
 	const addBet = (team, point, price) => {
@@ -51,29 +47,17 @@ const Bets = () => {
 
 	const submitBets = () => {
 		setSubmit(true)
-		// setShowSnackbar(true)
-
-
-		// const error = true;
-		// if (error) {
-		// 	setError(true)
-		// } else {
-		// 	setSuccess(true)
-		// }
 	}
 
 
 
 	return (
 		<Box  >
-
 			<Grid container spacing={10} >
-				{/* game stats */}
 				<Grid item xs={12} sm={12} md={12} lg={8}>
-					{/* top page: home vs away */}
 					<Grid container spacing={5} justifyContent="center" alignItems="center" >
 						<Grid item xs={12} sm={12} md={5} >
-							<Typography textAlign="center" variant="h2">{game.Away} </Typography>
+							<Typography textAlign="center" variant="h2">{game.away_team} </Typography>
 							<Typography textAlign="center" variant="h6" sx={{ color: 'gray' }}>(Away)</Typography>
 						</Grid>
 						<Grid item xs={12} sm={12} md={2} >
@@ -82,7 +66,7 @@ const Bets = () => {
 
 						</Grid>
 						<Grid item xs={12} sm={12} md={5}>
-							<Typography textAlign="center" variant="h2">{game.Home} </Typography>
+							<Typography textAlign="center" variant="h2">{game.home_team} </Typography>
 							<Typography textAlign="center" variant="h6" sx={{ color: 'gray' }}>(Home)</Typography>
 						</Grid>
 					</Grid>
@@ -102,27 +86,27 @@ const Bets = () => {
 					<Box sx={{ margin: '5em' }} />
 
 					<Grid container spacing={5} justifyContent="center" >
-						<BetOption point={game.SpreadAwayPoint} price={game.SpreadAwayPrice} addBet={addBet} team={game.Away} removeBet={removeBet} />
+						<BetOption point={game.away_spread_point} price={game.away_spread_price} addBet={addBet} team={game.away_team} removeBet={removeBet} />
 						<BetSeparator type="Spread" />
-						<BetOption point={game.SpreadHomePoint} price={game.SpreadHomePrice} addBet={addBet} team={game.Home} removeBet={removeBet} />
+						<BetOption point={game.home_spread_point} price={game.home_spread_price} addBet={addBet} team={game.home_team} removeBet={removeBet} />
 					</Grid>
 
 					<Box sx={{ margin: '5em' }} />
 
 
 					<Grid container spacing={5} justifyContent="center" >
-						<BetOption point={game.MoneylineAway} addBet={addBet} team={game.Away} removeBet={removeBet} />
+						<BetOption point={game.home_moneyline_price} addBet={addBet} team={game.away_team} removeBet={removeBet} />
 						<BetSeparator type="MLine" />
-						<BetOption point={game.MoneylineHome} addBet={addBet} team={game.Home} removeBet={removeBet} />
+						<BetOption point={game.away_moneyline_price} addBet={addBet} team={game.home_team} removeBet={removeBet} />
 					</Grid>
 
 					<Box sx={{ margin: '6em' }} />
 
 
 					<Grid container spacing={5} justifyContent="center" >
-						<BetOption point={game.OverPoint} price={game.OverPrice} addBet={addBet} team={"Over"} removeBet={removeBet} />
+						<BetOption point={game.over_point} price={game.over_price} addBet={addBet} team={"Over"} removeBet={removeBet} />
 						<BetSeparator type="Totals" />
-						<BetOption point={game.UnderPoint} price={game.UnderPrice} addBet={addBet} team={"Under"} removeBet={removeBet} />
+						<BetOption point={game.under_point} price={game.under_price} addBet={addBet} team={"Under"} removeBet={removeBet} />
 					</Grid>
 
 				</Grid>
@@ -148,11 +132,11 @@ const Bets = () => {
 
 
 
-						<Box>
+						{/* <Box>
 							{
 								bets.map(b => <BetSlipOption key={`${b.team}${b.point}`} team={b.team} point={b.point} price={b.price} submit={submit} game={game} gameId={gameId} />)
 							}
-						</Box>
+						</Box> */}
 
 						{
 							bets.length > 0 &&
@@ -161,27 +145,12 @@ const Bets = () => {
 							</Button>
 						}
 
-						<Snackbar
-							open={showSnackbar}
-							autoHideDuration={6000}
-							onClose={() => setShowSnackbar(false)}
-							d message="Submitting all bets..."
-						/>
-						<Snackbar
-							open={error}
-							autoHideDuration={6000}
-							onClose={() => setError(false)}
-							d message="Error: Please try again"
-						/>
-						<Snackbar
-							open={success}
-							autoHideDuration={6000}
-							onClose={() => setSuccess(false)}
-							d message="Successfully submitted all bets"
-						/>
 
 					</Box>
 				</Grid>
+
+
+
 			</Grid>
 
 
@@ -192,71 +161,77 @@ const Bets = () => {
 const BetOption = ({ point, price, addBet, removeBet, team }) => {
 
 	const [active, setActive] = useState(false)
-	const [added, setAdded] = useState(false)
-	const [disabled, setDisabled] = useState((point == 0 || price == 0 || point == "-") ? true : false)
-	const [newPoint, setNewPoint] = useState(point)
-	const [newPrice, setNewPrice] = useState(price)
+	// const [added, setAdded] = useState(false)
+	// const [disabled, setDisabled] = useState((point == 0 || price == 0 || point == "-") ? true : false)
+	// const [newPoint, setNewPoint] = useState(point)
+	// const [newPrice, setNewPrice] = useState(price)
 
 
 
-	useEffect(() => {
-		if (point == 0) {
-			setNewPoint("-")
-			setNewPrice("")
-			setDisabled(true)
-		}
-		if (disabled) {
-			return
-		}
-		if (active && !added) {
-			// MLINE
-			if (!price) {
-				if (point > 0) {
-					addBet(team, "ML", `+${point}`)
-					setAdded(true)
-				}
-				else {
-					addBet(team, "ML", point)
-					setAdded(true)
-				}
-			}
+	// useEffect(() => {
+	// 	if (point == 0) {
+	// 		setNewPoint("-")
+	// 		setNewPrice("")
+	// 		setDisabled(true)
+	// 	}
+	// 	if (disabled) {
+	// 		return
+	// 	}
+	// 	if (active && !added) {
+	// 		// MLINE
+	// 		if (!price) {
+	// 			if (point > 0) {
+	// 				addBet(team, "ML", `+${point}`)
+	// 				setAdded(true)
+	// 			}
+	// 			else {
+	// 				addBet(team, "ML", point)
+	// 				setAdded(true)
+	// 			}
+	// 		}
 
-			// TOTALS
-			else if (team == "Over" || team == "Under") {
-				addBet(team, point, price)
-				setAdded(true)
-			}
+	// 		// TOTALS
+	// 		else if (team == "Over" || team == "Under") {
+	// 			addBet(team, point, price)
+	// 			setAdded(true)
+	// 		}
 
-			// SPREAD
-			else {
-				// SPREAD
-				if (point > 0) {
-					point = `+${point}`
-				}
-				setAdded(true)
-				addBet(team, point, price)
-			}
+	// 		// SPREAD
+	// 		else {
+	// 			// SPREAD
+	// 			if (point > 0) {
+	// 				point = `+${point}`
+	// 			}
+	// 			setAdded(true)
+	// 			addBet(team, point, price)
+	// 		}
 
-		} else {
-			if (!price) {
-				removeBet(team, "ML", point)
-				setAdded(false)
-			} else {
-				removeBet(team, point, price)
-				setAdded(false)
-			}
-		}
-	}, [active, disabled, newPoint, newPrice])
+	// 	} else {
+	// 		if (!price) {
+	// 			removeBet(team, "ML", point)
+	// 			setAdded(false)
+	// 		} else {
+	// 			removeBet(team, point, price)
+	// 			setAdded(false)
+	// 		}
+	// 	}
+	// }, [active, disabled, newPoint, newPrice])
 
-	const activate = () => {
-		if (!disabled) { setActive(true) }
-	}
+	// const activate = () => {
+	// 	if (!disabled) { setActive(true) }
+	// }
 
 	return (
+		// <Grid item xs={4} sm={4} md={5}  >
+		// 	<Box sx={{ border: '1px solid lightgray' }} className={active ? "bet-box-active" : "bet-box-inactive"} onClick={activate} >
+		// 		<Typography textAlign="center" sx={{ fontWeight: 'bold' }} variant="h6">{newPoint > 0 ? `+${newPoint}` : newPoint} </Typography>
+		// 		<Typography textAlign="center" variant="body1" sx={{ color: 'gray' }}>{newPrice > 0 ? `+${newPrice}` : newPrice} </Typography>
+		// 	</Box>
+		// </Grid>
 		<Grid item xs={4} sm={4} md={5}  >
-			<Box sx={{ border: '1px solid lightgray' }} className={active ? "bet-box-active" : "bet-box-inactive"} onClick={activate} >
-				<Typography textAlign="center" sx={{ fontWeight: 'bold' }} variant="h6">{newPoint > 0 ? `+${newPoint}` : newPoint} </Typography>
-				<Typography textAlign="center" variant="body1" sx={{ color: 'gray' }}>{newPrice > 0 ? `+${newPrice}` : newPrice} </Typography>
+			<Box sx={{ border: '1px solid lightgray' }} className={active ? "bet-box-active" : "bet-box-inactive"} >
+				<Typography textAlign="center" sx={{ fontWeight: 'bold' }} variant="h6">{point > 0 ? `+${point}` : point} </Typography>
+				<Typography textAlign="center" variant="body1" sx={{ color: 'gray' }}>{price > 0 ? `+${price}` : price} </Typography>
 			</Box>
 		</Grid>
 	)
@@ -272,7 +247,6 @@ const BetSeparator = ({ type }) => {
 
 const BetSlipOption = ({ team, point, price, submit, game, gameId }) => {
 	const { user } = useAuth()
-	console.log(user)
 	const [amount, setAmount] = useState(10)
 
 	const submitBet = () => {
@@ -286,9 +260,9 @@ const BetSlipOption = ({ team, point, price, submit, game, gameId }) => {
 			"user_free_play": user.current_free_play,
 
 			"game_id": gameId,
-			"home_team": game.Home,
-			"away_team": game.Away,
-			"game_start_time": game.CommenceTime,
+			"home_team": game.home_team,
+			"away_team": game.away_team,
+			"game_start_time": game.commence_time,
 
 			"bet_type": team == "Over" || team == "Under" ? "Totals" : point == "ML" ? "Moneyline" : "Spread",
 			"bet_on_team": team,

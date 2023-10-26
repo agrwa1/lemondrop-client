@@ -17,67 +17,28 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { useLocation } from 'react-router-dom'
 
 
 export default function GameCard({ game }) {
-	// console.log(game)
-
-	const away = game.away_team
-	const home = game.home_team
-	const startTime = `${(new Date(game.commence_time)).toLocaleDateString()} ${(new Date(game.commence_time)).toLocaleTimeString()}`
 	const sportTitle = game.sport_title
-
-	const lines = game.bookmakers[0].markets[0].outcomes
-	const spreads = game.bookmakers[0].markets[1].outcomes
-	const totals = game.bookmakers[0].markets[2].outcomes
-
-	let homeLine = 0
-	let awayLine = 0
-
-	let homeSpreadPoint = 0
-	let homeSpreadPrice = 0
-	let awaySpreadPoint = 0
-	let awaySpreadPrice = 0
-
-	let overPoint = totals[0].point
-	let overPrice = totals[0].price
-	let underPoint = totals[1].point
-	let underPrice = totals[1].price
-
-	if (lines[0].name == away) {
-		awayLine = lines[0].price
-		homeLine = lines[1].price
-
-		awaySpreadPoint = spreads[0].point
-		awaySpreadPrice = spreads[0].price
-		homeSpreadPoint = spreads[1].point
-		homeSpreadPrice = spreads[1].price
-	} else {
-		homeLine = lines[0].price
-		awayLine = lines[1].price
-
-		awaySpreadPoint = spreads[1].point
-		awaySpreadPrice = spreads[1].price
-		homeSpreadPoint = spreads[0].point
-		homeSpreadPrice = spreads[0].price
-	}
-
-
+	console.log(game)
+	const startTime = `${(new Date(game.commence_time)).toLocaleDateString()} ${(new Date(game.commence_time)).toLocaleTimeString()}`
 
 
 
 	const tableData = [
 		{
-			name: away,
-			spread: awaySpreadPoint == 0 ? "-" : (awaySpreadPoint > 0 ? `+${awaySpreadPoint} ${awaySpreadPrice}` : `${awaySpreadPoint} ${awaySpreadPrice}`),
-			moneyline: awayLine == 0 ? "-" : (awayLine > 0 ? `+${awayLine}` : awayLine),
-			totals: overPoint == 0 ? "-" : (`O${overPoint} ${overPrice}`)
+			name: game.away_team,
+			spread: game.spreads_exist ? `${game.away_spread_point > 0 ? `+${game.away_spread_point}` : game.away_spread_point} ${game.away_spread_price > 0 ? `+${game.away_spread_point}` : game.away_spread_price}` : "-",
+			moneyline: game.moneylines_exist ? `${game.away_moneyline_price > 0 ? `+${game.away_moneyline_price}` : game.away_moneyline_price}` : '-',
+			totals: game.totals_exist ? `O${game.over_point} ${game.over_price > 0 ? `+${game.over_price}` : game.over_price}` : "-"
 		},
 		{
-			name: home,
-			spread: homeSpreadPoint == 0 ? "-" : (homeSpreadPoint > 0 ? `+${homeSpreadPoint} ${homeSpreadPrice}` : `${homeSpreadPoint} ${homeSpreadPrice}`),
-			moneyline: homeLine == 0 ? "-" : (homeLine > 0 ? `+${homeLine}` : homeLine),
-			totals: underPoint == 0 ? "-" : (`U${underPoint} ${underPrice}`)
+			name: game.home_team,
+			spread: game.spreads_exist ? `${game.home_spread_point > 0 ? `+${game.home_spread_point}` : game.home_spread_point} ${game.home_spread_price > 0 ? `+${game.home_spread_point}` : game.home_spread_price}` : "-",
+			moneyline: game.moneylines_exist ? `${game.home_moneyline_price > 0 ? `+${game.home_moneyline_price}` : game.home_moneyline_price}` : '-',
+			totals: game.totals_exist ? `U${game.under_point} ${game.under_price > 0 ? `+${game.under_price}` : game.under_price}` : "-"
 		},
 	]
 
@@ -90,7 +51,7 @@ export default function GameCard({ game }) {
 						<caption  >
 							<Box sx={{ display: 'flex', justifyContent: "space-between", width: '100%' }} >
 								{startTime}
-								<Link to={`/games/${game.id}`} style={{ color: "red", fontWeight: 'bold', textDecoration: 'underline' }} >Bet Now</Link>
+								<Link to={`/game/${game.id}`} style={{ color: "red", fontWeight: 'bold', textDecoration: 'underline' }} >Bet Now</Link>
 							</Box>
 						</caption>
 						<TableHead>

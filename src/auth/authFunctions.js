@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 
 export const getAuth = () => {
 	const jwt = localStorage.getItem('jwt');
-	// console.log(jwt);
 
 	if (jwt) {
 		const config = {
@@ -18,10 +17,6 @@ export const getAuth = () => {
 			{},
 			config
 		);
-		// .then((res) => {
-		// 	// console.log('this is auth', res.data);
-		// 	res.data;
-		// });
 	} else {
 		console.log('no jwt');
 		return new Promise((resolve, reject) => {

@@ -144,10 +144,15 @@ export default function MiniDrawer({ children }) {
 
 				<Divider />
 				<List>
-					<DrawerIcon text="Football" icon={faFootball} open={open} link="/games/nfl" />
-					<DrawerIcon text="Basketball" icon={faBasketball} open={open} link="/games/nba" />
-					<DrawerIcon text="Baseball" icon={faBaseballBatBall} open={open} link="/games/mlb" />
-					<DrawerIcon text="Hockey" icon={faHockeyPuck} open={open} link="/games/nhl" />
+					<DrawerIcon text="NFL" icon={faFootball} open={open} link="/games/americanfootball_nfl" />
+					<DrawerIcon text="College Football" icon={faFootball} open={open} link="/games/americanfootball_ncaaf" />
+
+					<DrawerIcon text="MLB" icon={faBaseballBatBall} open={open} link="/games/baseball_mlb" />
+
+					<DrawerIcon text="NBA" icon={faBasketball} open={open} link="/games/basketball_nba" />
+					<DrawerIcon text="College Basketball" icon={faBasketball} open={open} link="/games/basketball_ncaab" />
+
+					<DrawerIcon text="NHL" icon={faHockeyPuck} open={open} link="/games/icehockey_nhl" />
 				</List>
 
 				{/* <List>
