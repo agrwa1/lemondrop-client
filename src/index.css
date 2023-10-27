@@ -6,7 +6,6 @@
 	width: 100%;
 	display: flex;
 	justify-content: center;
-
 }
 
 
@@ -284,6 +283,12 @@
 	/* border: 1px solid white; */
 }
 
+@media only screen and (max-width: 900px) {
+	.bet-slip {
+		display: none;
+	}
+}
+
 .main-header {
 	padding: 0.5em 1em;
 	border-top: 0.5px solid #444;
@@ -336,4 +341,81 @@
 	height: 0;
 	width: 100%;
 	border-bottom: 1px solid #444;
+}
+
+.market-picker {
+	min-width: 100%;
+	max-width: 0;
+	overflow: scroll;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em 0 ;
+	margin: 1em 0;
+	border-bottom: 1px solid #444;
+
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+}
+
+
+
+.market-picker::-webkit-scrollbar {
+	display: none
+}
+
+ 
+.market-option {
+	border-radius: 10px;
+	padding: 0.25em 1em;
+	margin: 0 1em;
+	background-color: #2c90ff;
+}
+ 
+.market-option-active {
+	background-color: #1565c1;;
+}
+
+.market-option-text {
+	color: #eee;
+	white-space: nowrap;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.market-option-text-active {
+	color: white;
+} 
+
+.bets-main {
+	max-width: 100%;
+	margin: 0;
+	padding: 0;
+
+}
+
+.bets-container {
+	max-width: 100%;
+}
+
+.bets-header {
+	max-width: 100%;
+}
+
+.main-game-props {
+	width: 100%;
+	margin: 1em 0;
+	border-radius: 10px;
+}
+
+.submarkets {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.submarket-accordion {
+	margin: 0.5em 0;
+	/* padding: 0.5em 0; */
+	background-color: #1b1b1b;
 }

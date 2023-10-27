@@ -7,7 +7,7 @@ import { useLocation } from 'react-router-dom'
 import moment from 'moment'
 
 
-export default function GameCard({ game }) {
+export default function GameCard({ game, raw }) {
 	const sportTitle = game.sport_title
 	const startTime = moment(game.commence_time).calendar()
 
@@ -41,12 +41,15 @@ export default function GameCard({ game }) {
 		return (
 			<Grid item xs={12} key={game.id} className={"bet-table"} >
 				<Table>
-					<caption  >
-						<Box sx={{ display: 'flex', justifyContent: "space-between", width: '100%' }} >
-							{startTime}
-							<Link to={`/game/${game.id}`} style={{ fontWeight: 'bold', textDecoration: 'none', color: "#2c90ff", fontSize: '12px' }}  >More Wagers</Link>
-						</Box>
-					</caption>
+					{
+						!raw &&
+						<caption  >
+							<Box sx={{ display: 'flex', justifyContent: "space-between", width: '100%' }} >
+								{startTime}
+								<Link to={`/game/${game.id}`} style={{ fontWeight: 'bold', textDecoration: 'none', color: "#2c90ff", fontSize: '12px' }}  >More Wagers</Link>
+							</Box>
+						</caption>
+					}
 
 					<TableBody>
 						{
@@ -84,7 +87,10 @@ export default function GameCard({ game }) {
 					</TableBody>
 				</Table>
 
-				<Box sx={{ width: '100%', height: 0, borderBottom: '1px solid #333' }} />
+				{
+					!raw &&
+					<Box sx={{ width: '100%', height: 0, borderBottom: '1px solid #333' }} />
+				}
 
 			</Grid >
 		)

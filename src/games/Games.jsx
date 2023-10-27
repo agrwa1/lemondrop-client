@@ -8,6 +8,7 @@ import Header from '../layout/Header'
 import { useLocation, Navigate } from 'react-router-dom'
 import axios from 'axios'
 
+import DesktopBetSlip from '../components/Betslip'
 
 function Games({ pathname }) {
 	let league = useLocation().pathname.split('/')[2]
@@ -119,7 +120,7 @@ function Games({ pathname }) {
 
 
 					{
-						games.length == 0 &&
+						(games.length == 0 && !loading) &&
 						<Box>
 							<Typography variant="h3">there are no {leagueParsed} games active right now.</Typography>
 						</Box>
@@ -141,37 +142,5 @@ function Games({ pathname }) {
 }
 
 
-const DesktopBetSlip = ({ bets }) => {
-	return (
-		<Box className="bet-slip">
-
-			<Box className="bet-slip-header">
-				<Box className="bet-slip-header-count">
-					{bets.length}
-				</Box>
-				<Typography variant="h6" style={{ fontWeight: 'bold', fontSize: "16px", color: '#ccc' }} >Betslip</Typography>
-			</Box>
-
-			<Box className="bet-slip-divider" />
-
-			{
-				bets.length == 0 &&
-				<Box className="empty-betslip-container">
-					<Typography variant="h6">Empty betslip</Typography>
-				</Box>
-			}
-
-
-			{
-				bets.map(bet =>
-					<Box className="bet-slip-option">
-						<Typography variant="h6">bet.name</Typography>
-					</Box>
-				)
-			}
-
-		</Box>
-	)
-}
 
 export default Games

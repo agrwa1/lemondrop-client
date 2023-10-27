@@ -108,7 +108,7 @@ export default function MiniDrawer({ children }) {
 
 			<Box className="mobile-nav-links" >
 				{
-					sports.map(s => <SportLinkButton sport={s} />)
+					sports.map(s => <SportLinkButton key={s.name} sport={s} />)
 				}
 			</Box>
 
