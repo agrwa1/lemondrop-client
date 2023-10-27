@@ -1,220 +1,146 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react'
 
 import { Box } from '@mui/material'
-import { styled, useTheme, Button, Card, CardContent, CardActions, CssBaseline, Drawer as MuiDrawer, AppBar as MuiAppBar, Toolbar, List, Typography, Divider, IconButton, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
+import { Grid, styled, useTheme, Button, Card, CardContent, CardActions, CssBaseline, Drawer as MuiDrawer, AppBar as MuiAppBar, Toolbar, List, Typography, Divider, IconButton, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import CasinoOutlinedIcon from '@mui/icons-material/CasinoOutlined';
-
+import SportsBasketballOutlinedIcon from '@mui/icons-material/SportsBasketballOutlined';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faGamepad, faChessBoard, faChartLine, faFootball, faBasketball, faBaseballBatBall, faHockeyPuck } from '@fortawesome/free-solid-svg-icons'
 
-import { Link } from 'react-router-dom'
-import { useNavigate, Navigate } from 'react-router-dom'
+import { useNavigate, Navigate, Link, useLocation } from 'react-router-dom'
+import nbaLogo from '../nba-logo.png'
+// import "./styles.css"
+// import MenuIcon from '@mui/icons-material/Menu';
+import { useAuth } from '../App'
 
 
-const drawerWidth = 240;
-
-const openedMixin = (theme) => ({
-	width: drawerWidth,
-	transition: theme.transitions.create('width', {
-		easing: theme.transitions.easing.sharp,
-		duration: theme.transitions.duration.enteringScreen,
-	}),
-	overflowX: 'hidden',
-});
-
-const closedMixin = (theme) => ({
-	transition: theme.transitions.create('width', {
-		easing: theme.transitions.easing.sharp,
-		duration: theme.transitions.duration.leavingScreen,
-	}),
-	overflowX: 'hidden',
-	width: `calc(${theme.spacing(7)} + 1px)`,
-	[theme.breakpoints.up('sm')]: {
-		width: `calc(${theme.spacing(8)} + 1px)`,
-	},
-});
-
-const DrawerHeader = styled('div')(({ theme }) => ({
-	display: 'flex',
-	alignItems: 'center',
-	justifyContent: 'flex-end',
-	padding: theme.spacing(0, 1),
-	// necessary for content to be below app bar
-	...theme.mixins.toolbar,
-}));
-
-const AppBar = styled(MuiAppBar, {
-	shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
-	zIndex: theme.zIndex.drawer + 1,
-	transition: theme.transitions.create(['width', 'margin'], {
-		easing: theme.transitions.easing.sharp,
-		duration: theme.transitions.duration.leavingScreen,
-	}),
-	...(open && {
-		marginLeft: drawerWidth,
-		width: `calc(100% - ${drawerWidth}px)`,
-		transition: theme.transitions.create(['width', 'margin'], {
-			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.enteringScreen,
-		}),
-	}),
-}));
-
-
-
-
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-	({ theme, open }) => ({
-		width: drawerWidth,
-		flexShrink: 0,
-		whiteSpace: 'nowrap',
-		boxSizing: 'border-box',
-		...(open && {
-			...openedMixin(theme),
-			'& .MuiDrawer-paper': openedMixin(theme),
-		}),
-		...(!open && {
-			...closedMixin(theme),
-			'& .MuiDrawer-paper': closedMixin(theme),
-		}),
-	}),
-);
 
 export default function MiniDrawer({ children }) {
-	const theme = useTheme();
-	const [open, setOpen] = React.useState(false);
-
-	const handleDrawerOpen = () => {
-		setOpen(true);
-	};
-
-	const handleDrawerClose = () => {
-		setOpen(false);
-	};
+	const { user, token } = useAuth()
+	const sports = [
+		{ name: "NFL", link: "/games/americanfootball_nfl", icon: faFootball, id: "americanfootball_nfl" },
+		{ name: "NCAAF", link: "/games/americanfootball_ncaaf", icon: faFootball, id: "americanfootball_ncaaf" },
+		{ name: "NBA", link: "/games/basketball_nba", icon: faBasketball, id: "basketball_nba" },
+		{ name: "NCAAB", link: "/games/basketball_ncaab", icon: faBasketball, id: "basketball_ncaab" },
+		{ name: "NHL", link: "/games/icehockey_nhl", icon: faHockeyPuck, id: "icehockey_nhl" },
+		{ name: "UEFA", link: "/games/soccer_uefa_champs_league", icon: faHockeyPuck, id: "icehockey_nhl" }
+	]
 
 	return (
 
-		<Box sx={{ display: 'flex', marginTop: '3em' }}>
-			<AppBar open={open}>
-				<Toolbar sx={{ backgroundColor: 'primary.main' }} >
-					<IconButton
-						color="inherit"
-						aria-label="open drawer"
-						onClick={handleDrawerOpen}
-						edge="start"
-						sx={{
-							marginRight: 5,
-							...(open && { display: 'none' }),
-						}}
-					>
-						<MenuIcon />
-					</IconButton>
-					<Typography variant="h6" noWrap component="div" sx={{ fontFamily: "Lobster", fontWeight: 'bold', fontSize: '2em' }} >
-						LemonDrop
-					</Typography>
-				</Toolbar>
-			</AppBar>
+		<Box className="container">
+
 			<CssBaseline />
 
+			<Box className="navbar"  >
 
-			<Drawer variant="permanent" open={open} PaperProps={{
-				sx: {
-					backgroundColor: "primary.main",
-					color: 'white'
+				<Box className="nav-left"  >
+					<Link to="/dashboard" className="link-reset" >
+						<Box className="word-logo" >
+							<Typography sx={{ fontFamily: "Lobster", fontSize: "32px" }} color="primary" variant="h3">lemondrop</Typography>
+							<Typography variant="h6" style={{ fontSize: "16px" }} >SPORTSBOOK</Typography>
+						</Box>
+					</Link>
+
+					<Link to="/" className="link-reset" >
+						<Box className="nav-link nav-link-left">
+							<Typography variant='body1'>Home</Typography>
+						</Box>
+					</Link>
+
+					<Link to="bets" className="link-reset" >
+						<Box className="nav-link nav-link-left " >
+							<Typography variant='body1'>My Bets</Typography>
+						</Box>
+					</Link>
+				</Box>
+				{
+					user &&
+					<Box className="nav-right">
+						<Box className="nav-link nav-link-profile">
+							<Typography className="nav-link" variant='body1'>My Profile</Typography>
+						</Box>
+					</Box>
 				}
-			}}>
-				<DrawerHeader>
-					<IconButton onClick={handleDrawerClose} sx={{ color: "white" }} >
-						{theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-					</IconButton>
-				</DrawerHeader>
-				<Divider />
 
-				<List>
-					<DrawerIcon text="Dashboard" disableUnderline icon={faChartLine} open={open} link="/dashboard" />
-					<DrawerIcon text="Profile" icon={faUser} open={open} link="/profile" />
-				</List>
+				{
+					!user &&
+					<Box className="nav-right nav-right-noauth" >
+						<Box className="nav-auth-btn signup-btn" >
+							Join Now
+						</Box>
+						<Box className="nav-auth-btn login-btn" >
+							Log In
+						</Box>
+					</Box>
 
-				<Divider />
-				<List>
-					<DrawerIcon text="NFL" icon={faFootball} open={open} link="/games/americanfootball_nfl" />
-					<DrawerIcon text="College Football" icon={faFootball} open={open} link="/games/americanfootball_ncaaf" />
+				}
 
-					<DrawerIcon text="MLB" icon={faBaseballBatBall} open={open} link="/games/baseball_mlb" />
+			</Box>
 
-					<DrawerIcon text="NBA" icon={faBasketball} open={open} link="/games/basketball_nba" />
-					<DrawerIcon text="College Basketball" icon={faBasketball} open={open} link="/games/basketball_ncaab" />
+			<Box className="desktop-main">
+				<Grid container spacing={2}  >
 
-					<DrawerIcon text="NHL" icon={faHockeyPuck} open={open} link="/games/icehockey_nhl" />
-				</List>
+					<Grid item sm={2} >
+						<Box className="sidebar" sx={{ marginTop: '2em' }}>
+							<Box >
+								<Typography sx={{ color: "#ccc", fontSize: '1.2em', fontWeight: 'bold', marginBottom: ".7em" }} variant="h3" className="all-sports-header" >All Leagues</Typography>
+								{
+									sports.map(s => <SportSidebarLink sport={s} key={s.id} />)
+								}
+							</Box>
+						</Box>
+					</Grid>
 
-				{/* <List>
-					<Button onClick={signOut}>
-						<DrawerIcon text="Sign Out" icon={faUser} open={open} />
-					</Button>
-				</List> */}
-			</Drawer>
-			<Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-				<DrawerHeader />
+
+					<Grid item sm={10} >
+						{children}
+					</Grid>
+				</Grid>
+			</Box>
+
+			<Box className="mobile-nav-links" >
+				{
+					sports.map(s => <SportLinkButton sport={s} />)
+				}
+			</Box>
+
+
+			<Box className="mobile-main">
 				{children}
 			</Box>
+
 		</Box>
 
 
 	);
 }
 
-const DrawerIcon = ({ text, icon, open, link }) => {
+const SportSidebarLink = ({ sport }) => {
 
 	return (
-
-		<ListItem key={text} alignItems="flex-start" disablePadding sx={{ display: 'block' }}>
-			<Link to={link} style={{ textDecoration: 'none' }} >
-				<ListItemButton
-					sx={{
-						minHeight: 48,
-						justifyContent: open ? 'initial' : 'center',
-						px: 2.5,
-
-					}}
-				>
-					<ListItemIcon
-						sx={{
-							minWidth: 0,
-							mr: open ? 3 : 'auto',
-							justifyContent: 'center',
-							color: 'white',
-						}}
-					>
-						<FontAwesomeIcon icon={icon} aria-hidden={true} className="fa-fw" />
-					</ListItemIcon>
-
-					<ListItemText primary={text} sx={{
-						opacity: open ? 1 : 0,
-						color: 'white',
-						fontWeight: 'bold',
-						textDecoration: 'none'
-					}} />
-				</ListItemButton>
-
-
-
-			</Link>
-		</ListItem>
-
-
+		<Link to={sport.link} className="link-reset">
+			<Box className={`sidebar-link ${window.location.pathname.includes(sport.link)} ? "sidebar-link-active : ""`} >
+				<Typography variant='body1' style={{ color: '#aaa' }} >{sport.name}</Typography>
+			</Box>
+		</Link>
 	)
 }
 
+const SportLinkButton = ({ sport }) => {
+	return (
+		<Link to={sport.link} className="link-reset">
+			<Box className={`sport-link-container-mobile ${window.location.pathname.includes(sport.id)} ? "active-mobile-link" :"" `}>
+				<Typography variant="body2"  >{sport.name}</Typography>
+			</Box>
+		</Link>
+	)
+}
 
-/*
-
-
-*/

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 
 import Header from '../layout/Header'
-import { Box, Typography, Grid, Button, TextField, Checkbox, FormControl } from '@mui/material'
+import { Box, Typography, Grid, Button, TextField, Checkbox, FormControl, CircularProgress } from '@mui/material'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { getAuth } from '../auth/authFunctions'
 import { useAuth } from '../App'
+import { CssBaseline } from '@mui/material'
 
 import { useNavigate } from 'react-router-dom'
 
@@ -15,6 +16,7 @@ const Login = () => {
 	const [email, setEmail] = useState("")
 	const [password, setPassword] = useState("")
 	const [error, setError] = useState("")
+	const [loading, setLoading] = useState(false)
 
 	const submit = () => {
 		setError("")
@@ -27,6 +29,7 @@ const Login = () => {
 			return
 		}
 
+		setLoading(true)
 		axios.post("https://lemondrop-api.onrender.com/api/users/login", {
 			email: email,
 			password: password,
@@ -34,6 +37,7 @@ const Login = () => {
 			console.log(res)
 			localStorage.setItem("jwt", res.data.jwt)
 			console.log(localStorage.getItem("jwt"))
+			setLoading(false)
 			update()
 			navigate("/dashboard")
 		}).catch(err => {
@@ -48,11 +52,17 @@ const Login = () => {
 	}, [])
 
 	return (
-		<Box sx={{ height: '100vh', justifyContent: "center", alignItems: "center", display: 'flex', backgroundColor: '#FFF4F2' }} >
+		<Box sx={{ height: '100vh', justifyContent: "center", alignItems: "center", display: 'flex', }} >
+			<CssBaseline />
 			<form>
 
-				<Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', padding: '5em 3em', border: '1px solid white', backgroundColor: 'white', borderRadius: '15px' }} >
-					<Typography variant="h6" color="primary" sx={{ fontWeight: 'bold', fontFamily: "Lobster", fontSize: '2em' }}>Lemondrop</Typography>
+				<Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', padding: '5em 3em', border: '1px solid #949494', borderRadius: '15px' }} >
+					{
+						loading &&
+						<CircularProgress />
+					}
+
+					<Typography variant="h6" color="primary" sx={{ fontWeight: 'bold', fontFamily: "Lobster", fontSize: '2em' }}>lemondrop</Typography>
 					<Box sx={{ marginBottom: '2em' }} />
 
 

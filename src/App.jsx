@@ -19,6 +19,8 @@ import { useNavigate, Navigate } from 'react-router-dom'
 
 import { getAuth } from './auth/authFunctions'
 
+import "./index.css"
+
 import {
   BrowserRouter,
   Route,
@@ -29,7 +31,7 @@ import {
 const theme = createTheme({
   typography: {
     fontFamily: [
-      "Open Sans"
+      "Inter"
     ].join(','),
     fontWeight: 'bold',
     h1: {
@@ -54,9 +56,16 @@ const theme = createTheme({
   },
   palette: {
     primary: {
-      main: "#E10600"
+      main: "#2C90FF"
     },
-    secondary: orange,
+    secondary: {
+      main: "#138001"
+    },
+    mode: 'dark',
+    dark: "#0A0A0A",
+    background: {
+      default: "#0A0A0A"
+    }
     // mode: 'dark',
   }
 });
@@ -79,7 +88,7 @@ export default function App() {
 
             <Route path="/games/:league" element={
               <ProtectedRoute>
-                <GamePage key={window.location.pathname} />
+                <GamePage pathname={window.location.pathname} />
               </ProtectedRoute>
             } />
 
