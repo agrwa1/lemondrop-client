@@ -20,6 +20,7 @@ import { useNavigate, Navigate } from 'react-router-dom'
 import { getAuth } from './auth/authFunctions'
 
 import "./index.css"
+import "./betslip.css"
 
 import {
   BrowserRouter,

@@ -11,28 +11,61 @@ import axios from 'axios'
 import DesktopBetSlip from '../components/Betslip'
 
 function Games({ pathname }) {
-	let league = useLocation().pathname.split('/')[2]
+	const [league, setLeague] = useState(useLocation().pathname.split('/')[2])
+	// let league = useLocation().pathname.split('/')[2]
 	const [leagueParsed, setLeagueParsed] = useState("")
 	const [games, setGames] = useState([])
 	const [loading, setLoading] = useState(true)
 	const [urlChanged, setUrlChanged] = useState(false)
 	const [bets, setBets] = useState([])
 
+
+	useEffect(() => {
+		console.log("bets changed", bets)
+	}, [bets])
+
 	/*
-		Bet schema:
-			- Team bet on (home away)
-			- Type of bet (ML, Spread, Totals, PropsName, etc)
-			- Odds (-110...)
-			- timestamp momentized
-			- wager amount
-			- towin amount
-			- index in bet array
-			- game id
-			= time placed
-			= user placing
-			= 
+	Bets schema:
+	{
+		BetOnTeam: "Los Angeles Rams +6.5",
+		BetType: "Spread",
+		Odds: -110,
+		Timestamp: "Today at 10:01AM",
+		Index: 0,
+		AwayTeam: "Dallas Cowboys",
+		HomeTeam: "Los Angeles Rams",
+		GameId: "3bd722d85e1bb286bb75111a0787eb87"
+	}
 
 	*/
+
+	// find way to modularize so it can be reusable. 
+	//! CURRENTLY IN BETS.JSX
+	const addBet = (betOnTeam, betType, odds, awayTeam, homeTeam, gameId) => {
+		const newBet = {
+			BetOnTeam: betOnTeam,
+			BetType: betType,
+			Odds: odds,
+			// Timestamp: timestamp,
+			AwayTeam: awayTeam,
+			HomeTeam: homeTeam,
+			GameId: gameId,
+			Index: bets.length,
+		}
+		setBets([...bets, newBet])
+	}
+
+	const removeBet = (index) => {
+		let newBets = bets
+		newBets.splice(index, 1)
+		// need to update all other bets with correct index
+		for (let i = 0; i < newBets.length; i++) {
+			newBets[i].Index = i
+		}
+		setBets([...newBets])
+	}
+
+
 
 	const validSports = [
 		'americanfootball_nfl',
@@ -48,10 +81,9 @@ function Games({ pathname }) {
 	}
 
 	useEffect(() => {
-		console.log(league)
-		console.log(window.location.pathname.split('/')[2])
 		if (league != window.location.pathname.split('/')[2]) {
-			league = window.location.pathname.split('/')[2]
+			setLeague(window.location.pathname.split('/')[2])
+			// league = window.location.pathname.split('/')[2]
 			setUrlChanged(true)
 		}
 	})
@@ -60,7 +92,7 @@ function Games({ pathname }) {
 	useEffect(() => {
 		// wont rerender because of empty dependency array
 		console.log('refetching...')
-		const url = `https://lemondrop-api.onrender.com/api/games/${league}`
+		const url = `https://lemondrop-api.onrender.com/api/games/league/${league}`
 		axios.get(url).then(res => {
 			setGames(res.data)
 			setLoading(false)
@@ -68,10 +100,10 @@ function Games({ pathname }) {
 		})
 
 
-	}, [pathname, urlChanged])
+	}, [pathname, urlChanged, league])
 
 	return (
-		<Box>
+		<Box key={league} >
 
 			{
 				loading &&
@@ -112,12 +144,10 @@ function Games({ pathname }) {
 
 
 						<Grid container>
-							{games.map(game => <GameCard game={game} key={game.id} />)}
+							{games.map(game => <GameCard addBet={addBet} bets={bets} game={game} key={game.id} removeBet={removeBet} />)}
 						</Grid>
 
 					</Grid>
-
-
 
 					{
 						(games.length == 0 && !loading) &&
@@ -129,12 +159,13 @@ function Games({ pathname }) {
 
 
 
+
+
 				</Grid>
 
 				<Grid item xs={12} sm={4} className="bet-slip-container">
-					<DesktopBetSlip bets={bets} />
+					<DesktopBetSlip bets={bets} setBets={setBets} removeBet={removeBet} />
 				</Grid>
-
 			</Grid>
 
 		</Box >
