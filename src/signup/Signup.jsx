@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import Header from '../layout/Header'
-import { Box, Typography, Grid, Button, TextField, Checkbox, CircularProgress, LinearProgress, FormControl } from '@mui/material'
+import { Box, Typography, Grid, Button, TextField, Checkbox, Snackbar, CircularProgress, LinearProgress, FormControl } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../App'
 import { CssBaseline } from '@mui/material'
 
 const Signup = () => {
-	const { update } = useAuth()
+	const { update, setToken } = useAuth()
 	const navigate = useNavigate()
 	const [firstName, setFirstName] = useState("")
 	const [lastName, setLastName] = useState("")
@@ -17,7 +17,7 @@ const Signup = () => {
 	const [phoneNumber, setPhoneNumber] = useState("")
 	const [agePassed, setAgePassed] = useState(false)
 	const [error, setError] = useState("")
-	const [loading, setLoading] = useState(true)
+	const [loading, setLoading] = useState(false)
 
 	const verifyInfoAndSubmit = () => {
 		// verify user info
@@ -46,21 +46,23 @@ const Signup = () => {
 
 		setError("")
 		setLoading(true)
-		axios.post("https://lemondrop-api.onrender.com/api/users/signup", {
-			"first_name": firstName,
-			"last_name": lastName,
-			"email": email,
-			"password": password,
-			"phone_number": phoneNumber
-		}).then(res => {
-			console.log(res)
-			const jwt = res.data
-			localStorage.setItem("jwt", jwt)
-			console.log(localStorage.getItem("jwt"))
-			setLoading(false)
-			update()
-			navigate("/dashboard")
-		}).catch(err => { console.log(err) })
+		axios.post(
+			"https://lemondrop-api.onrender.com/api/users/signup",
+			// "http://localhost:8080/api/users/signup",
+			{
+				"first_name": firstName,
+				"last_name": lastName,
+				"email": email,
+				"password": password,
+				"phone_number": phoneNumber
+			}).then(res => {
+				const jwt = res.data
+				localStorage.setItem("jwt", jwt)
+				setToken("")
+				setLoading(false)
+				update()
+				navigate("/leagues/all")
+			}).catch(err => { console.log(err) })
 
 
 		// on success -> redirect to dashboard

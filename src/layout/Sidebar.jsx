@@ -19,19 +19,27 @@ import nbaLogo from '../nba-logo.png'
 // import "./styles.css"
 // import MenuIcon from '@mui/icons-material/Menu';
 import { useAuth } from '../App'
-
+import axios from 'axios'
+// import { Link } from 'react-router-dom'
 
 
 export default function MiniDrawer({ children }) {
+	const [leagues, setLeagues] = useState([])
+	const [sports, setSports] = useState([])
+	useEffect(() => {
+		axios.get("https://lemondrop-api.onrender.com/api/games/leagues").then(res => {
+			setLeagues(res.data)
+		})
+	}, [])
+
+	useEffect(() => {
+		axios.get("https://lemondrop-api.onrender.com/api/games/sports").then(res => {
+			setSports(res.data)
+		})
+	}, [])
+
 	const { user, token } = useAuth()
-	const sports = [
-		{ name: "NFL", link: "/games/americanfootball_nfl", icon: faFootball, id: "americanfootball_nfl" },
-		{ name: "NCAAF", link: "/games/americanfootball_ncaaf", icon: faFootball, id: "americanfootball_ncaaf" },
-		{ name: "NBA", link: "/games/basketball_nba", icon: faBasketball, id: "basketball_nba" },
-		{ name: "NCAAB", link: "/games/basketball_ncaab", icon: faBasketball, id: "basketball_ncaab" },
-		{ name: "NHL", link: "/games/icehockey_nhl", icon: faHockeyPuck, id: "icehockey_nhl" },
-		{ name: "UEFA", link: "/games/soccer_uefa_champs_league", icon: faHockeyPuck, id: "icehockey_nhl" }
-	]
+
 
 	return (
 
@@ -49,7 +57,7 @@ export default function MiniDrawer({ children }) {
 						</Box>
 					</Link>
 
-					<Link to="/" className="link-reset" >
+					<Link to="/dashboard" className="link-reset" >
 						<Box className="nav-link nav-link-left">
 							<Typography variant='body1'>Home</Typography>
 						</Box>
@@ -90,16 +98,16 @@ export default function MiniDrawer({ children }) {
 
 					<Grid item sm={2} >
 						<Box className="sidebar" sx={{ marginTop: '2em' }}>
-							<Box >
-								<Typography sx={{ color: "#ccc", fontSize: '1.2em', fontWeight: 'bold', marginBottom: ".7em" }} variant="h3" className="all-sports-header" >All Leagues</Typography>
-								{
-									sports.map(s => <SportSidebarLink sport={s} key={s.id} />)
-								}
-							</Box>
+							<Link to="/leagues/all" style={{ textDecoration: 'none' }} >
+								<Box className="all-sport-header-container" >
+									<Typography sx={{ color: "#ccc", fontSize: '1.2em', fontWeight: 'bold', marginBottom: ".7em" }} variant="h3" className="all-sports-header" >All Leagues</Typography>
+									{
+										leagues.map(l => <LeagueSidebarLink league={l} key={l.id} />)
+									}
+								</Box>
+							</Link>
 						</Box>
 					</Grid>
-
-
 					<Grid item sm={10} >
 						{children}
 					</Grid>
@@ -108,7 +116,7 @@ export default function MiniDrawer({ children }) {
 
 			<Box className="mobile-nav-links" >
 				{
-					sports.map(s => <SportLinkButton key={s.name} sport={s} />)
+					leagues.map(l => <LeagueLinkButton key={l.id} league={l} />)
 				}
 			</Box>
 
@@ -123,12 +131,31 @@ export default function MiniDrawer({ children }) {
 	);
 }
 
+
+
+
 const SportSidebarLink = ({ sport }) => {
+	const sportLink = sport.name.toLowerCase().replace(" ", "-")
 
 	return (
-		<Link to={sport.link} className="link-reset">
-			<Box className={`sidebar-link ${window.location.pathname.includes(sport.link)} ? "sidebar-link-active : ""`} >
+		<Link to={`/sports/${sportLink}`} className="link-reset">
+			<Box className={`sidebar-link ${window.location.pathname.includes(sportLink)} ? "sidebar-link-active : ""`} >
 				<Typography variant='body1' style={{ color: '#aaa' }} >{sport.name}</Typography>
+			</Box>
+		</Link>
+	)
+}
+const LeagueSidebarLink = ({ league }) => {
+
+	let leagueName = league.league_name
+	// if (league.league_name.length > 15) {
+	// 	leagueName = league.league_name.substring(0, 15) + "..."
+	// }
+
+	return (
+		<Link to={`/games/${league.league_id}`} className="link-reset">
+			<Box className={`sidebar-link ${window.location.pathname.includes(league.league_id)} ? "sidebar-link-active : ""`} >
+				<Typography variant='body1' style={{ fontSize: '15px', color: '#aaa' }} >{leagueName}</Typography>
 			</Box>
 		</Link>
 	)
@@ -136,9 +163,20 @@ const SportSidebarLink = ({ sport }) => {
 
 const SportLinkButton = ({ sport }) => {
 	return (
-		<Link to={sport.link} className="link-reset">
-			<Box className={`sport-link-container-mobile ${window.location.pathname.includes(sport.id)} ? "active-mobile-link" :"" `}>
-				<Typography variant="body2"  >{sport.name}</Typography>
+		<Link to={`/sports/${sport.name.toLowerCase()}`} className="link-reset">
+			<Box className={`sport-link-container-mobile ${window.location.pathname.includes(sport.name.toLowerCase())} ? "active-mobile-link" :"" `}>
+				<Typography variant="body2" >{sport.name}</Typography>f
+			</Box>
+		</Link>
+	)
+
+}
+
+const LeagueLinkButton = ({ league }) => {
+	return (
+		<Link to={`/games/${league.league_id}`} className="link-reset">
+			<Box className={`sport-link-container-mobile ${window.location.pathname.includes(league.league_id)} ? "active-mobile-link" :"" `}>
+				<Typography variant="body2" >{league.league_name}</Typography>
 			</Box>
 		</Link>
 	)

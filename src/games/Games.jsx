@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-import { Grid, Typography, Box, Button, CircularProgress } from '@mui/material'
+import { Grid, Typography, Box, Button, CircularProgress, Snackbar } from '@mui/material'
 import GameCard from './GameCard';
 // import gamesData from './gamesData'
 
@@ -8,7 +8,7 @@ import Header from '../layout/Header'
 import { useLocation, Navigate } from 'react-router-dom'
 import axios from 'axios'
 
-import DesktopBetSlip from '../components/Betslip'
+import BetSlip from '../components/Betslip'
 
 function Games({ pathname }) {
 	const [league, setLeague] = useState(useLocation().pathname.split('/')[2])
@@ -19,38 +19,26 @@ function Games({ pathname }) {
 	const [urlChanged, setUrlChanged] = useState(false)
 	const [bets, setBets] = useState([])
 
+	const [success, setSuccess] = useState(false)
+	const [failure, setFailure] = useState(false)
 
-	useEffect(() => {
-		console.log("bets changed", bets)
-	}, [bets])
-
-	/*
-	Bets schema:
-	{
-		BetOnTeam: "Los Angeles Rams +6.5",
-		BetType: "Spread",
-		Odds: -110,
-		Timestamp: "Today at 10:01AM",
-		Index: 0,
-		AwayTeam: "Dallas Cowboys",
-		HomeTeam: "Los Angeles Rams",
-		GameId: "3bd722d85e1bb286bb75111a0787eb87"
-	}
-
-	*/
 
 	// find way to modularize so it can be reusable. 
 	//! CURRENTLY IN BETS.JSX
-	const addBet = (betOnTeam, betType, odds, awayTeam, homeTeam, gameId) => {
+	const addBet = (betOnTeam, betType, price, point, awayTeam, homeTeam, gameId, gameHash) => {
 		const newBet = {
 			BetOnTeam: betOnTeam,
 			BetType: betType,
-			Odds: odds,
+			Price: price,
+			Point: point,
+			// Odds: odds,
 			// Timestamp: timestamp,
 			AwayTeam: awayTeam,
 			HomeTeam: homeTeam,
 			GameId: gameId,
+			GameHash: gameHash,
 			Index: bets.length,
+			Amount: 1
 		}
 		setBets([...bets, newBet])
 	}
@@ -65,20 +53,19 @@ function Games({ pathname }) {
 		setBets([...newBets])
 	}
 
+	// const validSports = [
+	// 	'football_nfl',
+	// 	'football_ncaaf',
+	// 	'basketball_nba',
+	// 	'basketball_ncaab',
+	// 	'icehockey_nhl',
+	// 	'soccer_champions_league',
+	// 	'soccer_mexico_liga_mx',
+	// ]
 
-
-	const validSports = [
-		'americanfootball_nfl',
-		'americanfootball_ncaaf',
-		'basketball_nba',
-		'basketball_ncaab',
-		'icehockey_nhl',
-		'soccer_uefa_champs_league',
-	]
-
-	if (!validSports.includes(league)) {
-		return <Navigate to="/404" />
-	}
+	// if (!validSports.includes(league)) {
+	// 	return <Navigate to="/404" />
+	// }
 
 	useEffect(() => {
 		if (league != window.location.pathname.split('/')[2]) {
@@ -91,12 +78,15 @@ function Games({ pathname }) {
 
 	useEffect(() => {
 		// wont rerender because of empty dependency array
+		console.log(league)
 		console.log('refetching...')
+		setLoading(true)
 		const url = `https://lemondrop-api.onrender.com/api/games/league/${league}`
 		axios.get(url).then(res => {
+			console.log(res.data)
 			setGames(res.data)
 			setLoading(false)
-			setLeagueParsed(res.data[0].sport_title)
+			setLeagueParsed(res.data[0].league)
 		})
 
 
@@ -120,27 +110,21 @@ function Games({ pathname }) {
 
 
 					<Grid container className="games-header grid-games-header"  >
-						<Grid item xs={12} container className="main-header">
-							<Grid item xs={6} className="games-header-name" >
-								<Typography variant="h6" sx={{ fontWeight: 'bold', fontSize: '20px' }} >{leagueParsed}</Typography>
-							</Grid>
 
-							<Grid item xs={2} className="header-stat"  >
-								<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', color: "#666" }}>
-									<Typography variant="body2" style={{ fontSize: '12px' }} >SPREAD</Typography>
-								</Box>
-							</Grid>
-							<Grid item xs={2}>
-								<Box sx={{ display: 'flex', justifyContent: 'center', width: '100%', color: '#666' }}>
-									<Typography variant="body2" style={{ fontSize: '12px' }} >MONEY</Typography>
-								</Box>
-							</Grid>
-							<Grid item xs={2}>
-								<Box sx={{ display: 'flex', justifyContent: 'center', width: '100%', color: '#666' }}>
-									<Typography variant="body2" style={{ fontSize: '12px' }} >TOTAL</Typography>
-								</Box>
-							</Grid>
-						</Grid>
+						{
+							(games.length == 0 && !loading) &&
+							<Box>
+								<Typography variant="h3">Sorry, No Active Games Right Now!</Typography>
+							</Box>
+						}
+						{
+							games.length > 0 && games[0].game_type == '1' &&
+							<Type1GamesHeader leagueName={leagueParsed} sport={games[0].sport} />
+						}
+						{
+							games.length > 0 && games[0].game_type == '2' &&
+							<Type2GamesHeader leagueName={leagueParsed} sport={games[0].sport} />
+						}
 
 
 						<Grid container>
@@ -149,26 +133,75 @@ function Games({ pathname }) {
 
 					</Grid>
 
-					{
-						(games.length == 0 && !loading) &&
-						<Box>
-							<Typography variant="h3">there are no {leagueParsed} games active right now.</Typography>
-						</Box>
-					}
-
-
-
-
 
 
 				</Grid>
 
 				<Grid item xs={12} sm={4} className="bet-slip-container">
-					<DesktopBetSlip bets={bets} setBets={setBets} removeBet={removeBet} />
+					<BetSlip bets={bets} setBets={setBets} removeBet={removeBet} setSuccess={setSuccess} setFailure={setFailure} />
 				</Grid>
+
+				<Snackbar open={success} message="Bets Successfully Placed!" onClose={() => setSuccess(false)} autoHideDuration={6000} />
+				<Snackbar open={failure} message="Failed to Place Bets" onClose={() => setFailure(false)} autoHideDuration={6000} />
 			</Grid>
 
 		</Box >
+	)
+}
+
+const Type1GamesHeader = ({ leagueName, sport }) => {
+	return (
+
+		<Grid item xs={12} container className="main-header">
+			<Grid item xs={6} className="games-header-name" >
+				<Typography variant="h6" sx={{ fontWeight: 'bold', fontSize: '16px', color: "#aaa" }} > {sport} / {leagueName}</Typography>
+			</Grid>
+
+			<Grid item xs={2} className="header-stat"  >
+				<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', color: "#666" }}>
+					<Typography variant="body2" style={{ fontSize: '12px' }} >SPREAD</Typography>
+				</Box>
+			</Grid>
+			<Grid item xs={2}>
+				<Box sx={{ display: 'flex', justifyContent: 'center', width: '100%', color: '#666' }}>
+					<Typography variant="body2" style={{ fontSize: '12px' }} >MONEY</Typography>
+				</Box>
+			</Grid>
+			<Grid item xs={2}>
+				<Box sx={{ display: 'flex', justifyContent: 'center', width: '100%', color: '#666' }}>
+					<Typography variant="body2" style={{ fontSize: '12px' }} >TOTAL</Typography>
+				</Box>
+			</Grid>
+		</Grid>
+	)
+}
+
+const Type2GamesHeader = ({ leagueName, sport }) => {
+	return (
+
+		<Grid item xs={12} container className="main-header">
+			<Grid item xs={12} className="games-header-name" >
+				<Box style={{ width: '100%', display: 'flex', marginBottom: '2em' }}>
+					<Typography variant="h6" sx={{ fontWeight: 'bold', fontSize: '16px', color: "#aaa" }} > {sport} / {leagueName}</Typography>
+				</Box>
+			</Grid>
+
+			<Grid item xs={4} className="header-stat"  >
+				<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', color: "#666" }}>
+					<Typography variant="body2" style={{ fontSize: '12px' }} >AWAY</Typography>
+				</Box>
+			</Grid>
+			<Grid item xs={4}>
+				<Box sx={{ display: 'flex', justifyContent: 'center', width: '100%', color: '#666' }}>
+					<Typography variant="body2" style={{ fontSize: '12px' }} >DRAW</Typography>
+				</Box>
+			</Grid>
+			<Grid item xs={4}>
+				<Box sx={{ display: 'flex', justifyContent: 'center', width: '100%', color: '#666' }}>
+					<Typography variant="body2" style={{ fontSize: '12px' }} >HOME</Typography>
+				</Box>
+			</Grid>
+		</Grid>
 	)
 }
 

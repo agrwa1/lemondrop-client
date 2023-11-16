@@ -11,7 +11,7 @@ import { CssBaseline } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
-	const { user, token, update } = useAuth()
+	const { setToken, user, token, update } = useAuth()
 	const navigate = useNavigate()
 	const [email, setEmail] = useState("")
 	const [password, setPassword] = useState("")
@@ -34,12 +34,12 @@ const Login = () => {
 			email: email,
 			password: password,
 		}).then(res => {
-			console.log(res)
+			console.log("res", res)
 			localStorage.setItem("jwt", res.data.jwt)
-			console.log(localStorage.getItem("jwt"))
+			setToken(res.data.jwt)
 			setLoading(false)
 			update()
-			navigate("/dashboard")
+			navigate("/leagues/all")
 		}).catch(err => {
 			setError("Invalid credentials. Please try again")
 		})

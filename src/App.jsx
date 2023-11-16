@@ -8,6 +8,9 @@ import BetPage from './bet/BetPage'
 import LoginPage from './login/LoginPage'
 import SignupPage from './signup/SignupPage'
 import WheelPage from './wheel/WheelPage'
+import AllSportsPage from './sports/AllSportsPage'
+import SingleSportPage from './sports/SingleSportPage'
+import LandingPage from './landing/LandingPage'
 
 import Error404 from './errors/Error404'
 
@@ -21,6 +24,11 @@ import { getAuth } from './auth/authFunctions'
 
 import "./index.css"
 import "./betslip.css"
+import "./dashboard.css"
+import "./gamecard2.css"
+import "./gamecard1.css"
+import "./sports-leagues.css"
+import "./landing.css"
 
 import {
   BrowserRouter,
@@ -93,17 +101,17 @@ export default function App() {
               </ProtectedRoute>
             } />
 
-            {/* <Route path="/games/:league/:game" element={
-              <ProtectedRoute>
-                <BetPage />
-              </ProtectedRoute>
-            } /> */}
-
-            <Route path="/game/:game" element={
+            <Route path="/games/:league/:game" element={
               <ProtectedRoute>
                 <BetPage />
               </ProtectedRoute>
             } />
+
+            {/* <Route path="/game/:game" element={
+              <ProtectedRoute>
+                <BetPage />
+              </ProtectedRoute>
+            } /> */}
 
 
             <Route path="/profile" element={
@@ -111,6 +119,18 @@ export default function App() {
                 <ProfilePage />
               </ProtectedRoute>
             } />
+
+            <Route path="/leagues/all" element={
+              <ProtectedRoute>
+                <AllSportsPage />
+              </ProtectedRoute>
+            } />
+
+            {/* <Route path="/sports/:sport" element={
+              <ProtectedRoute>
+                <SingleSportPage />
+              </ProtectedRoute>
+            } /> */}
 
             {/* PUBLIC ROUTES */}
             {/* 
@@ -121,6 +141,7 @@ export default function App() {
             <Route path="/*" element={<Error404 />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
+            <Route path="/" element={<LandingPage />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
@@ -141,12 +162,10 @@ const AuthProvider = ({ children }) => {
   // console.log(getAuth())
 
   useEffect(() => {
-
     getAuth().then(r => {
       setUser(r.data)
-      console.log(r.data)
     })
-  }, [])
+  }, [token])
 
   const update = () => {
     setToken(localStorage.getItem('jwt'));
@@ -166,7 +185,8 @@ const AuthProvider = ({ children }) => {
     user,
     setToken,
     update,
-    signOut
+    signOut,
+    setUser
   }
 
   return (
