@@ -5,6 +5,7 @@ import Layout from '../layout'
 import MoneyHeroImg from './money-1.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom'
 
 const LandingPage = () => {
 	return (
@@ -26,10 +27,15 @@ const LandingPage = () => {
 						<Typography variant="h1">Lemondrop Sportsbook Coming Soon</Typography>
 						<p>Make Your Own Luck</p>
 						<div className="cta-buttons">
-							<button className="primary-cta">Get Started</button>
-							<button className="secondary-cta">
-								Explore <FontAwesomeIcon icon={faArrowRight} />
-							</button>
+							<Link to="/dashboard">
+								<button className="primary-cta">Get Started</button>
+							</Link>
+
+							<Link to="dashboard">
+								<button className="secondary-cta">
+									Explore <FontAwesomeIcon icon={faArrowRight} />
+								</button>
+							</Link>
 						</div>
 					</div>
 				</div>
