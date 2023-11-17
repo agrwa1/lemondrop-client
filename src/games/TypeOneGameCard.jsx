@@ -8,7 +8,7 @@ import moment from 'moment'
 import axios from 'axios'
 
 export default function GameCard({ bets, game, raw, addBet, removeBet }) {
-	console.log(game)
+	// console.log(game)
 	const sportTitle = game.league
 	const startTime = moment(game.start_date).format("dddd h:mmA")
 	const [homeLogoUrl, setHomeLogoUrl] = useState("")
@@ -61,7 +61,7 @@ export default function GameCard({ bets, game, raw, addBet, removeBet }) {
 	const addBetByIndex = optionIndex => {
 		if (optionIndex == 0) {
 			// away spread
-			addBet(`${game.away_team_name} ${game.away_spread_point}`, "spread", game.away_spread_price, game.away_spread_point, game.away_team_name, game.home_team_name_name, game.id, game.hash)
+			addBet(`${game.away_team_name} ${game.away_spread_point}`, "spread", game.away_spread_price, game.away_spread_point, game.away_team_name, game.home_team_name, game.id, game.hash)
 		} else if (optionIndex == 1) {
 			// away money
 			addBet(game.away_team_name, "moneyline", game.away_moneyline, "", game.away_team_name, game.home_team_name, game.id, game.hash)

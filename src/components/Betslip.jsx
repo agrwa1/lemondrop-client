@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react'
-import { Grid, Typography, Box, Button, Input, InputLabel, TextField, FormControl, Snackbar, Fab, Badge, Backdrop } from '@mui/material'
+import { Grid, Typography, Box, Button, ButtonGroup, Input, InputLabel, TextField, FormControl, Snackbar, Fab, Badge, Backdrop } from '@mui/material'
 import InputAdornment from '@mui/material/InputAdornment';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
@@ -20,12 +20,53 @@ const Betslip = ({ bets, setBets, removeBet, setSuccess, setFailure }) => {
 	const deleteAllBets = () => {
 		setBets([])
 	}
+	const [isParlay, setIsParlay] = useState(false)
 	const [mobileOpen, setMobileOpen] = useState(false)
+	const [parlayOdds, setParlayOdds] = useState(0)
+
+	useEffect(() => {
+		// calculating parlay odds
+		let currentOdds = 1
+		bets.forEach(bet => {
+			let priceFloat = 0
+			if (bet.Price[0] == "+") {
+				priceFloat = parseInt(bet.Price.substring(1, bet.Price.length))
+			} else {
+				priceFloat = parseInt(bet.Price.substring(1, bet.Price.length)) * -1
+			}
+			const decimalOdds = priceFloat > 0 ? 1 + (priceFloat / 100) : 1 - (100 / priceFloat)
+			currentOdds *= decimalOdds
+		})
+
+		let americanOdds = 0
+		if (currentOdds > 2) {
+			americanOdds = (currentOdds - 1) * 100
+			setParlayOdds(`+${americanOdds.toFixed(0)}`)
+		} else {
+			americanOdds = -100 / (currentOdds - 1)
+			setParlayOdds(`-${americanOdds.toFixed(0)}`)
+		}
+
+	}, [bets])
 
 	const submitBets = () => {
 		const url = "https://lemondrop-api.onrender.com/api/bets/bet"
 		// const url = "http://localhost:8080/api/bets/bet"
 
+		if (bets.length >= 2 && isParlay) {
+			submitBetsParlay()
+		}
+
+		else {
+			submitBetsSingles(url)
+		}
+	}
+
+	const submitBetsParlay = () => {
+
+	}
+
+	const submitBetsSingles = (url) => {
 		bets.forEach(bet => {
 			if (!bet.Price || !bet.Amount) {
 				console.log("failure")
@@ -67,13 +108,6 @@ const Betslip = ({ bets, setBets, removeBet, setSuccess, setFailure }) => {
 				deleteAllBets()
 			})
 		}
-
-
-	}
-
-	const submitBet = bet => {
-		//
-		return
 	}
 
 	const handleMobileDeleteAll = () => {
@@ -92,12 +126,60 @@ const Betslip = ({ bets, setBets, removeBet, setSuccess, setFailure }) => {
 				<Box className="bet-slip-content">
 
 					<Box className="bet-slip-header">
-						<Box className="bet-slip-header-count">
-							{bets.length}
+						<Box className="bet-slip-header-main">
+							<Box className="bet-slip-header-count">
+								{bets.length}
+							</Box>
+							<Typography variant="h6" style={{ fontWeight: 'bold', fontSize: "16px", color: '#ccc' }} >Betslip</Typography>
 						</Box>
-						<Typography variant="h6" style={{ fontWeight: 'bold', fontSize: "16px", color: '#ccc' }} >Betslip</Typography>
+						{
+							bets.length >= 2 &&
+							<Box className="bet-type-selector">
+								<ButtonGroup>
+									<Button variant={isParlay ? "outlined" : "contained"} onClick={() => setIsParlay(false)} >Singles</Button>
+									<Button variant={isParlay ? "contained" : "outlined"} onClick={() => setIsParlay(true)}>Parlay</Button>
+								</ButtonGroup>
+							</Box>
+						}
 					</Box>
 
+
+					{
+						isParlay && bets.length >= 2 &&
+						<Box className="parlay-options">
+							<Box className="parlay-odds-display">
+								<Typography variant="body1" style={{ fontWeight: 'bold', color: '#bbb' }}>Parlay Odds</Typography>
+								<Typography variant="body1" style={{ fontWeight: 'bold', color: '#bbb' }} >{parlayOdds}</Typography>
+							</Box>
+							<Box className="wager-win-amts" sx={{ marginTop: "1em" }} >
+								<FormControl fullWidth sx={{ mr: 1 }}>
+									<InputLabel htmlFor="outlined-adornment-amount">Wager</InputLabel>
+									<OutlinedInput
+										id="outlined-adornment-amount"
+										startAdornment={<InputAdornment position="start">$</InputAdornment>}
+										label="Wager"
+										pattern="[0-9]*"
+									// value={amount}
+									// placeholder={amount}
+									// color={color}
+									// onChange={wagerChanged}
+									/>
+								</FormControl>
+
+								<FormControl fullWidth sx={{ ml: 1 }}>
+									<InputLabel htmlFor="outlined-adornment-amount">To Win</InputLabel>
+									<OutlinedInput
+										disabled
+										id="outlined-adornment-amount"
+										startAdornment={<InputAdornment position="start">$</InputAdornment>}
+										label="To Win"
+									// value={toWinAmount}
+									/>
+								</FormControl>
+							</Box>
+						</Box>
+
+					}
 
 					{
 						bets.length == 0 &&
@@ -113,7 +195,7 @@ const Betslip = ({ bets, setBets, removeBet, setSuccess, setFailure }) => {
 						<Box className="bet-slip-option-container">
 							{
 								bets.map(bet =>
-									<BetslipOption key={bet.BetOnTeam} bet={bet} removeBet={removeBet} />
+									<BetslipOption key={bet.BetOnTeam} isParlay={isParlay} bet={bet} removeBet={removeBet} />
 								)
 							}
 						</Box>
@@ -122,6 +204,8 @@ const Betslip = ({ bets, setBets, removeBet, setSuccess, setFailure }) => {
 				{
 					bets.length > 0 &&
 					<Box className="bet-slip-actions">
+
+
 						<Button fullWidth variant="outlined" onClick={deleteAllBets} style={{ border: '0.5px solid #ff3008', margin: '1em 0', color: "#ff3008", fontWeight: 'bold', display: 'flex', alignItems: "center" }} >
 							<DeleteOutlinedIcon />
 							Delete All
@@ -186,7 +270,7 @@ const Betslip = ({ bets, setBets, removeBet, setSuccess, setFailure }) => {
 	)
 }
 
-const BetslipOption = ({ bet, removeBet }) => {
+const BetslipOption = ({ bet, removeBet, isParlay }) => {
 
 	// cant parse negative numbers for some reason???
 	let priceFloat = 0
@@ -244,6 +328,7 @@ const BetslipOption = ({ bet, removeBet }) => {
 					</Box>
 
 				</Box>
+
 				<Box className="wager-win-amts">
 					<FormControl fullWidth sx={{ mr: 1 }}>
 						<InputLabel htmlFor="outlined-adornment-amount">Wager</InputLabel>
@@ -256,6 +341,7 @@ const BetslipOption = ({ bet, removeBet }) => {
 							placeholder={amount}
 							color={color}
 							onChange={wagerChanged}
+							disabled={isParlay}
 						/>
 					</FormControl>
 					<FormControl fullWidth sx={{ ml: 1 }}>
