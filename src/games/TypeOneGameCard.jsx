@@ -59,6 +59,7 @@ export default function GameCard({ bets, game, raw, addBet, removeBet }) {
 	}, [bets])
 
 	const addBetByIndex = optionIndex => {
+		console.log(game)
 		if (optionIndex == 0) {
 			// away spread
 			addBet(`${game.away_team_name} ${game.away_spread_point}`, "spread", game.away_spread_price, game.away_spread_point, game.away_team_name, game.home_team_name, game.id, game.hash)
@@ -143,87 +144,89 @@ export default function GameCard({ bets, game, raw, addBet, removeBet }) {
 
 
 	return (
-		<Grid item xs={12} key={game.id} className={"bet-table"} >
-			<Grid item xs={12}>
-				<Box sx={{ display: 'flex', justifyContent: "start", width: '100%', padding: '1em 0 0 1em' }} >
-					<Typography variant="body1" sx={{ color: "#bbb", fontSize: '13px', fontWeight: 'bold' }} >{startTime}</Typography>
-				</Box>
-			</Grid>
-			<Table>
-				<TableBody>
-					{
-						tableData.map((row, tableIndex) =>
-							<Grid key={Math.floor(Math.random() * 100000000000)} container sx={{ padding: '0.1em' }} >
+		<Box className="bet-table">
+			<Grid item xs={12} key={game.id}>
+				<Grid item xs={12}>
+					<Box sx={{ display: 'flex', justifyContent: "start", width: '100%', padding: '1em 0 0 1em' }} >
+						<Typography variant="body1" sx={{ color: "#bbb", fontSize: '13px', fontWeight: 'bold' }} >{startTime}</Typography>
+					</Box>
+				</Grid>
+				<Table>
+					<TableBody>
+						{
+							tableData.map((row, tableIndex) =>
+								<Grid key={Math.floor(Math.random() * 100000000000)} container sx={{ padding: '0.1em' }} >
 
-								<Grid item xs={6}>
-									<Box className="bet-team-name">
-										<Typography color="primary" variant="body2" sx={{ fontWeight: 'bold', padding: '0 1em' }} >{row.name}</Typography>
-									</Box>
+									<Grid item xs={6}>
+										<Box className="bet-team-name">
+											<Typography color="primary" variant="body2" sx={{ fontWeight: 'bold', padding: '0 1em' }} >{row.name}</Typography>
+										</Box>
+									</Grid>
+
+									{
+										row.spread_point &&
+										<Grid item xs={2}>
+											<Box onClick={() => onOptionClick(3 * tableIndex)} className={`${'bet-option'} ${activeArray[3 * tableIndex] ? "bet-option-active" : ""}`}>
+												<Typography variant="body2" style={{ fontSize: '12px', fontWeight: 'bold' }} >{row.spread_point}  </Typography>
+												<Typography variant="body2" style={activeArray[3 * tableIndex] ? { fontSize: '12px', fontWeight: 'bold' } : { fontSize: '12px', color: '#2c90ff', fontWeight: 'bold' }}>{row.spread_price}</Typography>
+											</Box>
+										</Grid>
+									}
+									{
+										!row.spread_point &&
+										<Grid item xs={2}>
+											<Box className={`bet-option-disabled bet-option`}>
+												<Typography variant="body2" style={{ color: "white", fontWeight: 'bold', fontSize: '12px' }}></Typography>
+											</Box>
+										</Grid>
+									}
+
+									{
+										row.moneyline &&
+										<Grid item xs={2}>
+											<Box onClick={() => onOptionClick(3 * tableIndex + 1)} className={`${'bet-option'} ${activeArray[3 * tableIndex + 1] ? "bet-option-active" : ""}`}>
+												<Typography variant="body2" style={activeArray[3 * tableIndex + 1] ? { fontWeight: 'bold', fontSize: '12px' } : { fontSize: '12px', color: '#2c90ff', fontWeight: 'bold' }}>{row.moneyline} </Typography>
+											</Box>
+										</Grid>
+									}
+									{
+										!row.moneyline &&
+										<Grid item xs={2}>
+											<Box className={`bet-option-disabled bet-option`}>
+												<Typography variant="body2" style={{ color: "white", fontWeight: 'bold', fontSize: '12px' }}></Typography>
+											</Box>
+										</Grid>
+									}
+
+
+									{
+										row.totals_price &&
+										<Grid item xs={2}>
+											<Box onClick={() => onOptionClick(3 * tableIndex + 2)} className={`${'bet-option'} ${activeArray[3 * tableIndex + 2] ? "bet-option-active" : ""}`}>
+												<Typography variant="body2" style={{ fontSize: '12px', fontWeight: 'bold' }} >{row.totals_point}  </Typography>
+												<Typography variant="body2" style={activeArray[3 * tableIndex + 2] ? { fontSize: '12px', fontWeight: 'bold' } : { fontSize: '12px', color: '#2c90ff', fontWeight: 'bold' }}>{row.totals_price}</Typography>
+											</Box >
+										</Grid>
+									}
+									{
+										!row.totals_price &&
+										<Grid item xs={2}>
+											<Box className={`bet-option-disabled bet-option`}>
+												<Typography variant="body2" style={{ color: "white", fontWeight: 'bold', fontSize: '12px' }}></Typography>
+											</Box >
+										</Grid>
+									}
+
 								</Grid>
+							)
+						}
 
-								{
-									row.spread_point &&
-									<Grid item xs={2}>
-										<Box onClick={() => onOptionClick(3 * tableIndex)} className={`${'bet-option'} ${activeArray[3 * tableIndex] ? "bet-option-active" : ""}`}>
-											<Typography variant="body2" style={{ fontSize: '12px', fontWeight: 'bold' }} >{row.spread_point}  </Typography>
-											<Typography variant="body2" style={activeArray[3 * tableIndex] ? { fontSize: '12px', fontWeight: 'bold' } : { fontSize: '12px', color: '#2c90ff', fontWeight: 'bold' }}>{row.spread_price}</Typography>
-										</Box>
-									</Grid>
-								}
-								{
-									!row.spread_point &&
-									<Grid item xs={2}>
-										<Box className={`bet-option-disabled bet-option`}>
-											<Typography variant="body2" style={{ color: "white", fontWeight: 'bold', fontSize: '12px' }}></Typography>
-										</Box>
-									</Grid>
-								}
-
-								{
-									row.moneyline &&
-									<Grid item xs={2}>
-										<Box onClick={() => onOptionClick(3 * tableIndex + 1)} className={`${'bet-option'} ${activeArray[3 * tableIndex + 1] ? "bet-option-active" : ""}`}>
-											<Typography variant="body2" style={activeArray[3 * tableIndex + 1] ? { fontWeight: 'bold', fontSize: '12px' } : { fontSize: '12px', color: '#2c90ff', fontWeight: 'bold' }}>{row.moneyline} </Typography>
-										</Box>
-									</Grid>
-								}
-								{
-									!row.moneyline &&
-									<Grid item xs={2}>
-										<Box className={`bet-option-disabled bet-option`}>
-											<Typography variant="body2" style={{ color: "white", fontWeight: 'bold', fontSize: '12px' }}></Typography>
-										</Box>
-									</Grid>
-								}
+					</TableBody>
+				</Table>
 
 
-								{
-									row.totals_price &&
-									<Grid item xs={2}>
-										<Box onClick={() => onOptionClick(3 * tableIndex + 2)} className={`${'bet-option'} ${activeArray[3 * tableIndex + 2] ? "bet-option-active" : ""}`}>
-											<Typography variant="body2" style={{ fontSize: '12px', fontWeight: 'bold' }} >{row.totals_point}  </Typography>
-											<Typography variant="body2" style={activeArray[3 * tableIndex + 2] ? { fontSize: '12px', fontWeight: 'bold' } : { fontSize: '12px', color: '#2c90ff', fontWeight: 'bold' }}>{row.totals_price}</Typography>
-										</Box >
-									</Grid>
-								}
-								{
-									!row.totals_price &&
-									<Grid item xs={2}>
-										<Box className={`bet-option-disabled bet-option`}>
-											<Typography variant="body2" style={{ color: "white", fontWeight: 'bold', fontSize: '12px' }}></Typography>
-										</Box >
-									</Grid>
-								}
-
-							</Grid>
-						)
-					}
-
-				</TableBody>
-			</Table>
-
-
-		</Grid >
+			</Grid >
+		</Box>
 	)
 
 }

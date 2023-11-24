@@ -104,13 +104,11 @@ function Games({ pathname }) {
 
 			<Grid container >
 				<Grid item xs={12}>
-					<Box sx={{ height: '2em' }}></Box>
+					<Box sx={{ height: '1em' }}></Box>
 				</Grid>
+
 				<Grid item xs={12} md={8} className="betting">
-
-
 					<Grid container className="games-header grid-games-header"  >
-
 						{
 							(games.length == 0 && !loading) &&
 							<Box>
@@ -126,15 +124,10 @@ function Games({ pathname }) {
 							<Type2GamesHeader leagueName={leagueParsed} sport={games[0].sport} />
 						}
 
-
 						<Grid container>
 							{games.map(game => <GameCard addBet={addBet} bets={bets} game={game} key={game.id} removeBet={removeBet} />)}
 						</Grid>
-
 					</Grid>
-
-
-
 				</Grid>
 
 				<Grid item xs={12} sm={4} className="bet-slip-container">

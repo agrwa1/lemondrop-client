@@ -1,0 +1,57 @@
+.pick-card {
+	border: 1px solid #333;
+	border-radius: 10px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 1em;
+}
+
+.pick-card-info {
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+	padding: 2em 1em;
+}
+
+.player-picture {
+	max-width: 10em;
+}
+
+.pick-card-point-display {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.picks-markets-option-selector {
+	/* padding: 0.5em 1em;
+	background-color: #2c90ff;
+	border-radius: 10px;
+	color: white;
+	font-weight: bold; */
+
+	margin: 0 1em 0 0 ;
+	background-color: #2C90FF;
+	padding: 0.25em 1em;
+	border-radius: 10px;
+	/* display: none; */
+}
+
+
+
+.picks-selector-container {
+	display: flex;
+	max-width: 100%;
+	justify-content: start;
+	overflow: scroll;
+	margin-bottom: 1em;
+
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+}
+
+.picks-selector-container::-webkit-scrollbar {
+	display: none;
+}

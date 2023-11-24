@@ -130,16 +130,19 @@ const Bet = ({ bet }) => {
 	return (
 		<Box className="bets-section-bet" key={`${bet.away_team} ${bet.home_team} ${bet.bet_point} ${bet.bet_price}`} >
 			{
-				bet.bet_status == "" &&
-				// <CheckCircleIcon style={{ color: '#138001', marginTop: '.2em' }} />
-				<CancelIcon style={{ color: '#cc0000', marginTop: '.2em' }} />
-			}
-
-
-			{
 
 				bet.bet_status == "Pending" &&
 				<PendingIcon style={{ color: '#F7CB73', marginTop: '.2em' }} />
+			}
+			{
+
+				bet.bet_status == "Won" &&
+				<CheckCircleIcon style={{ color: '#138001', marginTop: '.2em' }} />
+			}
+			{
+
+				bet.bet_status == "Lost" &&
+				<CancelIcon style={{ color: '#cc0000', marginTop: '.2em' }} />
 			}
 
 

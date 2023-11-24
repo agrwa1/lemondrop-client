@@ -18,6 +18,7 @@ import { useNavigate, Navigate, Link, useLocation } from 'react-router-dom'
 import nbaLogo from '../nba-logo.png'
 // import "./styles.css"
 // import MenuIcon from '@mui/icons-material/Menu';
+import Footer from './Footer'
 import { useAuth } from '../App'
 import axios from 'axios'
 // import { Link } from 'react-router-dom'
@@ -124,6 +125,8 @@ export default function MiniDrawer({ children }) {
 			<Box className="mobile-main">
 				{children}
 			</Box>
+
+			<Footer />
 
 		</Box>
 

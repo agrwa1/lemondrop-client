@@ -11,6 +11,9 @@ import WheelPage from './wheel/WheelPage'
 import AllSportsPage from './sports/AllSportsPage'
 import SingleSportPage from './sports/SingleSportPage'
 import LandingPage from './landing/LandingPage'
+import PicksPage from './picks/PicksPage'
+import TermsServicesPage from './misc/TermsServicesPage'
+import PrivacyPolicyPage from './misc/PrivacyPolicyPage'
 
 import Error404 from './errors/Error404'
 
@@ -23,12 +26,15 @@ import { useNavigate, Navigate } from 'react-router-dom'
 import { getAuth } from './auth/authFunctions'
 
 import "./index.css"
+import './picks.css'
 import "./betslip.css"
 import "./dashboard.css"
 import "./gamecard2.css"
 import "./gamecard1.css"
 import "./sports-leagues.css"
 import "./landing.css"
+import "./terms.css"
+import './footer.css'
 
 import {
   BrowserRouter,
@@ -75,7 +81,7 @@ const theme = createTheme({
     background: {
       default: "#0A0A0A"
     }
-    // mode: 'dark',
+    // mode: 'dark', 
   }
 });
 
@@ -98,6 +104,12 @@ export default function App() {
             <Route path="/games/:league" element={
               <ProtectedRoute>
                 <GamePage pathname={window.location.pathname} />
+              </ProtectedRoute>
+            } />
+
+            <Route path="/picks/:league" element={
+              <ProtectedRoute>
+                <PicksPage pathname={window.location.pathname} />
               </ProtectedRoute>
             } />
 
@@ -142,6 +154,8 @@ export default function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/" element={<LandingPage />} />
+            <Route path="/terms" element={<TermsServicesPage />} />
+            <Route path="/privacy" element={<PrivacyPolicyPage />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>

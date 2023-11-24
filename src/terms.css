@@ -1,0 +1,21 @@
+.terms-container {
+	width: 100%;
+	max-width: 1740px;
+	padding: 1em 8em;
+	line-height: 4em;
+	box-sizing: border-box;
+
+	/* background-color: #0a0a0a; */
+
+}
+
+.tos-header {
+	margin: 2em 0;
+}
+
+@media only screen and (max-width: 900px) {
+	.terms-container {
+		padding: 1em 3em;
+	}	
+}
+

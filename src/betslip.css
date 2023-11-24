@@ -7,13 +7,16 @@
 }
 
 .betslip-option {
-	margin: 0.5em 0;
+	margin: 1em 0;
 	display: flex;
-	justify-content: space-between;
+	/* justify-content: space-between; */
 }
 
 .betslip-option-container {
-	margin-left: 0.5em;
+	margin-left: 1em;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
 }
 
 .betslip-option-header{
@@ -56,10 +59,36 @@
 	overflow: hidden;
 }
 
+.bet-slip-header-tabs {
+	border-bottom: 0.5px solid #555;
+	display: flex;
+	flex-direction: space-between;
+	width: 100%;
+}
+
+.tab-container {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.tab-container-active {
+	border-bottom: 2px solid #2c90ff;
+}
+
+.header-tab {
+	/* border-bottom: 1px solid red; */
+	padding-top: 1em;
+	padding-bottom: 0.2em;
+	font-weight: bold;
+}
+
 .bet-slip-header {
 	display: flex;
 	justify-content: space-between;
-	align-items: center;
+	/* align-items: center; */
+	flex-direction: column;
 	margin-bottom: 0.5em;
 	background-color: #222;
 	padding: 1em;
@@ -128,6 +157,21 @@
 	height: 10em;
 	display: flex;
 	justify-content: center;
+	align-items: center;
+}
+
+.parlay-options {
+	display:flex;
+	flex-direction: column;
+	align-items: flex-end;
+	/* padding-left: 1em; */
+	/* border: 1px solid white; */
+}
+
+.parlay-odds-display {
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
 	align-items: center;
 }
 
@@ -213,10 +257,10 @@
 .close-icon-container {
 	display: flex;
 	justify-content: space-between;
-	border-bottom: 1px solid #333;
+	border-bottom: 1px solid #222;
 	align-items: center;
 	padding: 1em 0;
-	margin-bottom: 1em;
+	/* margin-bottom: 1em; */
 }
 
 
@@ -229,18 +273,4 @@
 	.bet-slip-mobile {
 		display: flex;
 	}
-}
-
-.parlay-options {
-	display:flex;
-	flex-direction: column;
-	align-items: flex-end;
-	padding: 0 1em;
-}
-
-.parlay-odds-display {
-	display: flex;
-	width: 100%;
-	justify-content: space-between;
-	align-items: center;
 }

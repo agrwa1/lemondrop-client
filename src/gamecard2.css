@@ -37,10 +37,10 @@
 
 
 .bet-table-2 {
-	/* padding-bottom: 4em; */
-	/* padding: 2em 1em 1em 0; */
-	padding: 0.5em 1em;
-	/* margin: 1em 0; */
+	border-radius: 5px;
+	background-color: #131313;
+	padding: 1em;
+	margin: 1em 0;
 }
 
 .gc2-card-body-container {
