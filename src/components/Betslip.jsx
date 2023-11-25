@@ -69,10 +69,10 @@ const Betslip = ({ bets, setBets, removeBet, setSuccess, setFailure }) => {
 	}
 
 	const submitBets = () => {
-		const url = "https://lemondrop-api.onrender.com/api/bets/bet"
-		// const url = "http://localhost:8080/api/bets/bet"
-		const parlayUrl = "https://lemondrop-api.onrender.com/api/bets/bet"
-		// const parlayUrl = "http://localhost:8080/api/bets/bet"
+		// const url = "https://lemondrop-api.onrender.com/api/bets/bet"
+		const url = "http://localhost:8080/api/bets/bet"
+		// const parlayUrl = "https://lemondrop-api.onrender.com/api/bets/bet"
+		const parlayUrl = "http://localhost:8080/api/bets/bet"
 
 		if (bets.length >= 2 && isParlay) {
 			submitBetsParlay(parlayUrl)
@@ -149,9 +149,21 @@ const Betslip = ({ bets, setBets, removeBet, setSuccess, setFailure }) => {
 			}
 		})
 
+		var date = new Date();
+		var now_utc = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(),
+			date.getUTCDate(), date.getUTCHours(),
+			date.getUTCMinutes(), date.getUTCSeconds());
+
+		const singleBet = {
+			user_id: user.user_id,
+			user_email: user.email,
+			bets: [],
+			is_parlay: false,
+			bet_placed_time: new Date(now_utc),
+		}
+
 		for (let i = 0; i < bets.length; i++) {
 			const bet = bets[i]
-			console.log(bet)
 			var date = new Date();
 			var now_utc = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(),
 				date.getUTCDate(), date.getUTCHours(),
@@ -175,13 +187,16 @@ const Betslip = ({ bets, setBets, removeBet, setSuccess, setFailure }) => {
 
 				bet_placed_time: new Date(now_utc),
 			}
-			axios.post(url, b).then(() => {
-				console.log(b)
-				console.log("bet placed")
-				setSuccess(true)
-				deleteAllBets()
-			})
+
+			singleBet.bets.push(b)
 		}
+
+		axios.post(url, singleBet).then(() => {
+			console.log(singleBet)
+			console.log("bet placed")
+			setSuccess(true)
+			deleteAllBets()
+		})
 	}
 
 	const handleMobileDeleteAll = () => {

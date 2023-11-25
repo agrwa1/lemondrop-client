@@ -17,7 +17,11 @@ import BetsSection from './BetsSection'
 import moment from 'moment'
 
 const Dashboard = () => {
-	const { user } = useAuth()
+	const { user, update } = useAuth()
+
+	// useEffect(() => {
+	// 	update()
+	// }, [])
 
 	return (
 		<div>
@@ -27,32 +31,32 @@ const Dashboard = () => {
 
 			<Grid container spacing={5} >
 
-				<Grid item xs={6} sm={6} lg={3}>
-					<Box sx={{ border: "1px solid black", padding: '2em', borderRadius: '10px' }}>
+				<Grid item xs={12} sm={6} lg={3}>
+					<Box sx={{ padding: '2em', borderRadius: '10px' }}>
 						<Typography variant="h6" sx={{ color: 'gray' }} >Balance</Typography>
 						<Box sx={{ marginBottom: 1 }} />
-						<Typography variant="h2">${user.current_balance}</Typography>
+						<Typography variant="h2" sx={{ fontSize: "54px" }} >${parseFloat(user.current_balance).toFixed(2)}</Typography>
 					</Box>
 				</Grid>
-				<Grid item xs={6} sm={6} lg={3}>
-					<Box sx={{ border: "1px solid black", padding: '2em', borderRadius: '10px' }}>
+				<Grid item xs={12} sm={6} lg={3}>
+					<Box sx={{ padding: '2em', borderRadius: '10px' }}>
 						<Typography variant="h6" sx={{ color: 'gray' }} >Pending</Typography>
 						<Box sx={{ marginBottom: 1 }} />
-						<Typography variant="h2">${user.current_pending} </Typography>
+						<Typography variant="h2" sx={{ fontSize: "54px" }}>${parseFloat(user.current_pending).toFixed(2)} </Typography>
 					</Box>
 				</Grid>
-				<Grid item xs={6} sm={6} lg={3}>
-					<Box sx={{ border: "1px solid black", padding: '2em', borderRadius: '10px' }}>
+				<Grid item xs={12} sm={6} lg={3}>
+					<Box sx={{ padding: '2em', borderRadius: '10px' }}>
 						<Typography variant="h6" sx={{ color: 'gray' }} >Free Play</Typography>
 						<Box sx={{ marginBottom: 1 }} />
-						<Typography variant="h2">${user.current_free_play} </Typography>
+						<Typography variant="h2" sx={{ fontSize: "54px" }}>${parseFloat(user.current_free_play).toFixed(2)} </Typography>
 					</Box>
 				</Grid>
-				<Grid item xs={6} sm={6} lg={3}>
-					<Box sx={{ border: "1px solid black", padding: '2em', borderRadius: '10px' }}>
+				<Grid item xs={12} sm={6} lg={3}>
+					<Box sx={{ padding: '2em', borderRadius: '10px' }}>
 						<Typography variant="h6" sx={{ color: 'gray' }} >Profit</Typography>
 						<Box sx={{ marginBottom: 1 }} />
-						<Typography variant="h2">${user.total_profit} </Typography>
+						<Typography variant="h2" sx={{ fontSize: "54px" }}>${parseFloat(user.total_profit).toFixed(2)} </Typography>
 					</Box>
 				</Grid>
 
@@ -93,7 +97,7 @@ const FundsSection = ({ user }) => {
 	}
 
 	return (
-		<Box sx={{ display: 'flex', width: '100%', marginTop: "1em" }} >
+		<Box sx={{ display: 'flex', width: '100%', margin: "1em 0" }} >
 			<Grid container spacing={2}>
 				<Grid item xs={12} sm={6}>
 					<form action={`https://lemondrop-api.onrender.com/api/payments/checkout/${user.user_id}`} method="post" style={{ width: '100%' }} >

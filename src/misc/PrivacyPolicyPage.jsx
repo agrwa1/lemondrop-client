@@ -11,7 +11,7 @@ const PrivacyPolicyPage = () => {
 			<nav >
 				<Link to="/" style={{ textDecoration: 'none' }}>
 					<Box sx={{ display: 'flex', flexDirection: 'column', textDecoration: "none" }}>
-						<Typography variant="h6" sx={{ color: '#5b40f6', fontFamily: "lobster", fontSize: '36px' }}>lemondrop</Typography>
+						<Typography variant="h6" sx={{ color: '#2c90ff', fontFamily: "lobster", fontSize: '36px' }}>lemondrop</Typography>
 						<Typography variant="h6" sx={{ fontSize: '20px', color: 'black' }}>SPORTSBOOK</Typography>
 					</Box>
 				</Link>
