@@ -69,9 +69,10 @@ const Betslip = ({ bets, setBets, removeBet, setSuccess, setFailure }) => {
 	}
 
 	const submitBets = () => {
-		// const url = "https://lemondrop-api.onrender.com/api/bets/bet"
-		const url = "http://localhost:8080/api/bets/bet"
-		const parlayUrl = "http://localhost:8080/api/bets/bet"
+		const url = "https://lemondrop-api.onrender.com/api/bets/bet"
+		// const url = "http://localhost:8080/api/bets/bet"
+		const parlayUrl = "https://lemondrop-api.onrender.com/api/bets/bet"
+		// const parlayUrl = "http://localhost:8080/api/bets/bet"
 
 		if (bets.length >= 2 && isParlay) {
 			submitBetsParlay(parlayUrl)
@@ -87,6 +88,11 @@ const Betslip = ({ bets, setBets, removeBet, setSuccess, setFailure }) => {
 			setFailure(true)
 		}
 
+		var date = new Date();
+		var now_utc = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(),
+			date.getUTCDate(), date.getUTCHours(),
+			date.getUTCMinutes(), date.getUTCSeconds());
+
 		const parlay = {
 			is_parlay: true,
 
@@ -94,6 +100,9 @@ const Betslip = ({ bets, setBets, removeBet, setSuccess, setFailure }) => {
 			user_email: user.email,
 
 			bets: [],
+			bet_placed_time: new Date(now_utc),
+			bet_price: parlayOdds,
+			bet_amount: String(parlayWagerAmt)
 		}
 
 		parlay.bets = bets.map(bet => {

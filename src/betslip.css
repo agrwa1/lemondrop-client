@@ -74,7 +74,7 @@
 }
 
 .tab-container-active {
-	border-bottom: 2px solid #2c90ff;
+	border-bottom: 2px solid #5b40f6;
 }
 
 .header-tab {
@@ -112,7 +112,7 @@
 	height: 1em;
 	border-radius: 50%;
 
-	background-color: #2c90ff;
+	background-color: #5b40f6;
 	color: black;
 	font-weight: bold;
 
@@ -188,7 +188,7 @@
 	padding: 1em;
 	box-sizing: border-box;
 	border-radius: 10px;
-	background-color: #2c90ff;
+	background-color: #5b40f6;
 }
 
 /* .mobile-bet-slip-option-container {

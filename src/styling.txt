@@ -1,0 +1,2 @@
+original: #2c90ff
+deep purple: #5b40f6

@@ -1,5 +1,5 @@
 .dashboard-bets-section {
-	padding: 1em;
+	/* padding: 1em; */
 
 	/* border: 1px solid white; */
 	border-radius: 10px;
@@ -10,6 +10,12 @@
 	padding: 1em;
 	width: 100%;
 	align-items: start;
+
+	/* border-bottom: 1px solid #222; */
+
+	/* margin: 2em 0; */
+	margin-bottom: 2em;
+	border-radius: 5px;
 }
 
 .bets-section-bet-header {
@@ -17,9 +23,100 @@
 	justify-content: space-between; 
 	/* align-items: center; */
 	width: 100%;
-	margin: 0 2em;
+	margin: 0 1em;
 	flex-direction: column;
 }
+
+
+.bets-bets-name-container {
+	display: flex;
+	flex-direction: column;
+	overflow: none;
+	width: 100%;
+}
+
+.bets-bet-price-container {
+	display: flex;
+	justify-content: space-between;
+}
+
+.bets-bet-game-container {
+	margin-top: 1em;
+}
+
+.parlay-container {
+	padding: 1em;
+	padding-right: 0;
+	border-radius: 5px;
+	display: flex;
+	width: 100%;
+	align-items: start;
+	background-color: #121212;
+	/* margin: 2em 0; */
+	margin-bottom: 2em;
+
+}
+
+.bets-parlay-inner-container {
+	width: 100%;
+	margin: 0 1em;
+	/* margin-left: 2em; */
+}
+
+
+.bets-parlay-header {
+	display: flex;
+	justify-content: space-between;
+}
+
+.bets-parlay-odds-dd {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.profile-form-btn {
+	width: 100%;
+	padding: 1em;
+	
+	background-color: #5b40f6;
+	color: white;
+	border: none;
+	font-family: Inter;
+	font-weight: bold;
+	border-radius: 5px;
+	font-size: 1em;
+	/* margin: 1em; */
+	box-sizing: border-box;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .bets-section-bet-header-top, .bets-section-bet-header-bottom {
 	width: 100%;
@@ -43,4 +140,13 @@
 
 @media only screen and (max-width: 500px) {
 
+}
+
+.bets-section-subbet {
+	display: flex;
+	width: 100%;
+	align-items: start;
+	padding: 1em 0;
+
+	/* border-bottom: 1px solid #222; */
 }

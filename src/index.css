@@ -64,7 +64,7 @@
 }
 
 .login-btn {
-	background-color: #2c90ff;
+	background-color: #5b40f6;
 }
 
 .signup-btn {
@@ -113,7 +113,7 @@
 }
 
 .sidebar-link-active {
-	background-color: #2c90ff;
+	background-color: #5b40f6;
 }
 
 .all-sport-header-container {
@@ -139,7 +139,7 @@
 
 .sport-link-container-mobile {
 	margin: 0 1em 0 0 ;
-	background-color: #2C90FF;
+	background-color: #5b40f6;
 	padding: 0.25em 1em;
 	border-radius: 10px;
 	display: none;
@@ -285,7 +285,7 @@
 }
 
 .market-option-text-active {
-	color: #2c90ff;
+	color: #5b40f6;
 } 
 
 .bets-main {
@@ -344,10 +344,10 @@
 }
 
 .bets-outcome-option-active {
-	background-color: #2c90ff;
+	background-color: #5b40f6;
 }
 
 .bets-outcome-option-active:hover {
-	background-color: #2c90ff;
+	background-color: #5b40f6;
 }
 

@@ -10,12 +10,14 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import PendingIcon from '@mui/icons-material/Pending';
 import { CheckCircleOutline } from '@mui/icons-material'
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import BetsSection from './BetsSection'
 
 import moment from 'moment'
 
 const Dashboard = () => {
 	const { user } = useAuth()
-	console.log("user:", user)
 
 	return (
 		<div>
@@ -56,14 +58,18 @@ const Dashboard = () => {
 
 			</Grid>
 
-			<Box sx={{ marginBottom: '3em' }} />
+			{/* <Box sx={{ marginBottom: '3em' }} /> */}
 
 			<Grid container spacing={3}>
+
+				<Grid item xs={12} md={12} lg={12}>
+					<FundsSection user={user} />
+				</Grid>
+
 
 				<Grid item xs={12} md={12} lg={8} xl={8}>
 					<BetsSection />
 				</Grid>
-
 				<Grid item xs={12} md={12} lg={4} xl={4}>
 					<ProfileSection />
 				</Grid>
@@ -74,107 +80,46 @@ const Dashboard = () => {
 	)
 }
 
-/*
-away_team
-bet_amount
-bet_cashed
-bet_category
-bet_on_team
-bet_point
-bet_price
-bet_status
-bet_type
-bet_verified
-game_start_time
-home_team
-*/
+const FundsSection = ({ user }) => {
+	const [withdrawConfirmation, setWithdrawConfirmation] = useState(false)
 
-const BetsSection = () => {
-	const { user } = useAuth()
-	const [bets, setBets] = useState([])
+	const handleWithdrawFunds = () => {
+		if (!withdrawConfirmation) {
+			setWithdrawConfirmation(true)
+			return
+		}
 
-	useEffect(() => {
-		const url = `https://lemondrop-api.onrender.com/api/bets/bet/user/${user.user_id}`
-		// const url = `http://localhost:8080/api/bets/bet/user/${user.user_id}`
-		axios.get(url).then(res => {
-			setBets(res.data.slice(0, 10))
-		})
 
-	}, [user])
-
-	return (
-		<Box className="dashboard-bets-section">
-			<Typography variant="h3" className={"recent-bets-header"} >Recent Bets</Typography>
-			{
-				bets.map(bet => <Bet bet={bet} />)
-			}
-		</Box>
-	)
-}
-
-const Bet = ({ bet }) => {
-	const toTitleCase = str => {
-		// return str.toLowerCase().split(' ').map(function (word) {
-		// 	return word.charAt(0).toUpperCase().concat(word.substr(1));
-		// }).join(' ');
-
-		return str.toUpperCase()
 	}
-	const price = bet.bet_price.charAt(0) == "+" ? parseFloat(bet.bet_price.substring(1)) : parseFloat(-1 * bet.bet_price.substring(1))
-	const decimalOdds = price > 0 ? 1 + (price / 100) : 1 - (100 / price)
-	const toWinAmount = (Math.floor(100 * parseFloat(bet.bet_amount) * decimalOdds) / 100).toFixed(2)
-	// const toWinAmount = parseFloat(bet.bet_amount)
-	const startTime = moment(bet.game_start_date).calendar()
-	console.log(bet.game_start_time)
 
 	return (
-		<Box className="bets-section-bet" key={`${bet.away_team} ${bet.home_team} ${bet.bet_point} ${bet.bet_price}`} >
-			{
+		<Box sx={{ display: 'flex', width: '100%', marginTop: "1em" }} >
+			<Grid container spacing={2}>
+				<Grid item xs={12} sm={6}>
+					<form action={`https://lemondrop-api.onrender.com/api/payments/checkout/${user.user_id}`} method="post" style={{ width: '100%' }} >
+						<button type="submit" className="profile-form-btn">
+							Add Funds
+						</button>
+					</form>
+				</Grid>
 
-				bet.bet_status == "Pending" &&
-				<PendingIcon style={{ color: '#F7CB73', marginTop: '.2em' }} />
-			}
-			{
-
-				bet.bet_status == "Won" &&
-				<CheckCircleIcon style={{ color: '#138001', marginTop: '.2em' }} />
-			}
-			{
-
-				bet.bet_status == "Lost" &&
-				<CancelIcon style={{ color: '#cc0000', marginTop: '.2em' }} />
-			}
-
-
-
-			<Box className={"bets-section-bet-header"}>
-				<Box className={"bets-section-bet-header-top"}>
-					<Typography variant="body1" style={{ fontWeight: 'bold', fontSize: '18px', color: "#2c90ff" }} >{toTitleCase(bet.bet_on_team)}</Typography>
-					<Typography variant="body1" style={{ fontSize: '16px', fontWeight: 'bold', color: "#2c90ff" }}> {bet.bet_type.toUpperCase()}</Typography>
-				</Box>
-
-				<Box className={"bets-section-bet-header-bottom"}>
-					<Box sx={{ display: 'flex', alignItems: 'center' }}>
-						<Typography variant="body1" style={{ fontSize: '16px', color: '#aaa' }} >Wager:&nbsp; </Typography>
-						<Typography variant="body1" style={{ fontWeight: 'bold', color: '#eee', fontSize: '16px' }} > ${parseFloat(bet.bet_amount).toFixed(2)}</Typography>
-					</Box>
-
-					<Box sx={{ display: 'flex', alignItems: 'center' }}>
-						<Typography variant="body1" style={{ fontSize: '16px', color: '#aaa' }} >To Win:&nbsp; </Typography>
-						<Typography variant="body1" style={{ fontWeight: 'bold', color: '#eee', fontSize: '16px' }} > ${toWinAmount}</Typography>
-					</Box>
-				</Box>
-
-				<Box className={"bets-section-bet-header-bottom"}>
-					<Box sx={{ display: 'flex', alignItems: 'center' }}>
-					</Box>
-				</Box>
-
-
-			</Box>
+				<Grid item xs={12} sm={6}>
+					<button onClick={handleWithdrawFunds} className="profile-form-btn">
+						{
+							!withdrawConfirmation &&
+							"Withdraw Funds"
+						}
+						{
+							withdrawConfirmation &&
+							"All Funds Will Be Withdrawn"
+						}
+					</button>
+				</Grid>
+			</Grid>
 		</Box>
 	)
 }
+
 
 const ProfileSection = () => {
 	const { signOut, user } = useAuth()
