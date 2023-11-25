@@ -14,6 +14,7 @@ import LandingPage from './landing/LandingPage'
 import PicksPage from './picks/PicksPage'
 import TermsServicesPage from './misc/TermsServicesPage'
 import PrivacyPolicyPage from './misc/PrivacyPolicyPage'
+import CheckoutPage from './checkout/CheckoutPage'
 
 import Error404 from './errors/Error404'
 
@@ -129,6 +130,12 @@ export default function App() {
             <Route path="/profile" element={
               <ProtectedRoute>
                 <ProfilePage />
+              </ProtectedRoute>
+            } />
+
+            <Route path="/checkout" element={
+              <ProtectedRoute>
+                <CheckoutPage />
               </ProtectedRoute>
             } />
 

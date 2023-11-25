@@ -27,6 +27,7 @@ const Dashboard = () => {
 		<div>
 			{/* <Box>
 				<Header title="My Dashboard" subtitle="This is where you see everything at a glance" />
+				<Typography variant="h1">My Dashboard</Typography>
 			</Box> */}
 
 			<Grid container spacing={5} >

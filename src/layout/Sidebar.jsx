@@ -75,7 +75,7 @@ export default function MiniDrawer({ children }) {
 					<Link to="/dashboard" className="link-reset">
 						<Box className="nav-right">
 							<Box className="nav-link nav-link-profile">
-								<Typography className="nav-link" variant='body1'>Dashboard</Typography>
+								<Typography className="nav-link" variant='body1' sx={{ fontWeight: "bold" }} >Dashboard</Typography>
 							</Box>
 						</Box>
 					</Link>
