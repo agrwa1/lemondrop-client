@@ -14,6 +14,11 @@ const LandingPage = () => {
 	const { user } = useAuth()
 	console.log(user)
 
+	let linkEnd = "/signup"
+	if (user.email) {
+		linkEnd = "/dashboard"
+	}
+
 	return (
 		<main className="landing-main">
 
@@ -25,7 +30,7 @@ const LandingPage = () => {
 				</Box>
 				{
 					user &&
-					<Link to="/dashboard" className="link-reset">
+					<Link to={linkEnd} className="link-reset">
 						<Box sx={{ display: 'flex' }}>
 							<button className={"nav-primary-cta"}>Dashboard</button>
 						</Box>
@@ -33,7 +38,7 @@ const LandingPage = () => {
 				}
 				{
 					!user &&
-					<Link to="/signup" className="link-reset">
+					<Link to={linkEnd} className="link-reset">
 						<Box sx={{ display: 'flex' }}>
 							<button className={"nav-primary-cta"}>Sign Up Now</button>
 						</Box>
@@ -64,7 +69,7 @@ const LandingPage = () => {
 						<h3 className="hero-main-topper">The Next Generation Sportsbook</h3>
 						<h1 className="hero-main-title">BET WITH LEMONDROP.</h1>
 						<h2 className="hero-main-subtitle">Join Lemondrop Today. Bet On Your Favorite Sports Teams and Watch Them Win. Click Below to Start.</h2>
-						<Link to="/signup" className="link-reset">
+						<Link to={linkEnd} className="link-reset">
 							<Box className="hero-ctas-container" >
 								<button className="hero-cta-1 hero-cta">Join Now</button>
 								<button className="hero-cta hero-cta-2" >Get Started</button>
