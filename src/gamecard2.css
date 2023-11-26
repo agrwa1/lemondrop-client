@@ -16,7 +16,8 @@
 }
 
 .bet-option-2-active {
-	background-color: #5b40f6; 
+	color: black;
+	background-color: #ffff00; 
 }
 
 @media only screen and (max-width: 768px) {
