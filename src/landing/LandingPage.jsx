@@ -1,15 +1,21 @@
 import React from 'react'
-import { Typography, Box, CssBaseline } from '@mui/material'
+import { Typography, Box, CssBaseline, Button } from '@mui/material'
 import Layout from '../layout'
 
 import MoneyHeroImg from './money-1.png'
+import HeroBg from './mahomes-throwing.jpeg'
+import ProLogos from './pro-logos.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom'
+import { useAuth } from '../App'
 
 const LandingPage = () => {
+	const { user } = useAuth()
+	console.log(user)
+
 	return (
-		<main>
+		<main className="landing-main">
 
 			<CssBaseline />
 			<nav>
@@ -17,28 +23,60 @@ const LandingPage = () => {
 					<Typography sx={{ fontFamily: "Lobster", fontSize: "32px" }} color="primary" variant="h3">lemondrop</Typography>
 					<Typography variant="h6" style={{ fontSize: "16px" }} >SPORTSBOOK</Typography>
 				</Box>
-				<Typography variant="h3" style={{ fontSize: "16px" }} > Sportsbook</Typography>
+				{
+					user &&
+					<Link to="/dashboard" className="link-reset">
+						<Box sx={{ display: 'flex' }}>
+							<button className={"nav-primary-cta"}>Dashboard</button>
+						</Box>
+					</Link>
+				}
+				{
+					!user &&
+					<Link to="/signup" className="link-reset">
+						<Box sx={{ display: 'flex' }}>
+							<button className={"nav-primary-cta"}>Sign Up Now</button>
+						</Box>
+					</Link>
+				}
+
 			</nav>
 
-			<Box className="hero" >
-				<div className="sportsbook-hero">
-					<div className="hero-overlay"></div>
-					<div className="hero-content">
-						<Typography variant="h1">Lemondrop Sportsbook Coming Soon</Typography>
-						<p>Make Your Own Luck</p>
-						<div className="cta-buttons">
-							<Link to="/dashboard">
-								<button className="primary-cta">Get Started</button>
-							</Link>
+			<div className="firework"></div>
+			<div className="firework"></div>
+			<div className="firework"></div>
+			<div className="firework"></div>
+			<div className="firework"></div>
+			<div className="firework"></div>
+			<div className="firework"></div>
+			<div className="firework"></div>
+			<div className="firework"></div>
+			<div className="firework"></div>
+			<div className="firework"></div>
+			<div className="firework"></div>
+			<div className="firework"></div>
+			<div className="firework"></div>
 
-							<Link to="dashboard">
-								<button className="secondary-cta">
-									Explore <FontAwesomeIcon icon={faArrowRight} />
-								</button>
-							</Link>
-						</div>
-					</div>
-				</div>
+
+			<Box className="hero" >
+				<Box className="hero-left-container">
+					<Box className="hero-left">
+						<h3 className="hero-main-topper">The Next Generation Sportsbook</h3>
+						<h1 className="hero-main-title">BET WITH LEMONDROP.</h1>
+						<h2 className="hero-main-subtitle">Join Lemondrop Today. Bet On Your Favorite Sports Teams and Watch Them Win. Click Below to Start.</h2>
+						<Link to="/signup" className="link-reset">
+							<Box className="hero-ctas-container" >
+								<button className="hero-cta-1 hero-cta">Join Now</button>
+								<button className="hero-cta hero-cta-2" >Get Started</button>
+							</Box>
+						</Link>
+					</Box>
+
+				</Box>
+
+				<Box className="hero-right">
+					<img src={ProLogos} className="hero-graphic-right" ></img>
+				</Box>
 			</Box>
 
 		</main>

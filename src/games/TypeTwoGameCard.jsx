@@ -88,7 +88,7 @@ export default function GameCard({ bets, game, raw, addBet, removeBet }) {
 						(!raw && game.props) &&
 						<caption  >
 							<Box sx={{ display: 'flex', justifyContent: "space-between", width: '100%' }} >
-								<Link to={`/games/${game.league_id}/${game.id}`} style={{ fontWeight: 'bold', textDecoration: 'none', color: "#2c90ff", fontSize: '12px' }}  >More Wagers</Link>
+								<Link to={`/games/${game.league_id}/${game.id}`} style={{ fontWeight: 'bold', textDecoration: 'none', color: "#5b40f6", fontSize: '12px' }}  >More Wagers</Link>
 							</Box>
 						</caption>
 					}
@@ -107,21 +107,21 @@ export default function GameCard({ bets, game, raw, addBet, removeBet }) {
 							<Grid item xs={4}>
 								<Box className={activeArray[0] ? `bet-option-2 bet-option-2-active` : `bet-option-2`} onClick={() => onOptionClick(0)} >
 									<Typography variant="body2" style={activeArray[0] ? { color: '#fff', fontWeight: '800' } : { fontWeight: 'bold', color: "#a6a6a6", }} >{game.away_team_name.length > 10 && !game.away_team_name.includes(' ') ? `${game.away_team_name.substring(0, 9)}...` : game.away_team_name}</Typography>
-									<Typography variant="body2" style={activeArray[0] ? { fontWeight: 'bold', color: '#fff' } : { color: "#2c90ff", fontWeight: 'bold' }}>{game.away_moneyline}</Typography>
+									<Typography variant="body2" style={activeArray[0] ? { fontWeight: 'bold', color: '#fff' } : { color: "#5b40f6", fontWeight: 'bold' }}>{game.away_moneyline}</Typography>
 								</Box>
 							</Grid>
 
 							<Grid item xs={4}>
 								<Box className={activeArray[1] ? `bet-option-2 bet-option-2-active` : `bet-option-2`} onClick={() => onOptionClick(1)} >
 									<Typography variant="body2" style={activeArray[1] ? { color: '#fff', fontWeight: 'bold' } : { fontWeight: 'bold', color: "#a6a6a6" }} >Draw</Typography>
-									<Typography variant="body2" style={activeArray[1] ? { fontWeight: 'bold', color: '#fff' } : { color: "#2c90ff", fontWeight: 'bold' }}>{game.draw_moneyline}</Typography>
+									<Typography variant="body2" style={activeArray[1] ? { fontWeight: 'bold', color: '#fff' } : { color: "#5b40f6", fontWeight: 'bold' }}>{game.draw_moneyline}</Typography>
 								</Box>
 							</Grid>
 
 							<Grid item xs={4} >
 								<Box className={activeArray[2] ? `bet-option-2 bet-option-2-active` : `bet-option-2`} onClick={() => onOptionClick(2)} >
 									<Typography variant="body2" style={activeArray[2] ? { color: '#fff', fontWeight: '800' } : { fontWeight: 'bold', color: "#a6a6a6" }} >{game.home_team_name}</Typography>
-									<Typography variant="body2" style={activeArray[2] ? { fontWeight: 'bold', color: '#fff' } : { color: "#2c90ff", fontWeight: 'bold' }}>{game.home_moneyline}</Typography>
+									<Typography variant="body2" style={activeArray[2] ? { fontWeight: 'bold', color: '#fff' } : { color: "#5b40f6", fontWeight: 'bold' }}>{game.home_moneyline}</Typography>
 								</Box >
 							</Grid>
 

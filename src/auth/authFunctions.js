@@ -13,7 +13,7 @@ export const getAuth = () => {
 			},
 		};
 
-		console.log(jwt);
+		// console.log(jwt);
 
 		return axios
 			.post(

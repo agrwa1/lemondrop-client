@@ -196,6 +196,8 @@ const Betslip = ({ bets, setBets, removeBet, setSuccess, setFailure }) => {
 			console.log("bet placed")
 			setSuccess(true)
 			deleteAllBets()
+		}).catch(err => {
+			setFailure(true)
 		})
 	}
 

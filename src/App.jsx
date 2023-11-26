@@ -72,7 +72,7 @@ const theme = createTheme({
   },
   palette: {
     primary: {
-      main: "#2c90ff"
+      main: "#5b40f6"
     },
     secondary: {
       main: "#138001"

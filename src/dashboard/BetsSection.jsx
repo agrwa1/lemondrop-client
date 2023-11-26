@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import { Button, Typography, Box, Grid } from '@mui/material'
+import { Button, Typography, Box, Grid, CircularProgress } from '@mui/material'
 import { useAuth } from '../App'
 
 import Header from '../layout/Header'
@@ -18,17 +18,26 @@ import moment from 'moment'
 const BetsSection = () => {
 	const { user } = useAuth()
 	const [bets, setBets] = useState([])
+	const [loading, setLoading] = useState(false)
 
 	useEffect(() => {
+		setLoading(true)
 		const url = `https://lemondrop-api.onrender.com/api/bets/bet/user/${user.user_id}`
 		// const url = `http://localhost:8080/api/bets/bet/user/${user.user_id}`
 		axios.get(url).then(res => {
 			setBets(res.data.slice(0, 10))
+			setLoading(false)
 		})
 
 	}, [user])
 
-	return (
+	if (loading) {
+		return (
+			<Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+				<CircularProgress />
+			</Box>
+		)
+	} else return (
 		<Box className="dashboard-bets-section">
 			{/* <Typography variant="h3" className={"recent-bets-header"} >Recent Bets</Typography> */}
 			{
@@ -60,7 +69,7 @@ is_parlay
 const Parlay = ({ parlay }) => {
 	const [open, setOpen] = useState(false)
 
-	console.log(parlay)
+	// console.log(parlay)
 	const price = parlay.bet_price.charAt(0) == "+" ? parseFloat(parlay.bet_price.substring(1)) : parseFloat(-1 * parlay.bet_price.substring(1))
 	const decimalOdds = price > 0 ? 1 + (price / 100) : 1 - (100 / price)
 	const toWinAmount = (Math.floor(100 * parseFloat(parlay.bet_amount) * decimalOdds) / 100).toFixed(2)

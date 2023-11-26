@@ -159,7 +159,8 @@ export default function GameCard({ bets, game, raw, addBet, removeBet }) {
 
 									<Grid item xs={6}>
 										<Box className="bet-team-name">
-											<Typography color="primary" variant="body2" sx={{ fontWeight: 'bold', padding: '0 1em' }} >{row.name}</Typography>
+											<Typography variant="body2" sx={{ fontWeight: 'bold', padding: '0 1em', color: '#5b40f6' }} >{row.name}</Typography>
+											{/* <Typography variant="body2" sx={{ fontWeight: 'bold', padding: '0 1em', color: '#ffff00' }} >{row.name}</Typography> */}
 										</Box>
 									</Grid>
 
@@ -168,7 +169,8 @@ export default function GameCard({ bets, game, raw, addBet, removeBet }) {
 										<Grid item xs={2}>
 											<Box onClick={() => onOptionClick(3 * tableIndex)} className={`${'bet-option'} ${activeArray[3 * tableIndex] ? "bet-option-active" : ""}`}>
 												<Typography variant="body2" style={{ fontSize: '12px', fontWeight: 'bold' }} >{row.spread_point}  </Typography>
-												<Typography variant="body2" style={activeArray[3 * tableIndex] ? { fontSize: '12px', fontWeight: 'bold' } : { fontSize: '12px', color: '#2c90ff', fontWeight: 'bold' }}>{row.spread_price}</Typography>
+												{/* <Typography variant="body2" style={activeArray[3 * tableIndex] ? { fontSize: '12px', fontWeight: 'bold' } : { fontSize: '12px', color: '#5b40f6', fontWeight: 'bold' }}>{row.spread_price}</Typography> */}
+												<Typography variant="body2" style={activeArray[3 * tableIndex] ? { fontSize: '12px', fontWeight: 'bold' } : { fontSize: '12px', color: '#999', fontWeight: 'bold' }}>{row.spread_price}</Typography>
 											</Box>
 										</Grid>
 									}
@@ -185,7 +187,8 @@ export default function GameCard({ bets, game, raw, addBet, removeBet }) {
 										row.moneyline &&
 										<Grid item xs={2}>
 											<Box onClick={() => onOptionClick(3 * tableIndex + 1)} className={`${'bet-option'} ${activeArray[3 * tableIndex + 1] ? "bet-option-active" : ""}`}>
-												<Typography variant="body2" style={activeArray[3 * tableIndex + 1] ? { fontWeight: 'bold', fontSize: '12px' } : { fontSize: '12px', color: '#2c90ff', fontWeight: 'bold' }}>{row.moneyline} </Typography>
+												{/* <Typography variant="body2" style={activeArray[3 * tableIndex + 1] ? { fontWeight: 'bold', fontSize: '12px' } : { fontSize: '12px', color: '#5b40f6', fontWeight: 'bold' }}>{row.moneyline} </Typography> */}
+												<Typography variant="body2" style={activeArray[3 * tableIndex + 1] ? { fontWeight: 'bold', fontSize: '12px' } : { fontSize: '12px', color: '#fff', fontWeight: 'bold' }}>{row.moneyline} </Typography>
 											</Box>
 										</Grid>
 									}
@@ -204,7 +207,8 @@ export default function GameCard({ bets, game, raw, addBet, removeBet }) {
 										<Grid item xs={2}>
 											<Box onClick={() => onOptionClick(3 * tableIndex + 2)} className={`${'bet-option'} ${activeArray[3 * tableIndex + 2] ? "bet-option-active" : ""}`}>
 												<Typography variant="body2" style={{ fontSize: '12px', fontWeight: 'bold' }} >{row.totals_point}  </Typography>
-												<Typography variant="body2" style={activeArray[3 * tableIndex + 2] ? { fontSize: '12px', fontWeight: 'bold' } : { fontSize: '12px', color: '#2c90ff', fontWeight: 'bold' }}>{row.totals_price}</Typography>
+												{/* <Typography variant="body2" style={activeArray[3 * tableIndex + 2] ? { fontSize: '12px', fontWeight: 'bold' } : { fontSize: '12px', color: '#5b40f6', fontWeight: 'bold' }}>{row.totals_price}</Typography> */}
+												<Typography variant="body2" style={activeArray[3 * tableIndex + 2] ? { fontSize: '12px', fontWeight: 'bold' } : { fontSize: '12px', color: '#999', fontWeight: 'bold' }}>{row.totals_price}</Typography>
 											</Box >
 										</Grid>
 									}
