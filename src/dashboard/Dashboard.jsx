@@ -113,7 +113,8 @@ const FundsSection = ({ user }) => {
 			user_id: user.user_id,
 			name: user.first_name + ' ' + user.last_name
 		}
-		axios.post("http://localhost:8080/api/payments/payout", body).then(() => {
+		const url = "https://lemondrop-api.onrender.com/api/payments/payout"
+		axios.post(url, body).then(() => {
 			console.log("successfully sent post request")
 			setSnackbarMessage("Success! Check Your Email.")
 		}).catch(err => {
