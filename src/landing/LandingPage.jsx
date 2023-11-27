@@ -15,9 +15,13 @@ const LandingPage = () => {
 	console.log(user)
 
 	let linkEnd = "/signup"
-	if (user.email) {
-		linkEnd = "/dashboard"
-	}
+	// try {
+	// 	const e = user.email
+	// 	linkEnd = "/dashboard"
+	// } catch (e) {
+	// 	pass
+	// }
+
 
 	return (
 		<main className="landing-main">

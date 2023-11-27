@@ -47,8 +47,8 @@ const Signup = () => {
 		setError("")
 		setLoading(true)
 		axios.post(
-			// "https://lemondrop-api.onrender.com/api/users/signup",
-			"http://localhost:8080/api/users/signup",
+			"https://lemondrop-api.onrender.com/api/users/signup",
+			// "http://localhost:8080/api/users/signup",
 			{
 				"first_name": firstName,
 				"last_name": lastName,
