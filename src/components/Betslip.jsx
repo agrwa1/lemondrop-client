@@ -69,7 +69,6 @@ const Betslip = ({ bets, setBets, removeBet, setSuccess, setFailure }) => {
 	}
 
 	const submitBets = () => {
-		console.log('submitting')
 		const url = "https://lemondrop-api.onrender.com/api/bets/bet"
 		// const url = "http://localhost:8080/api/bets/bet"
 		const parlayUrl = "https://lemondrop-api.onrender.com/api/bets/bet"
@@ -85,7 +84,6 @@ const Betslip = ({ bets, setBets, removeBet, setSuccess, setFailure }) => {
 	}
 
 	const submitBetsParlay = (url) => {
-		console.log("submittiing parlay..")
 		if (!parlayWagerAmt) {
 			setFailure(true)
 		}

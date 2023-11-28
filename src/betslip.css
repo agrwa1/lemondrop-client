@@ -74,7 +74,8 @@
 }
 
 .tab-container-active {
-	border-bottom: 2px solid #5b40f6;
+	/* border-bottom: 2px solid #5b40f6; */
+	border-bottom: 2px solid #ffff00;
 }
 
 .header-tab {
@@ -112,8 +113,8 @@
 	height: 1em;
 	border-radius: 50%;
 
-	background-color: #5b40f6;
-	/* background-color: #ffff00; */
+	/* background-color: #5b40f6; */
+	background-color: #ffff00;
 	color: black;
 	font-weight: bold;
 

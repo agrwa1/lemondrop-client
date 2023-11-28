@@ -53,7 +53,7 @@ export default function MiniDrawer({ children }) {
 				<Box className="nav-left"  >
 					<Link to="/dashboard" className="link-reset" >
 						<Box className="word-logo" >
-							<Typography sx={{ fontFamily: "Lobster", fontSize: "32px", color: '#5b40f6' }} variant="h3">lemondrop</Typography>
+							<Typography sx={{ fontFamily: "Lobster", fontSize: "32px", color: '#ffff00' }} variant="h3">lemondrop</Typography>
 							<Typography variant="h6" style={{ fontSize: "16px" }} >SPORTSBOOK</Typography>
 						</Box>
 					</Link>

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { Box, Button, Typography, Grid, Table, TableBody } from '@mui/material'
 import { Link } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
-
+import LockIcon from '@mui/icons-material/Lock';
 import moment from 'moment'
 import axios from 'axios'
 
@@ -11,20 +11,8 @@ export default function GameCard({ bets, game, raw, addBet, removeBet }) {
 	// console.log(game)
 	const sportTitle = game.league
 	const startTime = moment(game.start_date).format("dddd h:mmA")
-	const [homeLogoUrl, setHomeLogoUrl] = useState("")
-	const [awayLogoUrl, setAwayLogoUrl] = useState("")
 	// internal active buttons logic
 	const [activeArray, setActiveArray] = useState([false, false, false, false, false, false])
-
-	// getting logos
-	// useEffect(() => {
-	// 	if (!sportTitle) return // bugs out if missing this line
-	// 	// console.log(game.id)
-	// 	const homeUrl = `https://lemondrop-api.onrender.com/api/assets/${sportTitle}/${game.home_team}`
-	// 	const awayUrl = `https://lemondrop-api.onrender.com/api/assets/${sportTitle}/${game.away_team}`
-	// 	axios.get(awayUrl).then(res => setAwayLogoUrl(res.data))
-	// 	axios.get(homeUrl).then(res => setHomeLogoUrl(res.data))
-	// }, [game])
 
 	useEffect(() => {
 		// set all to false and then iterate over if game id and away or bet type matches
@@ -131,6 +119,8 @@ export default function GameCard({ bets, game, raw, addBet, removeBet }) {
 			moneyline: game.away_moneyline,
 			totals_point: `O${game.over_point}`,
 			totals_price: game.over_price,
+			photo_url: game.away_logo_url,
+			record: game.away_record,
 		},
 		{
 			name: game.home_team_name,
@@ -139,9 +129,12 @@ export default function GameCard({ bets, game, raw, addBet, removeBet }) {
 			moneyline: game.home_moneyline,
 			totals_point: `U${game.under_point}`,
 			totals_price: game.under_price,
+			photo_url: game.home_logo_url,
+			record: game.home_record,
 		},
 	]
 
+	console.log(tableData)
 
 	return (
 		<Box className="bet-table">
@@ -159,8 +152,16 @@ export default function GameCard({ bets, game, raw, addBet, removeBet }) {
 
 									<Grid item xs={6}>
 										<Box className="bet-team-name">
-											<Typography variant="body2" sx={{ fontWeight: 'bold', padding: '0 1em', color: '#5b40f6' }} >{row.name}</Typography>
-											{/* <Typography variant="body2" sx={{ fontWeight: 'bold', padding: '0 1em', color: '#ffff00' }} >{row.name}</Typography> */}
+											{
+												row.photo_url &&
+												<img src={row.photo_url} width="28px" />
+											}
+											{/* <Typography variant="body2" sx={{ fontWeight: 'bold', padding: '0 0.5em', color: '#5b40f6' }} >{row.name}</Typography> */}
+											<Box sx={{ padding: '0 0.5em', display: 'flex', flexDirection: "column", justifyContent: 'center' }}>
+												<Typography variant="body2" sx={{ fontWeight: 'bold', color: '#ffffff' }} >{row.name}</Typography>
+												<Typography variant="body2" sx={{ color: '#aaa', fontSize: "12px" }} >{row.record}</Typography>
+
+											</Box>
 										</Box>
 									</Grid>
 
@@ -168,9 +169,9 @@ export default function GameCard({ bets, game, raw, addBet, removeBet }) {
 										row.spread_point &&
 										<Grid item xs={2}>
 											<Box onClick={() => onOptionClick(3 * tableIndex)} className={`${'bet-option'} ${activeArray[3 * tableIndex] ? "bet-option-active" : ""}`}>
-												<Typography variant="body2" style={{ fontSize: '12px', fontWeight: 'bold' }} >{row.spread_point}  </Typography>
-												{/* <Typography variant="body2" style={activeArray[3 * tableIndex] ? { fontSize: '12px', fontWeight: 'bold' } : { fontSize: '12px', color: '#5b40f6', fontWeight: 'bold' }}>{row.spread_price}</Typography> */}
-												<Typography variant="body2" style={activeArray[3 * tableIndex] ? { fontSize: '12px', fontWeight: 'bold' } : { fontSize: '12px', color: '#999', fontWeight: 'bold' }}>{row.spread_price}</Typography>
+												<Typography variant="body2" style={{ fontSize: '12px', fontWeight: 'bold', }} >{row.spread_point}  </Typography>
+												<Typography variant="body2" style={activeArray[3 * tableIndex] ? { fontSize: '12px', fontWeight: 'bold' } : { fontSize: '12px', color: '#5b40f6', fontWeight: 'bold' }}>{row.spread_price}</Typography>
+												{/* <Typography variant="body2" style={activeArray[3 * tableIndex] ? { fontSize: '12px', fontWeight: 'bold' } : { fontSize: '12px', color: '#999', fontWeight: 'bold' }}>{row.spread_price}</Typography> */}
 											</Box>
 										</Grid>
 									}
@@ -178,7 +179,7 @@ export default function GameCard({ bets, game, raw, addBet, removeBet }) {
 										!row.spread_point &&
 										<Grid item xs={2}>
 											<Box className={`bet-option-disabled bet-option`}>
-												<Typography variant="body2" style={{ color: "white", fontWeight: 'bold', fontSize: '12px' }}></Typography>
+												<LockIcon style={{ color: "#777" }} />
 											</Box>
 										</Grid>
 									}
@@ -196,7 +197,7 @@ export default function GameCard({ bets, game, raw, addBet, removeBet }) {
 										!row.moneyline &&
 										<Grid item xs={2}>
 											<Box className={`bet-option-disabled bet-option`}>
-												<Typography variant="body2" style={{ color: "white", fontWeight: 'bold', fontSize: '12px' }}></Typography>
+												<LockIcon style={{ color: "#777" }} />
 											</Box>
 										</Grid>
 									}
@@ -207,8 +208,8 @@ export default function GameCard({ bets, game, raw, addBet, removeBet }) {
 										<Grid item xs={2}>
 											<Box onClick={() => onOptionClick(3 * tableIndex + 2)} className={`${'bet-option'} ${activeArray[3 * tableIndex + 2] ? "bet-option-active" : ""}`}>
 												<Typography variant="body2" style={{ fontSize: '12px', fontWeight: 'bold' }} >{row.totals_point}  </Typography>
-												{/* <Typography variant="body2" style={activeArray[3 * tableIndex + 2] ? { fontSize: '12px', fontWeight: 'bold' } : { fontSize: '12px', color: '#5b40f6', fontWeight: 'bold' }}>{row.totals_price}</Typography> */}
-												<Typography variant="body2" style={activeArray[3 * tableIndex + 2] ? { fontSize: '12px', fontWeight: 'bold' } : { fontSize: '12px', color: '#999', fontWeight: 'bold' }}>{row.totals_price}</Typography>
+												<Typography variant="body2" style={activeArray[3 * tableIndex + 2] ? { fontSize: '12px', fontWeight: 'bold' } : { fontSize: '12px', color: '#5b40f6', fontWeight: 'bold' }}>{row.totals_price}</Typography>
+												{/* <Typography variant="body2" style={activeArray[3 * tableIndex + 2] ? { fontSize: '12px', fontWeight: 'bold' } : { fontSize: '12px', color: '#999', fontWeight: 'bold' }}>{row.totals_price}</Typography> */}
 											</Box >
 										</Grid>
 									}
@@ -216,7 +217,7 @@ export default function GameCard({ bets, game, raw, addBet, removeBet }) {
 										!row.totals_price &&
 										<Grid item xs={2}>
 											<Box className={`bet-option-disabled bet-option`}>
-												<Typography variant="body2" style={{ color: "white", fontWeight: 'bold', fontSize: '12px' }}></Typography>
+												<LockIcon style={{ color: "#777" }} />
 											</Box >
 										</Grid>
 									}
