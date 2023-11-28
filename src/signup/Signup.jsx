@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Header from '../layout/Header'
 import { Box, Typography, Grid, Button, TextField, Checkbox, Snackbar, CircularProgress, LinearProgress, FormControl } from '@mui/material'
@@ -8,7 +8,7 @@ import { useAuth } from '../App'
 import { CssBaseline } from '@mui/material'
 
 const Signup = () => {
-	const { update, setToken } = useAuth()
+	const { setToken, user, token, update } = useAuth()
 	const navigate = useNavigate()
 	const [firstName, setFirstName] = useState("")
 	const [lastName, setLastName] = useState("")
@@ -18,6 +18,12 @@ const Signup = () => {
 	const [agePassed, setAgePassed] = useState(false)
 	const [error, setError] = useState("")
 	const [loading, setLoading] = useState(false)
+
+	useEffect(() => {
+		if (token !== null && user != null) {
+			navigate("/dashboard")
+		}
+	}, [])
 
 	const verifyInfoAndSubmit = () => {
 		// verify user info
