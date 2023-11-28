@@ -69,10 +69,11 @@ const Betslip = ({ bets, setBets, removeBet, setSuccess, setFailure }) => {
 	}
 
 	const submitBets = () => {
-		// const url = "https://lemondrop-api.onrender.com/api/bets/bet"
-		const url = "http://localhost:8080/api/bets/bet"
-		// const parlayUrl = "https://lemondrop-api.onrender.com/api/bets/bet"
-		const parlayUrl = "http://localhost:8080/api/bets/bet"
+		console.log('submitting')
+		const url = "https://lemondrop-api.onrender.com/api/bets/bet"
+		// const url = "http://localhost:8080/api/bets/bet"
+		const parlayUrl = "https://lemondrop-api.onrender.com/api/bets/bet"
+		// const parlayUrl = "http://localhost:8080/api/bets/bet"
 
 		if (bets.length >= 2 && isParlay) {
 			submitBetsParlay(parlayUrl)
@@ -84,6 +85,7 @@ const Betslip = ({ bets, setBets, removeBet, setSuccess, setFailure }) => {
 	}
 
 	const submitBetsParlay = (url) => {
+		console.log("submittiing parlay..")
 		if (!parlayWagerAmt) {
 			setFailure(true)
 		}
@@ -135,6 +137,7 @@ const Betslip = ({ bets, setBets, removeBet, setSuccess, setFailure }) => {
 			setSuccess(true)
 			deleteAllBets()
 		}).catch(err => {
+			console.log(err)
 			setFailure(true)
 		})
 
@@ -389,7 +392,7 @@ const Betslip = ({ bets, setBets, removeBet, setSuccess, setFailure }) => {
 									<DeleteOutlinedIcon />
 									Delete All
 								</Button>
-								<Button fullWidth variant="contained" onClick={deleteAllBets} style={{ fontWeight: 'bold', display: 'flex', alignItems: "center" }} disabled={!((!isParlay) || (isParlay && bets.length >= 2 && parlayWagerAmt > 0))}  >
+								<Button fullWidth variant="contained" onClick={submitBets} style={{ fontWeight: 'bold', display: 'flex', alignItems: "center" }} disabled={!((!isParlay) || (isParlay && bets.length >= 2 && parlayWagerAmt > 0))}  >
 									Submit Bets
 								</Button>
 							</Box>

@@ -78,12 +78,9 @@ function Games({ pathname }) {
 
 	useEffect(() => {
 		// wont rerender because of empty dependency array
-		console.log(league)
-		console.log('refetching...')
 		setLoading(true)
 		const url = `https://lemondrop-api.onrender.com/api/games/league/${league}`
 		axios.get(url).then(res => {
-			console.log(res.data)
 			setGames(res.data)
 			setLoading(false)
 			setLeagueParsed(res.data[0].league)
