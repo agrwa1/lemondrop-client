@@ -1,4 +1,4 @@
-import React, { useState, useEffecet } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Typography, Box, CssBaseline, Button, TextField, Snackbar } from '@mui/material'
 import InputAdornment from '@mui/material/InputAdornment';
 import SendIcon from '@mui/icons-material/Send';
@@ -21,13 +21,16 @@ const LandingPage = () => {
 	const [success, setSuccess] = useState(false)
 	const [failure, setFailure] = useState(false)
 
+	const inputRef = useRef()
+
+
 	const handleEmailChange = e => {
 		const rawEmail = e.target.value
+		setEmail(rawEmail)
 		let valid = rawEmail.match(
 			/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 		);
 
-		setEmail(rawEmail)
 		setEmailValid(valid)
 	}
 
@@ -50,6 +53,8 @@ const LandingPage = () => {
 			setFailure(true)
 		}).finally(() => {
 			setSubmitting(false)
+			// inputRef.current.value = ""
+			setEmail("")
 		})
 	}
 
@@ -122,7 +127,7 @@ const LandingPage = () => {
 							</Box>
 						</Link> */}
 						<Box className="hero-email-list">
-							<TextField onChange={handleEmailChange} id="outlined-basic" sx={{ marginRight: '5em' }} label="Email" variant="outlined" className="hero-email-input" />
+							<TextField ref={inputRef} value={email} onChange={handleEmailChange} id="outlined-basic" sx={{ marginRight: '5em' }} label="Email" variant="outlined" className="hero-email-input" />
 							<button onClick={handleSubmit} className="hero-email-submit" disabled={!emailValid || submitting} >Submit Now</button>
 						</Box>
 						<Snackbar
