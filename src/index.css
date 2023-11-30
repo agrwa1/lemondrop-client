@@ -9,24 +9,22 @@
 	/* background-color: #0a0a0a; */
 }
 
-
 .container {
 	width: 100%;
 	max-width: 1700px;
 	padding: 1em 3em;
 	box-sizing: border-box;
-	display: flex;	
+	display: flex;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
 	width: 100%;
 }
 
-
 .navbar {
 	width: 100%;
 	box-sizing: border-box;
-	display: flex;	
+	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	padding-bottom: 1em;
@@ -48,9 +46,8 @@
 }
 
 .nav-link-profile {
-	margin: 0
+	margin: 0;
 }
-
 
 .nav-auth-btn {
 	display: flex;
@@ -72,7 +69,7 @@
 }
 
 .login-btn:hover {
-	background-color: #1380FF;
+	background-color: #1380ff;
 }
 
 .link-reset {
@@ -85,7 +82,6 @@
 
 .full-logo {
 	display: flex;
-	
 }
 
 .word-logo {
@@ -97,14 +93,12 @@
 	/* color: yellow  */
 }
 
-
 .sidebar {
 	display: flex;
 	flex-direction: column;
 	position: sticky;
 	height: 100%;
 }
-
 
 .sidebar-link {
 	display: flex;
@@ -126,7 +120,6 @@
 	overflow: hidden;
 }
 
-
 .mobile-nav-links {
 	display: flex;
 	min-width: 100%;
@@ -142,9 +135,8 @@
 	display: none;
 }
 
-
 .sport-link-container-mobile {
-	margin: 0 1em 0 0 ;
+	margin: 0 1em 0 0;
 	background-color: #5b40f6;
 	padding: 0.25em 1em;
 	border-radius: 10px;
@@ -152,7 +144,7 @@
 }
 
 .active-mobile-link {
-	background-color: #fff
+	background-color: #fff;
 }
 
 .mobile-main {
@@ -164,7 +156,6 @@
 }
 
 @media only screen and (max-width: 790px) {
-
 	.container {
 		padding: 1em 2em;
 	}
@@ -179,14 +170,14 @@
 
 	.desktop-main {
 		display: none;
-	} 
+	}
 
 	.mobile-main {
 		display: flex;
 	}
 
 	.sport-link-container-mobile {
-		display:  flex;
+		display: flex;
 	}
 
 	.nav-auth-btn {
@@ -199,30 +190,25 @@
 }
 
 @media only screen and (max-width: 500px) {
-	.login-btn { 
+	.login-btn {
 		display: none;
 	}
-
-
 }
-
 
 .games-header {
 	min-width: 100%;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	
+
 	/* margin-bottom: 2em; */
 
 	/* padding: 0.5em 0; */
-
 }
 
 .grid-games-header {
 	/* background-color: #1d1e1f; */
 }
-
 
 .games-header-name {
 	width: 100%;
@@ -237,7 +223,6 @@
 	justify-content: space-evenly;
 	align-items: center;
 }
-
 
 .main-header {
 	padding: 0.5em 1em;
@@ -255,7 +240,6 @@
 	justify-content: center;
 }
 
-
 .market-picker {
 	min-width: 100%;
 	max-width: 0;
@@ -263,7 +247,7 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 1em 0 ;
+	padding: 1em 0;
 	margin: 1em 0;
 	border-bottom: 1px solid #444;
 
@@ -271,13 +255,10 @@
 	scrollbar-width: none;
 }
 
-
-
 .market-picker::-webkit-scrollbar {
-	display: none
+	display: none;
 }
 
- 
 .market-option {
 	border-radius: 10px;
 	padding: 0.25em 1em;
@@ -292,19 +273,18 @@
 
 .market-option-text-active {
 	color: #5b40f6;
-} 
+}
 
 .bets-main {
 	max-width: 100%;
 	margin: 0;
 	padding: 0;
-	height: 100%
+	height: 100%;
 }
 
 .bets-container {
 	max-width: 100%;
 	height: 100%;
-
 }
 
 .bets-header {
@@ -342,7 +322,6 @@
 
 	border: 0.5px solid #444;
 	cursor: pointer;
-
 }
 
 .bets-outcome-option:hover {
@@ -357,3 +336,27 @@
 	background-color: #5b40f6;
 }
 
+.hero-email-list {
+	width: 100%
+}
+
+.hero-email-input {
+	width: 100%;
+	height: 3em;
+}
+
+.hero-email-submit {
+	height: inherit;
+	width: 100%;
+	margin-top: 1em;
+	height: 3em;
+	font-weight: bold;
+	font-size: 18px;
+	background-color: #ffff00;
+	border: none;
+	border-radius: 5px;
+}
+
+.hero-email-submit:hover {
+	background-color: rgb(163, 178, 0)
+}
