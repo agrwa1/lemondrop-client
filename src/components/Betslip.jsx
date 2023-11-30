@@ -24,6 +24,7 @@ const Betslip = ({ bets, setBets, removeBet, setSuccess, setFailure }) => {
 	const [parlayWagerAmt, setParlayWagerAmt] = useState(10)
 	const [parlayWinAmt, setParlayWinAmt] = useState(0)
 	const [color, setColor] = useState("")
+	const [submitting, setSubmitting] = useState(false)
 
 
 	useEffect(() => {
@@ -57,9 +58,9 @@ const Betslip = ({ bets, setBets, removeBet, setSuccess, setFailure }) => {
 		let amt = e.target.value
 		const regex = /^(\d{0,5}\.\d{1,2}|\d{1,5})$/;
 		if (amt === "" || regex.test(amt)) {
-			if (amt > 50) {
+			if (amt > 300) {
 				setColor("error")
-				amt = 50
+				amt = 300
 			} else {
 				setColor("primary")
 			}
@@ -73,7 +74,7 @@ const Betslip = ({ bets, setBets, removeBet, setSuccess, setFailure }) => {
 		// const url = "http://localhost:8080/api/bets/bet"
 		const parlayUrl = "https://lemondrop-api.onrender.com/api/bets/bet"
 		// const parlayUrl = "http://localhost:8080/api/bets/bet"
-
+		setSubmitting(true)
 		if (bets.length >= 2 && isParlay) {
 			submitBetsParlay(parlayUrl)
 		}
@@ -134,9 +135,12 @@ const Betslip = ({ bets, setBets, removeBet, setSuccess, setFailure }) => {
 			console.log("parlay placed")
 			setSuccess(true)
 			deleteAllBets()
+
 		}).catch(err => {
 			console.log(err)
 			setFailure(true)
+		}).finally(() => {
+			setSubmitting(false)
 		})
 
 	}
@@ -199,6 +203,8 @@ const Betslip = ({ bets, setBets, removeBet, setSuccess, setFailure }) => {
 			deleteAllBets()
 		}).catch(err => {
 			setFailure(true)
+		}).finally(() => {
+			setSubmitting(false)
 		})
 	}
 
@@ -302,7 +308,7 @@ const Betslip = ({ bets, setBets, removeBet, setSuccess, setFailure }) => {
 							<DeleteOutlinedIcon />
 							Delete All
 						</Button>
-						<Button fullWidth variant="contained" onClick={submitBets} style={{ fontWeight: 'bold', display: 'flex', alignItems: "center" }} disabled={!((!isParlay) || (isParlay && bets.length >= 2 && parlayWagerAmt > 0))} >
+						<Button fullWidth variant="contained" onClick={submitBets} style={{ fontWeight: 'bold', display: 'flex', alignItems: "center" }} disabled={submitting || !((!isParlay) || (isParlay && bets.length >= 2 && parlayWagerAmt > 0))} >
 							Submit Bets
 						</Button>
 					</Box>
@@ -390,7 +396,7 @@ const Betslip = ({ bets, setBets, removeBet, setSuccess, setFailure }) => {
 									<DeleteOutlinedIcon />
 									Delete All
 								</Button>
-								<Button fullWidth variant="contained" onClick={submitBets} style={{ fontWeight: 'bold', display: 'flex', alignItems: "center" }} disabled={!((!isParlay) || (isParlay && bets.length >= 2 && parlayWagerAmt > 0))}  >
+								<Button fullWidth variant="contained" onClick={submitBets} style={{ fontWeight: 'bold', display: 'flex', alignItems: "center" }} disabled={submitting || !((!isParlay) || (isParlay && bets.length >= 2 && parlayWagerAmt > 0))}  >
 									Submit Bets
 								</Button>
 							</Box>
@@ -421,7 +427,7 @@ const BetslipOption = ({ bet, removeBet, isParlay }) => {
 	}
 	const decimalOdds = priceFloat > 0 ? 1 + (priceFloat / 100) : 1 - (100 / priceFloat)
 
-	const [amount, setAmount] = useState(5)
+	const [amount, setAmount] = useState(25)
 	bet.Amount = amount
 	const [toWinAmount, setToWinAmount] = useState((Math.floor(100 * amount * decimalOdds) / 100).toFixed(2))
 	const [color, setColor] = useState("primary")
@@ -430,9 +436,9 @@ const BetslipOption = ({ bet, removeBet, isParlay }) => {
 		let amt = e.target.value
 		const regex = /^(\d{0,5}\.\d{1,2}|\d{1,5})$/;
 		if (amt === "" || regex.test(amt)) {
-			if (amt > 50) {
+			if (amt > 300) {
 				setColor("error")
-				amt = 50
+				amt = 300
 			} else {
 				setColor("primary")
 			}

@@ -137,14 +137,21 @@ export default function GameCard({ bets, game, raw, addBet, removeBet }) {
 	console.log(tableData)
 
 	return (
-		<Box className="bet-table">
+		<Box className="bet-table"  >
 			<Grid item xs={12} key={game.id}>
 				<Grid item xs={12}>
-					<Box sx={{ display: 'flex', justifyContent: "start", width: '100%', padding: '1em 0 0 1em' }} >
+					<Box sx={{ display: 'flex', justifyContent: "space-between", width: '100%', padding: '1em 0 0.5em 1em' }} >
 						<Typography variant="body1" sx={{ color: "#bbb", fontSize: '13px', fontWeight: 'bold' }} >{startTime}</Typography>
+						{
+							!raw &&
+							<Link to={`/games/${game.league_id}/${game.id}`} className="link-reset" >
+								<Typography variant="body2" sx={{ fontSize: "12px", color: "#bbb", textDecoration: "underline" }} >More Wagers</Typography>
+							</Link>
+						}
 					</Box>
 				</Grid>
 				<Table>
+
 					<TableBody>
 						{
 							tableData.map((row, tableIndex) =>
@@ -228,6 +235,7 @@ export default function GameCard({ bets, game, raw, addBet, removeBet }) {
 
 					</TableBody>
 				</Table>
+
 
 
 			</Grid >

@@ -16,11 +16,11 @@ export default function GameCard({ bets, game, raw, addBet, removeBet }) {
 		<Box sx={{ width: '100%' }} >
 			{
 				gameType == "1" &&
-				<GC1 bets={bets} game={game} addBet={addBet} removeBet={removeBet} />
+				<GC1 bets={bets} game={game} raw={raw} addBet={addBet} removeBet={removeBet} />
 			}
 			{
 				gameType == "2" &&
-				<GC2 bets={bets} game={game} addBet={addBet} removeBet={removeBet} />
+				<GC2 bets={bets} game={game} raw={raw} addBet={addBet} removeBet={removeBet} />
 			}
 		</Box>
 	)

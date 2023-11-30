@@ -19,7 +19,7 @@ import GameCard from '../games/GameCard'
 const Bets = () => {
 	const [game, setGame] = useState({})
 	const [bets, setBets] = useState([])
-	const [gameId, setGameId] = useState(window.location.pathname.split('/')[2])
+	const [gameId, setGameId] = useState(window.location.pathname.split('/')[3])
 	const navigate = useNavigate()
 	const [markets, setMarkets] = useState([])
 	const [subMarkets, setSubMarkets] = useState([])
@@ -44,7 +44,7 @@ const Bets = () => {
 			}
 	*/
 
-	const addBet = (betOnTeam, betType, price, point, awayTeam, homeTeam, gameId) => {
+	const addBet = (betOnTeam, betType, price, point, awayTeam, homeTeam, gameId, gameHash) => {
 		const newBet = {
 			BetOnTeam: betOnTeam,
 			BetType: betType,
@@ -55,6 +55,7 @@ const Bets = () => {
 			AwayTeam: awayTeam,
 			HomeTeam: homeTeam,
 			GameId: gameId,
+			GameHash: gameHash,
 			Index: bets.length,
 			Amount: 1
 		}
@@ -73,12 +74,13 @@ const Bets = () => {
 
 	// get game
 	useEffect(() => {
-		// setLoading(true)
-		// const url = `https://lemondrop-api.onrender.com/api/games/game/${gameId}`
-		// axios.get(url).then(res => {
-		// 	setGame(res.data)
-		// }).catch(e => { navigate("/404") })
-		// setLoading(false)
+		console.log(gameId)
+		setLoading(true)
+		const url = `https://lemondrop-api.onrender.com/api/games/game/${gameId}`
+		axios.get(url).then(res => {
+			setGame(res.data)
+		}).catch(e => console.log(e))
+		setLoading(false)
 	}, [])
 
 
@@ -101,8 +103,8 @@ const Bets = () => {
 
 			<Grid item xs={12} md={8} className="bets-main" >
 				<Box className={"bets-header"}>
-					<Typography variant="body1" style={{ color: "#aaa", fontSize: '14px' }} >{moment(game.commence_time).format("LLLL")} </Typography>
-					<Typography variant="h6" style={{ fontSize: "20px" }} >{game.away_team + " @ " + game.home_team} </Typography>
+					<Typography variant="body1" style={{ color: "#aaa", fontSize: '14px' }} >{moment(game.start_date).format("LLLL")} </Typography>
+					<Typography variant="h6" style={{ fontSize: "20px" }} >{game.away_team_name + " @ " + game.home_team_name} </Typography>
 				</Box>
 
 				<Box className={"main-game-props"}>

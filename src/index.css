@@ -83,6 +83,11 @@
 	/* overflow: hidden; */
 }
 
+.full-logo {
+	display: flex;
+	
+}
+
 .word-logo {
 	display: flex;
 	flex-direction: column;

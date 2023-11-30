@@ -21,6 +21,7 @@ import nbaLogo from '../nba-logo.png'
 import Footer from './Footer'
 import { useAuth } from '../App'
 import axios from 'axios'
+import Logo from './lemondrop-logo-1.png'
 // import { Link } from 'react-router-dom'
 
 
@@ -52,13 +53,16 @@ export default function MiniDrawer({ children }) {
 
 				<Box className="nav-left"  >
 					<Link to="/dashboard" className="link-reset" >
-						<Box className="word-logo" >
-							<Typography sx={{ fontFamily: "Lobster", fontSize: "32px", color: '#ffff00' }} variant="h3">lemondrop</Typography>
-							<Typography variant="h6" style={{ fontSize: "16px" }} >SPORTSBOOK</Typography>
+						<Box className="full-logo">
+							<img src={Logo} width="64" />
+							<Box className="word-logo" >
+								<Typography sx={{ fontFamily: "Lobster", fontSize: "32px", color: '#ffff00' }} variant="h3">lemondrop</Typography>
+								<Typography variant="h6" style={{ fontSize: "16px" }} >SPORTSBOOK</Typography>
+							</Box>
 						</Box>
 					</Link>
 
-					{/* <Link to="/dashboard" className="link-reset" >
+					<Link to="/dashboard" className="link-reset" >
 						<Box className="nav-link nav-link-left">
 							<Typography variant='body1'>Home</Typography>
 						</Box>
@@ -68,7 +72,7 @@ export default function MiniDrawer({ children }) {
 						<Box className="nav-link nav-link-left " >
 							<Typography variant='body1'>My Bets</Typography>
 						</Box>
-					</Link> */}
+					</Link>
 				</Box>
 				{
 					user &&

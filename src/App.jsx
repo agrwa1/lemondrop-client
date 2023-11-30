@@ -109,11 +109,11 @@ export default function App() {
               </ProtectedRoute>
             } />
 
-            <Route path="/picks/:league" element={
+            {/* <Route path="/picks/:league" element={
               <ProtectedRoute>
                 <PicksPage pathname={window.location.pathname} />
               </ProtectedRoute>
-            } />
+            } /> */}
 
             <Route path="/games/:league/:game" element={
               <ProtectedRoute>
