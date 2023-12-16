@@ -117,7 +117,7 @@ const LandingPage = () => {
 					<Box className="hero-left">
 						<h3 className="hero-main-topper">The Next Generation Sportsbook</h3>
 						<h1 className="hero-main-title">BET WITH LEMONDROP.</h1>
-						<h2 className="hero-main-subtitle">Join the Lemondrop Mailing List to Stay Update on Your Favorite Sports. Fill Out Your Email Below to Get Started!</h2>
+						<h2 className="hero-main-subtitle">Join the Lemondrop Waitlist. Fill Out Your Email And We'll Let You Know When You're In.</h2>
 						{/* <h2 className="hero-main-subtitle">Join Lemondrop Today. Bet On Your Favorite Sports Teams and Watch Them Win. Click Below to Start.</h2> */}
 						{/* <Link to={linkEnd} className="link-reset">
 							<Box className="hero-ctas-container" >
