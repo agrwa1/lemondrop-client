@@ -162,6 +162,7 @@ export default function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/" element={<LandingPage />} />
+            <Route path="/waitlist" element={<LandingPage />} />
             <Route path="/terms" element={<TermsServicesPage />} />
             <Route path="/privacy" element={<PrivacyPolicyPage />} />
           </Routes>
