@@ -5,7 +5,7 @@ import GameCard from './GameCard';
 // import gamesData from './gamesData'
 
 import Header from '../layout/Header'
-import { useLocation, Navigate } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import axios from 'axios'
 
 import BetSlip from '../components/Betslip'

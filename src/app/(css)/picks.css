@@ -44,7 +44,7 @@
 .picks-selector-container {
 	display: flex;
 	max-width: 100%;
-	justify-content: start;
+	justify-content: flex-start;
 	overflow: scroll;
 	margin-bottom: 1em;
 

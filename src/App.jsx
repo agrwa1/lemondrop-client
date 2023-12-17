@@ -12,8 +12,6 @@ import AllSportsPage from './sports/AllSportsPage'
 import SingleSportPage from './sports/SingleSportPage'
 import LandingPage from './landing/LandingPage'
 import PicksPage from './picks/PicksPage'
-import TermsServicesPage from './misc/TermsServicesPage'
-import PrivacyPolicyPage from './misc/PrivacyPolicyPage'
 import CheckoutPage from './checkout/CheckoutPage'
 
 import Error404 from './errors/Error404'
@@ -22,20 +20,9 @@ import { createTheme, ThemeProvider }
   from '@mui/material/styles';
 
 import { orange, lime, purple, deepPurple, yellow, red } from '@mui/material/colors';
-import { useNavigate, Navigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { getAuth } from './auth/authFunctions'
-
-import "./index.css"
-import './picks.css'
-import "./betslip.css"
-import "./dashboard.css"
-import "./gamecard2.css"
-import "./gamecard1.css"
-import "./sports-leagues.css"
-import "./landing.css"
-import "./terms.css"
-import './footer.css'
 
 import {
   BrowserRouter,
@@ -163,8 +150,6 @@ export default function App() {
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/" element={<LandingPage />} />
             <Route path="/waitlist" element={<LandingPage />} />
-            <Route path="/terms" element={<TermsServicesPage />} />
-            <Route path="/privacy" element={<PrivacyPolicyPage />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
@@ -220,11 +205,14 @@ const AuthProvider = ({ children }) => {
 }
 
 const ProtectedRoute = ({ children }) => {
+  const navigate = useNavigate()
+
   const { token } = useAuth()
   // const navigate = useNavigate()
 
   if (!token) {
-    return <Navigate to="/login" replace />
+    navigate('/login')
+    // return <Navigate to="/login" replace />
   }
 
   return children

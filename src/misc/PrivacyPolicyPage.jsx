@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Box, Typography, CssBaseline } from '@mui/material'
 import { Link } from 'react-router-dom'
-import Footer from '../layout/Footer'
+import Footer from '../components/Footer'
 
 const PrivacyPolicyPage = () => {
 	return (

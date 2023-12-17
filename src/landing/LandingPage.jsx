@@ -4,8 +4,6 @@ import InputAdornment from '@mui/material/InputAdornment';
 import SendIcon from '@mui/icons-material/Send';
 import Layout from '../layout'
 
-import MoneyHeroImg from './money-1.png'
-import HeroBg from './mahomes-throwing.jpeg'
 import ProLogos from './pro-logos.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
@@ -77,7 +75,7 @@ const LandingPage = () => {
 				{/* {
 					user &&
 					<Link to={linkEnd} className="link-reset">
-						<Box sx={{ display: 'flex' }}>
+						<Box sx={{ d	isplay: 'flex' }}>
 							<button className={"nav-primary-cta"}>Dashboard</button>
 						</Box>
 					</Link>
@@ -146,7 +144,8 @@ const LandingPage = () => {
 				</Box>
 
 				<Box className="hero-right">
-					<img src={ProLogos} className="hero-graphic-right" ></img>
+					{/* <img src={ProLogos} className="hero-graphic-right" ></img> */}
+					<img src={ProLogos.src} className="hero-graphic-right" ></img>
 				</Box>
 			</Box>
 

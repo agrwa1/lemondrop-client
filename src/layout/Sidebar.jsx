@@ -14,14 +14,13 @@ import SportsBasketballOutlinedIcon from '@mui/icons-material/SportsBasketballOu
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faGamepad, faChessBoard, faChartLine, faFootball, faBasketball, faBaseballBatBall, faHockeyPuck } from '@fortawesome/free-solid-svg-icons'
 
-import { useNavigate, Navigate, Link, useLocation } from 'react-router-dom'
-import nbaLogo from '../nba-logo.png'
+import { useNavigate, Link, useLocation } from 'react-router-dom'
 // import "./styles.css"
 // import MenuIcon from '@mui/icons-material/Menu';
-import Footer from './Footer'
+import Footer from '../components/Footer'
 import { useAuth } from '../App'
 import axios from 'axios'
-import Logo from './lemondrop-logo-1.png'
+// import Logo from './lemondrop-logo-1.png'
 // import { Link } from 'react-router-dom'
 
 
@@ -54,7 +53,7 @@ export default function MiniDrawer({ children }) {
 				<Box className="nav-left"  >
 					<Link to="/dashboard" className="link-reset" >
 						<Box className="full-logo">
-							<img src={Logo} width="64" />
+							{/* <img src={Logo.src} width="64" /> */}
 							<Box className="word-logo" >
 								<Typography sx={{ fontFamily: "Lobster", fontSize: "32px", color: '#ffff00' }} variant="h3">lemondrop</Typography>
 								<Typography variant="h6" style={{ fontSize: "16px" }} >SPORTSBOOK</Typography>
