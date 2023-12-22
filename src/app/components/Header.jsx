@@ -33,7 +33,7 @@ export default function Header() {
 
 const AuthedComp = () => {
 	return (
-		<div className="flex justify-between  " >
+		<div className="flex justify-between" >
 			<Link href="/leagues/all">
 				<div className=" py-2 rounded-xl hover:underline px-1 cursor-pointer text-lightGray font-semibold mr-4 " >
 					Leagues
@@ -50,9 +50,9 @@ const AuthedComp = () => {
 
 const UnAuthedComp = () => {
 	return (
-		<div>
+		<div flex justify-between>
 			<Link href="/leagues/all">
-				<div className=" py-2 rounded-xl hover:underline px-1 cursor-pointer text-lightGray font-semibold " >
+				<div className=" py-2 rounded-xl hover:underline px-1 cursor-pointer text-lightGray font-semibold mr-4" >
 					Leagues
 				</div>
 			</Link>
