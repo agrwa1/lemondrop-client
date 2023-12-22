@@ -174,7 +174,7 @@ nav {
     color: black;
 }
 
-@media screen and (max-width: 550px) {
+@media screen and (max-width: 900px) {
 	.hero-ctas-container {
 		flex-direction: column;
 	}	

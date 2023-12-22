@@ -1,12 +1,8 @@
 import React from 'react';
-import Footer from '../../components/Footer';
-import Header from '../../components/Header';
 
 const TermsServicesPage = () => {
 	return (
 		<div className='terms-container'>
-			<Header />
-
 			<h1 className='tos-header text-4xl font-bold mt-24 mb-4'>
 				Terms of Service for Lemondrop
 			</h1>
@@ -166,7 +162,6 @@ const TermsServicesPage = () => {
 				yourself in the excitement of sports betting responsibly and
 				enjoy the unparalleled experience we provide.
 			</p>
-			<Footer />
 		</div>
 	);
 };

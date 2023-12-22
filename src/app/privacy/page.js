@@ -1,12 +1,8 @@
 import React from 'react';
-import Footer from '../../components/Footer';
-import Header from '../../components/Header';
 
 export default function PrivacyPage() {
 	return (
 		<div className='terms-container'>
-			<Header />
-
 			<h1 className='tos-header text-4xl font-bold mt-24 mb-4'>
 				Privacy Policy for Lemondrop
 			</h1>
@@ -131,8 +127,6 @@ export default function PrivacyPage() {
 				are committed to providing a secure and enjoyable sports betting
 				experience while respecting your privacy.
 			</p>
-
-			<Footer />
 		</div>
 	);
 }

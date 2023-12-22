@@ -1,11 +1,11 @@
-import Layout from '../(layout)/index'
+import Layout from '../../(layout)/index'
 
 export const metadata = {
-	title: 'Lemondrop Terms of Services',
+	title: 'Lemondrop Games',
 	description: 'This is Lemondrop Sportsbook. Premier Sports Betting Online Casino 18+. The Ball Is In Your Hands with Lemondrop Sportsbook.',
 }
 
-export default function Lay({ children }) {
+export default function PageLayout({ children }) {
 	return (
 		<Layout>
 			{children}
