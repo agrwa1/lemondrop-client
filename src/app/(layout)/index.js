@@ -7,7 +7,7 @@ import Image from 'next/image';
 
 async function getData() {
 	let res = await fetch(
-		'https://lemondrop-api.onrender.com/api/games/leagues',
+		'https://lemondrop-api.onrender.com/api/leagues',
 		{ cache: 'force-cache' }
 		// 'http://localhost:8080/api/leagues/all',
 		// { cache: 'no-store' }
@@ -34,6 +34,8 @@ async function getData() {
 */
 
 function LeagueOrSport({ league, data }) {
+	if (!data) return <div></div>;
+
 	const isLeague = data[0].league_name !== undefined;
 
 	const leagueLink = {

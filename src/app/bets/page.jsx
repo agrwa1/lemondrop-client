@@ -8,7 +8,8 @@ import BetsSection from './BetsSection';
 
 
 export default function Page() {
-	const [user, setUser] = useState({})
+	const [user, setUser] = useState({
+	})
 
 	useEffect(() => {
 		getAuth().then(u => {
@@ -24,28 +25,30 @@ export default function Page() {
 
 	return (
 		<div>
-			<div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-8 ">
-				<div className="p-5 bg-white rounded-lg shadow">
-					<p className="text-gray-500 text-md">Balance</p>
-					<p className="text-xl font-bold text-black">${parseFloat(user.current_balance).toFixed(2)}</p>
-				</div>
+			{
+				(Object.keys(user).length > 0) &&
+				<div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-8 ">
+					<div className="p-5 bg-white rounded-lg shadow">
+						<p className="text-gray-500 text-md">Balance</p>
+						<p className="text-xl font-bold text-black">${parseFloat(user.current_balance).toFixed(2)}</p>
+					</div>
 
-				<div className="p-5 bg-white rounded-lg shadow">
-					<p className="text-gray-500 text-md">Pending</p>
-					<p className="text-xl font-bold text-black">${parseFloat(user.current_pending).toFixed(2)}</p>
-				</div>
+					<div className="p-5 bg-white rounded-lg shadow">
+						<p className="text-gray-500 text-md">Pending</p>
+						<p className="text-xl font-bold text-black">${parseFloat(user.current_pending).toFixed(2)}</p>
+					</div>
 
-				<div className="p-5 bg-white rounded-lg shadow">
-					<p className="text-gray-500 text-md">Free Play</p>
-					<p className="text-xl font-bold text-black">${parseFloat(user.current_free_play).toFixed(2)}</p>
-				</div>
+					<div className="p-5 bg-white rounded-lg shadow">
+						<p className="text-gray-500 text-md">Free Play</p>
+						<p className="text-xl font-bold text-black">${parseFloat(user.current_free_play).toFixed(2)}</p>
+					</div>
 
-				<div className="p-5 bg-white rounded-lg shadow">
-					<p className="text-gray-500 text-md">Profit</p>
-					<p className="text-xl font-bold text-black">${parseFloat(user.total_profit).toFixed(2)}</p>
+					<div className="p-5 bg-white rounded-lg shadow">
+						<p className="text-gray-500 text-md">Profit</p>
+						<p className="text-xl font-bold text-black">${parseFloat(user.total_profit).toFixed(2)}</p>
+					</div>
 				</div>
-
-			</div>
+			}
 
 			<div className="">
 				<FundsSection user={user} />
