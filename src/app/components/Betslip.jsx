@@ -72,135 +72,6 @@ const Betslip = () => {
 		}
 	}
 
-	// const submitBets = () => {
-	// 	// const url = "https://lemondrop-api.onrender.com/api/bets/bet"
-	// 	const url = "http://localhost:8080/api/bets/bet"
-	// 	// const parlayUrl = "https://lemondrop-api.onrender.com/api/bets/bet"
-	// 	const parlayUrl = "http://localhost:8080/api/bets/bet"
-	// 	setSubmitting(true)
-	// 	if (bets.length >= 2 && isParlay) {
-	// 		submitBetsParlay(parlayUrl)
-	// 	}
-
-	// 	else {
-	// 		submitBetsSingles(url)
-	// 	}
-	// }
-
-	// const submitBetsParlay = (url) => {
-	// 	var date = new Date();
-	// 	var now_utc = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(),
-	// 		date.getUTCDate(), date.getUTCHours(),
-	// 		date.getUTCMinutes(), date.getUTCSeconds());
-
-	// 	const parlay = {
-	// 		is_parlay: true,
-
-	// 		user_id: user.user_id,
-	// 		user_email: user.email,
-
-	// 		bets: [],
-	// 		bet_placed_time: new Date(now_utc),
-	// 		bet_price: parlayOdds,
-	// 		bet_amount: String(parlayWagerAmt)
-	// 	}
-
-	// 	parlay.bets = bets.map(bet => {
-	// 		var date = new Date();
-	// 		var now_utc = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(),
-	// 			date.getUTCDate(), date.getUTCHours(),
-	// 			date.getUTCMinutes(), date.getUTCSeconds());
-	// 		return {
-	// 			is_parlay: false,
-	// 			user_id: user.user_id,
-	// 			user_email: user.email,
-
-	// 			game_id: bet.GameId,
-	// 			game_hash: bet.GameHash,
-	// 			home_team: bet.HomeTeam,
-	// 			away_team: bet.AwayTeam,
-
-	// 			bet_type: bet.BetType,
-	// 			bet_on_team: bet.BetOnTeam,
-
-	// 			bet_point: bet.Point,
-	// 			bet_price: bet.price,
-	// 			bet_amount: String(bet.Amount),
-
-	// 			bet_placed_time: new Date(now_utc),
-	// 		}
-	// 	})
-	// 	axios.post(url, parlay).then(() => {
-	// 		console.log("parlay placed")
-	// 		deleteAllBets()
-
-	// 	}).catch(err => {
-	// 		return
-	// 	}).finally(() => {
-	// 		setSubmitting(false)
-	// 	})
-
-	// }
-
-	// const submitBetsSingles = (url) => {
-	// 	state.bets.forEach(bet => {
-	// 		if (!bet.price || !bet.Amount) {
-	// 			return
-	// 		}
-	// 	})
-
-	// 	var date = new Date();
-	// 	var now_utc = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(),
-	// 		date.getUTCDate(), date.getUTCHours(),
-	// 		date.getUTCMinutes(), date.getUTCSeconds());
-
-	// 	const singleBet = {
-	// 		user_id: user.user_id,
-	// 		user_email: user.email,
-	// 		bets: [],
-	// 		is_parlay: false,
-	// 		bet_placed_time: new Date(now_utc),
-	// 	}
-
-	// 	for (let i = 0; i < bets.length; i++) {
-	// 		const bet = bets[i]
-	// 		var date = new Date();
-	// 		var now_utc = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(),
-	// 			date.getUTCDate(), date.getUTCHours(),
-	// 			date.getUTCMinutes(), date.getUTCSeconds());
-
-	// 		const b = {
-	// 			user_id: user.user_id,
-	// 			user_email: user.email,
-
-	// 			game_id: bet.GameId,
-	// 			game_hash: bet.GameHash,
-	// 			home_team: bet.HomeTeam,
-	// 			away_team: bet.AwayTeam,
-
-	// 			bet_type: bet.BetType,
-	// 			bet_on_team: bet.BetOnTeam,
-
-	// 			bet_point: bet.Point,
-	// 			bet_price: bet.price,
-	// 			bet_amount: String(bet.Amount),
-
-	// 			bet_placed_time: new Date(now_utc),
-	// 		}
-
-	// 		singleBet.bets.push(b)
-	// 	}
-
-	// 	axios.post(url, singleBet).then(() => {
-	// 		console.log(singleBet)
-	// 		console.log("bet placed")
-	// 		deleteAllBets()
-	// 	}).catch(err => {
-	// 		return
-	// 	}).finally(() => {
-	// 		setSubmitting(false)
-	// 	})
-	// }
 
 	const submitBets = () => {
 		// const url = "http://localhost:8080/api/bets/bet";
@@ -419,7 +290,7 @@ const Betslip = () => {
 			</div>
 
 
-			{state.bets.length > 0 && (
+			{userIsSignedIn && state.bets.length > 0 && (
 				<div className="lg:hidden"  >
 					<div className="mobile-bet-slip-fab" onClick={() => setMobileOpen(true)} >
 						<span className="mr-2">
