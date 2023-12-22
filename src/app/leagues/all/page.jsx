@@ -2,10 +2,10 @@ import Link from 'next/link'
 
 async function getData() {
 	let res = await fetch(
-		// 'https://lemondrop-api.onrender.com/api/games/leagues',
-		// { cache: 'force-cache' }
-		'http://localhost:8080/api/games/leagues',
-		{ cache: 'no-store' }
+		'https://lemondrop-api.onrender.com/api/games/leagues',
+		{ cache: 'force-cache' }
+		// 'http://localhost:8080/api/games/leagues',
+		// { cache: 'no-store' }
 	);
 	let body = await res.json();
 	return body;

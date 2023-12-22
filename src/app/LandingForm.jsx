@@ -12,8 +12,8 @@ const LandingForm = () => {
 	const handleSubmit = (e) => {
 		setLoading(true)
 		e.preventDefault();
-		// const url = "https://lemondrop-api.onrender.com/api/mailing/add"
-		const url = "http://localhost:8080/api/mailing/add"
+		const url = "https://lemondrop-api.onrender.com/api/mailing/add"
+		// const url = "http://localhost:8080/api/mailing/add"
 		const body = {
 			email: email
 		}

@@ -7,10 +7,10 @@ import Image from 'next/image';
 
 async function getData() {
 	let res = await fetch(
-		// 'https://lemondrop-api.onrender.com/api/games/leagues',
-		// { cache: 'force-cache' }
-		'http://localhost:8080/api/leagues/all',
-		{ cache: 'no-store' }
+		'https://lemondrop-api.onrender.com/api/games/leagues',
+		{ cache: 'force-cache' }
+		// 'http://localhost:8080/api/leagues/all',
+		// { cache: 'no-store' }
 	);
 	let body = await res.json();
 	// console.log(body);

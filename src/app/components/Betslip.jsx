@@ -203,7 +203,8 @@ const Betslip = () => {
 	// }
 
 	const submitBets = () => {
-		const url = "http://localhost:8080/api/bets/bet";
+		// const url = "http://localhost:8080/api/bets/bet";
+		const url = "https://lemondrop-api.onrender.com/api/bets/bet"
 		setSubmitting(true);
 		const allBets = []
 

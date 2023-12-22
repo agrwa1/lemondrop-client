@@ -80,7 +80,8 @@ export default function Page() {
 
 		try {
 			setLoading(true);
-			const response = await axios.post('http://localhost:8080/api/users/signup', {
+			const url = "https://lemondrop-api.onrender.com/api/users/signup"
+			const response = await axios.post(url, {
 				firstName,
 				lastName,
 				email,
