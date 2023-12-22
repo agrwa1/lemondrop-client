@@ -16,14 +16,14 @@ export default function Header() {
 
 	if (Object.keys(user).length) {
 		return (
-			<nav className="flex justify-between align-middle mb-2">
+			<nav className="flex justify-between align-middle mb-2 w-full ">
 				<WordLogo />
 				<AuthedComp />
 			</nav>
 		)
 	} else {
 		return (
-			<nav className="flex justify-between mb-2">
+			<nav className="flex justify-between align-middle mb-2 w-full">
 				<WordLogo />
 				<UnAuthedComp />
 			</nav>
@@ -33,7 +33,12 @@ export default function Header() {
 
 const AuthedComp = () => {
 	return (
-		<div>
+		<div className="flex justify-between  " >
+			<Link href="/leagues/all">
+				<div className=" py-2 rounded-xl hover:underline px-1 cursor-pointer text-lightGray font-semibold mr-4 " >
+					Leagues
+				</div>
+			</Link>
 			<Link href="/bets">
 				<div className=" py-2 rounded-xl hover:underline px-1 cursor-pointer text-lightGray font-semibold " >
 					My Bets
@@ -46,6 +51,11 @@ const AuthedComp = () => {
 const UnAuthedComp = () => {
 	return (
 		<div>
+			<Link href="/leagues/all">
+				<div className=" py-2 rounded-xl hover:underline px-1 cursor-pointer text-lightGray font-semibold " >
+					Leagues
+				</div>
+			</Link>
 			<Link href="/">
 				<div className=" py-2 rounded-xl hover:underline px-1 cursor-pointer text-lightGray font-semibold " >
 					Join Now
