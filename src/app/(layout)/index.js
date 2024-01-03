@@ -56,9 +56,14 @@ function LeagueOrSport({ league, data }) {
 			: `/leagues/${raw.sport_id}`,
 	}));
 
+	// show non-all leagues links on mobile
 	return (
-		<div className='md:mb-4 mt-4 flex md:flex-col '>
-			<h3 className='h-full md:flex  text-lg font-bold mb-0'>
+		<div
+			className={`md:mb-4 mt-4 md:flex-col ${
+				league == 'All Leagues' ? 'hidden md:flex' : 'flex'
+			} `}
+		>
+			<h3 className='h-full hidden md:flex  text-lg font-bold mb-0'>
 				<SidebarLink link={leagueLink} />
 			</h3>
 
@@ -102,18 +107,24 @@ const SidebarLink = ({ link }) => {
 	return (
 		<Link href={endpoint} className='hover:cursor-pointer '>
 			<div
-				className={`h-full flex justify-center items-center rounded-lg border border-white md:border-0 md:justify-start md:px-0 py-1 mx-1 ${
-					photoUrl ? 'px-6' : 'px-3'
+				className={`h-full flex md:flex-row flex-col justify-center items-center rounded-lg md:border-0 md:justify-start md:px-0 py-1 ${
+					photoUrl ? 'px-4' : 'px-1'
 				} `}
 			>
-				{photoUrl && <img src={photoUrl} width='24'></img>}
+				{photoUrl && (
+					<img
+						src={photoUrl}
+						className='p-1 bg-dark4 rounded-3xl md:bg-none'
+						width='24'
+					></img>
+				)}
 				{/* <Image src={league.url} width={50} /> */}
 				<h3
 					className={`${
 						photoUrl
-							? 'ml-2 text-sm text-gray-300 font-semibold'
-							: 'text-sm text-gray-300 font-bold'
-					}  whitespace-nowrap`}
+							? ' md:ml-2 text-sm text-gray-300 font-semibold '
+							: 'text-sm text-gray-300 font-bold '
+					}  whitespace-nowrap mt-1 md:mt-0`}
 				>
 					{name}
 				</h3>

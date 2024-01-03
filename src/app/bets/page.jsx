@@ -109,15 +109,12 @@ const FundsSection = ({ user }) => {
 
 
 
-				<button
-					onClick={handleWithdrawFunds}
-					className="flex rounded-xl justify-center items-center w-full p-4 border border-ldPurple "
-				>
-					{!withdrawConfirmation && !withdrawLoading && 'Withdraw Funds'}
-					{withdrawConfirmation && !withdrawLoading && 'All Funds Will Be Withdrawn'}
-					{withdrawLoading && 'Sending funds...'}
+				<button>
+
 				</button>
 			</div>
+
+			<ShareButton shareUrl="https://lemondrop.ag" shareTitle="Lemondrop Sportsbook" />
 
 			{snackbarMessage && (
 				<div className="fixed bottom-0 left-0 p-4 w-full">
@@ -127,5 +124,32 @@ const FundsSection = ({ user }) => {
 				</div>
 			)}
 		</div>
+	);
+};
+
+
+const ShareButton = ({ shareUrl, shareTitle }) => {
+	const handleShareClick = async () => {
+		try {
+			if (navigator.share) {
+				await navigator.share({
+					title: shareTitle,
+					text: 'Check out this link!',
+					url: shareUrl,
+				});
+			} else {
+				// Fallback for browsers that do not support the Web Share API
+				// You can implement your own share modal or other logic here
+				alert('Web Share API is not supported in this browser.');
+			}
+		} catch (error) {
+			console.error('Error sharing:', error);
+		}
+	};
+
+	return (
+		<button onClick={handleShareClick}>
+			Share with Friends
+		</button>
 	);
 };

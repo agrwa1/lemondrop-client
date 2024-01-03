@@ -41,11 +41,13 @@ export default function GameCard({ game, raw }) {
 					newActiveArray[4] = true
 				}
 
-			} else if (bet.betType.toLowerCase() == 'over') {
-				newActiveArray[2] = true
+			} else if (bet.betType.toLowerCase() == 'totals') {
+				if (bet.betOnTeam.includes("Over")) {
+					newActiveArray[2] = true
+				} else {
 
-			} else if (bet.betType.toLowerCase() == 'under') {
-				newActiveArray[5] = true
+					newActiveArray[5] = true
+				}
 			}
 		})
 
@@ -80,8 +82,8 @@ export default function GameCard({ game, raw }) {
 			case 2:
 			case 5:
 				// over or under
-				betType = optionIndex === 2 ? "over" : "Under";
-				point = optionIndex === 2 ? game.over_point : game.under_point;
+				betType = "totals"
+				point = optionIndex === 2 ? game.over_point.slice(2) : game.under_point.slice(2);
 				betOnTeam = optionIndex === 2 ? `Over ${point}` : `Under ${point}`;
 				price = optionIndex === 2 ? game.over_price : game.under_price;
 				break;

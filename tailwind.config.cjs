@@ -19,6 +19,8 @@ export default {
 			lightGray: '#bbb',
 			ldPurple: '#5b40f6',
 			bgdGray: '#131313',
+			dark1: '#111',
+			dark4: '#444',
 
 			transparent: 'transparent',
 			current: 'currentColor',

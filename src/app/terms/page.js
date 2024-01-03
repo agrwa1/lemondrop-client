@@ -146,7 +146,7 @@ const TermsServicesPage = () => {
 				you to explore our Help Center at [link to Lemondrop Help
 				Center]. If you have any questions or concerns regarding these
 				Terms, please contact our dedicated support team at
-				help@lemondrop.bet. Thank you for choosing Lemondrop! Immerse
+				help@lemondrop.ag. Thank you for choosing Lemondrop! Immerse
 				yourself in the excitement of sports betting responsibly and
 				enjoy the unparalleled experience we provide.
 			</p>
@@ -159,7 +159,7 @@ const TermsServicesPage = () => {
 				you to explore our Help Center at [link to Lemondrop Help
 				Center]. If you have any questions or concerns regarding these
 				Terms, please contact our dedicated support team at
-				help@lemondrop.bet. Thank you for choosing Lemondrop! Immerse
+				help@lemondrop.ag. Thank you for choosing Lemondrop! Immerse
 				yourself in the excitement of sports betting responsibly and
 				enjoy the unparalleled experience we provide.
 			</p>

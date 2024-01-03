@@ -36,7 +36,7 @@ const Footer = () => {
 				<div className="">
 					<div className="footer-grid-item">
 						<h6 className="font-bold">HELP</h6>
-						<p className="my-2 text-sm text-gray-500">contact@lemondrop.bet</p>
+						<p className="my-2 text-sm text-gray-500">contact@lemondrop.ag</p>
 						<p className="my-2 text-sm text-gray-500">1-800-GAMBLER</p>
 					</div>
 				</div>

@@ -8,14 +8,22 @@ const initialState = {
 };
 
 const reducer = (state, action) => {
+	// bet is unique if: game id, bet type, player name, prop name, point
 	const defaultBetValue = 10;
+
+	if (action.type == 'deleteAll') {
+		return { bets: [] };
+	}
 
 	if (action.type === 'update') {
 		const updatedBets = state.bets.map((b) => {
 			if (
 				b.betOnTeam === action.betOnTeam &&
 				b.betType === action.betType &&
-				b.gameId === action.gameId
+				b.gameId === action.gameId &&
+				b.propType === action.propType &&
+				b.propName === action.propName &&
+				b.playerName === action.playerName
 			) {
 				// Update the matching bet
 				return {
@@ -29,11 +37,16 @@ const reducer = (state, action) => {
 		return { bets: updatedBets };
 	}
 
+	//
 	const bet = {
 		betOnTeam: action.betOnTeam,
 		betType: action.betType,
+		propType: action.propType,
+		propName: action.propName,
+		playerName: action.playerName,
 		price: action.price,
 		point: action.point,
+
 		awayTeam: action.awayTeam,
 		homeTeam: action.homeTeam,
 		gameId: action.gameId,
@@ -46,7 +59,10 @@ const reducer = (state, action) => {
 		(b) =>
 			b.betOnTeam === bet.betOnTeam &&
 			b.betType === bet.betType &&
-			b.gameId === bet.gameId
+			b.gameId === bet.gameId &&
+			b.propType == bet.propType &&
+			b.propName == bet.propName &&
+			b.playerName === bet.playerName
 	);
 
 	let newBets = [];

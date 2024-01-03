@@ -12,6 +12,7 @@ import './(css)/terms.css'
 import './(css)/sports-leagues.css'
 
 import { CounterContextProvider } from "./context/bets.context";
+import Head from 'next/head'
 
 
 export const metadata = {
@@ -22,6 +23,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
 	return (
 		<html lang="en" className="box-border">
+			<Head>
+				<link rel="icon" href="/ld-logo-graphic-yellow.png" />
+			</Head>
 			<body className="min-h-screen bg-dark text-white font-sans" >
 				<div id="root">
 					<CounterContextProvider>

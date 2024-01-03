@@ -28,6 +28,7 @@ export default function Page() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [phoneNumber, setPhoneNumber] = useState('');
+	const [birthday, setBirthday] = useState('');
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
 
@@ -55,6 +56,19 @@ export default function Page() {
 	};
 
 	const validateForm = () => {
+		// birthday validation
+		const splitBirthday = birthday.split("-")
+		const bdayDate = new Date(parseInt(splitBirthday[0]), parseInt(splitBirthday[1]), parseInt(splitBirthday[2]))
+		const now = Date.now()
+
+		const diffMillis = now - bdayDate
+		const diffYears = diffMillis / (1000 * 3600 * 24 * 365)
+
+		if (diffYears < 18) {
+			setError("Must be 18+ to join Lemondrop")
+			return false
+		}
+
 		const phoneRegex = /^\(\d{3}\) \d{3}-\d{4}$/;
 
 		if (!firstName || !lastName || !email || !password || !phoneNumber) {
@@ -80,7 +94,8 @@ export default function Page() {
 
 		try {
 			setLoading(true);
-			const url = "https://lemondrop-api.onrender.com/api/users/signup"
+			// const url = "https://lemondrop-api.onrender.com/api/users/signup"
+			const url = "http://localhost:8080/api/users/signup"
 			const response = await axios.post(url, {
 				firstName,
 				lastName,
@@ -178,21 +193,42 @@ export default function Page() {
 									required
 								/>
 							</div>
-							<div>
-								<label htmlFor="phoneNumber" className="block mb-2 text-sm font-bold text-gray-100">
-									Phone Number
-								</label>
-								<input
-									type="tel"
-									name="phoneNumber"
-									id="phoneNumber"
-									value={phoneNumber}
-									onChange={handlePhoneNumberChange}
-									className="bg-gray-900 text-white border border-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-ldPurple focus:outline-none block w-full p-2.5"
-									placeholder="(123) 456-7890"
-									required
-								/>
+
+							<div className="flex space-x-2">
+
+								<div className="w-1/2">
+									<label htmlFor="phoneNumber" className="block mb-2 text-sm font-bold text-gray-100">
+										Phone Number
+									</label>
+									<input
+										type="tel"
+										name="phoneNumber"
+										id="phoneNumber"
+										value={phoneNumber}
+										onChange={handlePhoneNumberChange}
+										className="bg-gray-900 text-white border border-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-ldPurple focus:outline-none block w-full p-2.5"
+										placeholder="(123) 456-7890"
+										required
+									/>
+								</div>
+
+								<div className="w-1/2" data-te-datepicker-init
+									data-te-input-wrapper-init >
+									<label htmlFor="birthday" className="block mb-2 text-sm font-bold text-gray-100 ">
+										Birthday
+									</label>
+									<input type="date"
+										className="bg-gray-900 text-white border border-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-ldPurple focus:outline-none block w-full p-2.5"
+										value={birthday}
+										required
+										onChange={e => setBirthday(e.target.value)}
+										id="start" name="birthday" />
+
+								</div>
+
 							</div>
+
+
 							<button
 								type="submit"
 								className="w-full bg-ldPurple focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"

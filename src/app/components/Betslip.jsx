@@ -32,6 +32,7 @@ const Betslip = () => {
 	}, [])
 
 	const deleteAllBets = () => {
+		dispatch({ type: "deleteAll" })
 		return
 	}
 
@@ -79,15 +80,17 @@ const Betslip = () => {
 		setSubmitting(true);
 		const allBets = []
 
+		// get league id 
+
 		// parlay
 		if (isParlay) {
 			const selections = []
 			state.bets.forEach((bet) => {
 				const betSelection = {
 					bet_type: bet.betType,
-					prop_type: "",
-					prop_name: "",
-					player_name: "",
+					prop_type: bet.propType,
+					prop_name: bet.propName,
+					player_name: bet.playerName,
 					bet_on: bet.betOnTeam,
 					bet_point: bet.point,
 					odds: bet.price,
@@ -125,9 +128,9 @@ const Betslip = () => {
 					selections: [
 						{
 							bet_type: bet.betType,
-							prop_type: "",
-							prop_name: "",
-							player_name: "",
+							prop_type: bet.propType,
+							prop_name: bet.propName,
+							player_name: bet.playerName,
 							bet_on: bet.betOnTeam,
 							bet_point: bet.point,
 							odds: bet.price,
@@ -169,15 +172,10 @@ const Betslip = () => {
 
 	return (
 		<div className="">
-
-			{/* <div className="bet-slip  "> */}
 			<div className="w-full flex-col justify-between h-full overflow-hidden hidden lg:flex">
-				<div className="bet-slip-content">
+				<div className=" p-4 pb-0  bg-bgdGray "  >
 
-
-
-					<div className="bet-slip-header">
-
+					<div className="">
 						<div className="bet-slip-header-main mb-4">
 							<div className="bet-slip-header-count">
 								{state.bets.length}
@@ -196,7 +194,7 @@ const Betslip = () => {
 					</div>
 
 					{(!userIsSignedIn) && (
-						<div className="bg-darkGray py-16 border-b border-t border-gray-600 flex justify-center ">
+						<div className="bg-bgdGray py-16 border-t border-gray-600 flex justify-center ">
 							<Link href="/signup">
 								<h6 className="text-gray-700 underline text-xl">JOIN LEMONDROP</h6>
 							</Link>
@@ -204,15 +202,15 @@ const Betslip = () => {
 					)}
 
 					{userIsSignedIn && state.bets.length === 0 && (
-						<div className="bg-darkGray py-16 border-b border-t border-gray-600 flex justify-center">
+						<div className="bg-bgdGray py-16 border-t border-gray-600 flex justify-center">
 							<h6 className="text-gray-700  text-xl">EMPTY BETSLIP</h6>
 						</div>
 					)}
 
 					{userIsSignedIn && state.bets.length > 0 && (
-						<div className="bet-slip-option-container">
+						<div className="bg-bgdGray pt-4">
 							{isParlay && state.bets.length >= 2 && (
-								<div className="parlay-options" style={{ borderBottom: '1px solid #444' }}>
+								<div className="parlay-options" >
 									<div className="parlay-odds-display">
 										<p className="font-bold text-white">PARLAY ODDS</p>
 										<p className="font-bold text-gray-400">{parlayOdds}</p>
@@ -228,7 +226,8 @@ const Betslip = () => {
 												id="wager"
 												onChange={(e) => wagerChanged(e)}
 												value={isNaN(parlayWagerAmt) || parlayWagerAmt > 300 ? 300 : parlayWagerAmt}
-												className="border-none focus:ring-transparent outline-none text-gray-900 text-sm rounded-lg block w-full p-2.5"
+												// className="border-none focus:ring-transparent outline-none text-gray-900 text-sm rounded-lg block w-full p-2.5"
+												className="border border-gray-600 bg-bgdGray focus:ring-transparent outline-none text-gray-100 text-sm rounded-lg block w-full p-2.5"
 												placeholder={(isNaN(parseFloat(parlayWagerAmt)) || parseFloat(parlayWagerAmt) > 300 ? 300 : parseFloat(parlayWagerAmt)).toFixed(2)}
 												style={{ appearance: 'none' }}
 												required
@@ -317,7 +316,7 @@ const Betslip = () => {
 
 					{mobileOpen && (
 						// <div className="absolute left-0 top-0 w-full h-full overflow-clip">
-						<Backdrop open={mobileOpen} className="mobile-bet-slip-option-container">
+						<Backdrop open={mobileOpen} className="">
 							<div className="mobile-bet-slip-open">
 								<div className="close-icon-container" onClick={() => setMobileOpen(false)}>
 									<p className="font-bold text-lg text-gray-700">BETSLIP</p>
@@ -364,7 +363,8 @@ const Betslip = () => {
 														id="wager"
 														onChange={(e) => wagerChanged(e)}
 														value={isNaN(parlayWagerAmt) || parlayWagerAmt > 300 ? 300 : parlayWagerAmt}
-														className="border-none focus:ring-transparent outline-none text-gray-900 text-sm rounded-lg block w-full p-2.5"
+														// className="border-none focus:ring-transparent outline-none text-gray-900 text-sm rounded-lg block w-full p-2.5"
+														className="border border-gray-600 bg-bgdGray focus:ring-transparent outline-none text-gray-100 text-sm rounded-lg block w-full p-2.5"
 														placeholder={(isNaN(parseFloat(parlayWagerAmt)) || parseFloat(parlayWagerAmt) > 300 ? 300 : parseFloat(parlayWagerAmt)).toFixed(2)}
 														style={{ appearance: 'none' }}
 														required
@@ -386,7 +386,7 @@ const Betslip = () => {
 
 								<div className={"mobile-bet-slip-open-actions"}>
 									<button
-										className="w-full border bg-white text-red-500 font-bold py-2 my-4"
+										className="w-full border border-red-500 text-red-500 font-bold py-2 my-2"
 										onClick={handleMobileDeleteAll}
 									>
 										<span className="mr-2">
@@ -408,11 +408,17 @@ const Betslip = () => {
 										Delete All
 									</button>
 									<button
-										className="w-full bg-yellow text-dark font-bold py-2"
+										className="w-full bg-yellow text-dark font-bold py-2 my-2"
 										onClick={submitBets}
 										disabled={submitting || !((!isParlay) || (isParlay && state.bets.length >= 2 && parlayWagerAmt > 0))}
 									>
 										Submit Bets
+									</button>
+									<button
+										className="w-full underline text-gray-500 font-bold py-2 my-2"
+										onClick={() => setMobileOpen(false)}
+									>
+										Close Betslip
 									</button>
 								</div>
 							</div>
@@ -435,16 +441,17 @@ const BetslipOption = ({ bet, isParlay }) => {
 	const [amount, setAmount] = useState(bet.amount);
 	const [toWinAmount, setToWinAmount] = useState((Math.floor(100 * amount * decimalOdds) / 100).toFixed(2));
 
+
 	useEffect(() => {
 		setAmount(bet.amount)
 	}, [bet])
 
 	const removeBet = () => {
-		dispatch({ betOnTeam: bet.betOnTeam, betType: bet.betType, gameId: bet.gameId, gameHash: bet.gameHash, index: bet.index, amount: bet.amount })
+		dispatch({ betOnTeam: bet.betOnTeam, betType: bet.betType, propName: bet.propName, playerName: bet.playerName, gameId: bet.gameId, gameHash: bet.gameHash, index: bet.index, amount: bet.amount })
 	}
 
 	const updateBet = (amt) => {
-		dispatch({ type: "update", betOnTeam: bet.betOnTeam, betType: bet.betType, gameId: bet.gameId, gameHash: bet.gameHash, index: bet.index, amount: amt });
+		dispatch({ type: "update", betOnTeam: bet.betOnTeam, betType: bet.betType, playerName: bet.playerName, propName: bet.propName, gameId: bet.gameId, gameHash: bet.gameHash, index: bet.index, amount: amt });
 	}
 
 	const wagerChanged = (e) => {
@@ -467,17 +474,21 @@ const BetslipOption = ({ bet, isParlay }) => {
 			<div className="betslip-option-container w-full">
 
 				<div className="flex items-start justify-between ">
-					<div >
+					<div  >
 						<div className="">
 							<p className="text-sm font-bold">{bet.betOnTeam}</p>
-							<p className="text-xs text-gray-700">{bet.betType.toUpperCase()}</p>
+							{
+								bet.betType && typeof bet.betType === 'string' &&
+								<p className="text-xs text-gray-700">{bet.betType == "prop" ? bet.propName.toUpperCase() : bet.betType.toUpperCase()}</p>
+							}
+							<p className="text-xs text-gray-500 mt-1 mb-2 " >{bet.awayTeam} @ {bet.homeTeam} </p>
 						</div>
+
 					</div>
 
 					<div >
 						<p className="text-sm font-bold  text-gray-400 ">{bet.price}</p>
 					</div>
-
 				</div>
 
 				{!isParlay && (
@@ -490,7 +501,8 @@ const BetslipOption = ({ bet, isParlay }) => {
 								id="wager"
 								onChange={(e) => wagerChanged(e)}
 								value={isNaN(amount) || amount > 300 ? 300 : amount}
-								className="border-none bg-gray-800 focus:ring-transparent outline-none text-gray-100 text-sm rounded-lg block w-full p-2.5"
+								// className="border-none bg-gray-800 focus:ring-transparent outline-none text-gray-100 text-sm rounded-lg block w-full p-2.5"
+								className="border border-gray-600 bg-bgdGray focus:ring-transparent outline-none text-gray-100 text-sm rounded-lg block w-full p-2.5"
 								placeholder={(isNaN(parseFloat(amount)) || parseFloat(amount) > 300 ? 300 : parseFloat(amount)).toFixed(2)}
 								style={{ appearance: 'none' }}
 								required
