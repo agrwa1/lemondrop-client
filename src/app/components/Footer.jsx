@@ -8,7 +8,7 @@ const Footer = () => {
 			<div className="grid grid-cols- md:grid-cols-3 gap-4">
 
 				<div className="">
-					<Link href="/bets" passHref>
+					<Link href="/bets" passHref prefetch={false} >
 						<div className="cursor-pointer no-underline ">
 							<div className="footer-grid-item">
 								<WordLogo />
@@ -21,12 +21,12 @@ const Footer = () => {
 					<div className="footer-grid-item">
 						<h6 className="font-bold">BETTING</h6>
 						<div className="my-2 cursor-pointer">
-							<Link href="/terms" passHref>
+							<Link href="/terms" passHref prefetch={false} >
 								<p className="text-sm text-gray-500 no-underline ">Terms of Services</p>
 							</Link>
 						</div>
 						<div className="my-2 cursor-pointer">
-							<Link href="/privacy" passHref>
+							<Link href="/privacy" passHref prefetch={false} >
 								<p className="text-sm text-gray-500 no-underline ">Privacy Policy</p>
 							</Link>
 						</div>

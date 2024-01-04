@@ -34,12 +34,12 @@ export default function Header() {
 const AuthedComp = () => {
 	return (
 		<div className="flex justify-between" >
-			<Link href="/leagues/all">
+			<Link href="/leagues/all" prefetch={false} >
 				<div className=" py-2 rounded-xl hover:underline px-1 cursor-pointer text-lightGray font-semibold mr-4 " >
 					Leagues
 				</div>
 			</Link>
-			<Link href="/bets">
+			<Link href="/bets" prefetch={false} >
 				<div className=" py-2 rounded-xl hover:underline px-1 cursor-pointer text-lightGray font-semibold " >
 					My Bets
 				</div>
@@ -51,12 +51,12 @@ const AuthedComp = () => {
 const UnAuthedComp = () => {
 	return (
 		<div className="flex justify-between">
-			<Link href="/leagues/all">
+			<Link href="/leagues/all" prefetch={false} >
 				<div className=" py-2 rounded-xl hover:underline px-1 cursor-pointer text-lightGray font-semibold mr-4" >
 					Leagues
 				</div>
 			</Link>
-			<Link href="/">
+			<Link href="/" prefetch={false} >
 				<div className=" py-2 rounded-xl hover:underline px-1 cursor-pointer text-lightGray font-semibold " >
 					Join Now
 				</div>

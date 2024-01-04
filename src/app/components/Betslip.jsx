@@ -195,7 +195,7 @@ const Betslip = () => {
 
 					{(!userIsSignedIn) && (
 						<div className="bg-bgdGray py-16 border-t border-gray-600 flex justify-center ">
-							<Link href="/signup">
+							<Link href="/signup" prefetch={false} >
 								<h6 className="text-gray-700 underline text-xl">JOIN LEMONDROP</h6>
 							</Link>
 						</div>

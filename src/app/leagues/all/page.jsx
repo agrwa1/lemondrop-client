@@ -33,7 +33,7 @@ export default async function Page() {
 }
 const LeagueSelector = ({ league }) => {
 	return (
-		<Link href={`/games/${league.league_id}`} className=" ">
+		<Link href={`/games/${league.league_id}`} className=" " prefetch={false} >
 			<div className="px-4 py-4 my-3 bg-bgdGray">
 				<p className="font-bold text-base text-white">{league.league_name}</p>
 				{/* <ArrowForwardIosIcon className="text-base" /> */}

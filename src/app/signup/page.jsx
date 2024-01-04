@@ -276,7 +276,7 @@ export default function Page() {
 								Sign up
 							</button>
 							<p className="text-sm font-light text-gray-500">
-								Already have an account? <Link href="/login" className="font-medium text-ldPurple underline">Log in</Link>
+								Already have an account? <Link href="/login" className="font-medium text-ldPurple underline" prefetch={false} >Log in</Link>
 							</p>
 						</form>
 					</div>
