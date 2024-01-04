@@ -496,7 +496,7 @@ const BetslipOption = ({ bet, isParlay }) => {
 						<div className="w-full h-full justify-center flex flex-col items-start ">
 							<input
 								type="number"
-								inputmode="numeric"
+								inputMode="numeric"
 								min="0"
 								max="300"
 								id="wager"
