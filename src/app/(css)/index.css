@@ -79,9 +79,9 @@
 	background-color: #138001;
 }
 
-.login-btn:hover {
+/* .login-btn:hover {
 	background-color: #1380ff;
-}
+} */
 
 .link-reset {
 	text-decoration: none;
@@ -119,9 +119,9 @@
 	border-radius: 10px;
 }
 
-.sidebar-link:hover {
+/* .sidebar-link:hover {
 	background-color: #222;
-}
+} */
 
 .sidebar-link-active {
 	background-color: #5b40f6;
@@ -335,17 +335,17 @@
 	cursor: pointer;
 }
 
-.bets-outcome-option:hover {
+/* .bets-outcome-option:hover {
 	background-color: #222;
-}
+} */
 
 .bets-outcome-option-active {
 	background-color: #5b40f6;
 }
 
-.bets-outcome-option-active:hover {
+/* .bets-outcome-option-active:hover {
 	background-color: #5b40f6;
-}
+} */
 
 .hero-email-list {
 	width: 100%
