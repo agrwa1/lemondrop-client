@@ -1,3 +1,4 @@
+// _app.js or _app.jsx
 
 import 'fastclick';
 import { useEffect } from 'react';
@@ -7,7 +8,18 @@ function MyApp({ Component, pageProps }) {
 	const router = useRouter();
 
 	useEffect(() => {
-		// Ensure FastClick is attached to the document body after a route change
+		if ('addEventListener' in document) {
+			document.addEventListener(
+				'DOMContentLoaded',
+				function () {
+					// Attach FastClick to eliminate the 300ms delay on touch events
+					FastClick.attach(document.body);
+				},
+				false
+			);
+		}
+
+		// Attach FastClick to the document body after a route change
 		const handleRouteChange = () => {
 			if (window.FastClick) {
 				window.FastClick.attach(document.body);
@@ -23,6 +35,5 @@ function MyApp({ Component, pageProps }) {
 
 	return <Component {...pageProps} />;
 }
-
 
 export default MyApp;

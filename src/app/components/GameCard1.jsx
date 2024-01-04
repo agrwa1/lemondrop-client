@@ -132,9 +132,9 @@ export default function GameCard({ game, raw }) {
 					{!raw && (
 						<div className="flex items-center justify-between w-full mb-2 px-1 ">
 							<p className="text-sm  text-gray-500">{startTime}</p>
-							<Link href={`/games/${game.league_id}/${game.id}`} className="link-reset">
+							<a href={`/games/${game.league_id}/${game.id}`} className="link-reset">
 								<p className="text-sm text-gray-500 underline">More Wagers</p>
-							</Link>
+							</a>
 						</div>
 					)}
 				</div>
