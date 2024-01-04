@@ -8,8 +8,8 @@ import BetsSection from './BetsSection';
 
 
 export default function Page() {
-	const [user, setUser] = useState({
-	})
+	const [user, setUser] = useState({})
+	const [referralCode, setReferralCode] = useState("")
 
 	useEffect(() => {
 		getAuth().then(u => {
@@ -17,7 +17,10 @@ export default function Page() {
 				redirect('/')
 			}
 			setUser(u)
+			setReferralCode(u.referral_code)
+			console.log(u)
 		})
+
 	}, [])
 
 
@@ -52,6 +55,7 @@ export default function Page() {
 
 			<div className="">
 				<FundsSection user={user} />
+				<ShareButton shareUrl={`https://lemondrop.ag/signup?referral_code=${referralCode}`} shareTitle="Lemondrop Sportsbook" />
 				<BetsSection />
 			</div>
 		</div>
@@ -94,9 +98,8 @@ const FundsSection = ({ user }) => {
 	};
 
 	return (
-		<div className="flex w-full mt-6 ">
+		<div className="w-full mt-6 ">
 			<div className="grid grid-cols-2 gap-2 w-full ">
-
 				<form
 					action={`https://lemondrop-api.onrender.com/api/payments/checkout/${user.user_id}`}
 					method="post"
@@ -106,15 +109,12 @@ const FundsSection = ({ user }) => {
 						Add Funds
 					</button>
 				</form>
-
-
-
 				<button>
 
 				</button>
 			</div>
 
-			<ShareButton shareUrl="https://lemondrop.ag" shareTitle="Lemondrop Sportsbook" />
+
 
 			{snackbarMessage && (
 				<div className="fixed bottom-0 left-0 p-4 w-full">
@@ -128,7 +128,19 @@ const FundsSection = ({ user }) => {
 };
 
 
+
 const ShareButton = ({ shareUrl, shareTitle }) => {
+	const [shareOrCopy, setShareOrCopy] = useState('');
+	const [showPopup, setShowPopup] = useState(false);
+
+	useEffect(() => {
+		if (navigator.share) {
+			setShareOrCopy('share');
+		} else {
+			setShareOrCopy('copy');
+		}
+	}, []);
+
 	const handleShareClick = async () => {
 		try {
 			if (navigator.share) {
@@ -138,18 +150,40 @@ const ShareButton = ({ shareUrl, shareTitle }) => {
 					url: shareUrl,
 				});
 			} else {
-				// Fallback for browsers that do not support the Web Share API
-				// You can implement your own share modal or other logic here
-				alert('Web Share API is not supported in this browser.');
+				await copyToClipboard(shareUrl);
+				setShowPopup(true);
+
+				// Hide the popup after 2 seconds (adjust as needed)
+				setTimeout(() => {
+					setShowPopup(false);
+				}, 2000);
 			}
 		} catch (error) {
 			console.error('Error sharing:', error);
 		}
 	};
 
+	const copyToClipboard = async (text) => {
+		try {
+			await navigator.clipboard.writeText(text);
+			console.log('Link copied to clipboard');
+		} catch (error) {
+			const textarea = document.createElement('textarea');
+			textarea.value = text;
+			document.body.appendChild(textarea);
+			textarea.select();
+			document.execCommand('copy');
+			document.body.removeChild(textarea);
+			console.log('Link copied to clipboard (fallback)');
+		}
+	};
+
 	return (
-		<button onClick={handleShareClick}>
-			Share with Friends
-		</button>
+		<div className="relative w-full flex justify-center p-4 my-4 border border-white rounded-lg cursor-pointer ">
+			<button onClick={handleShareClick} className="font-bold text-gray-300" >
+				{shareOrCopy === 'copy' ? (showPopup ? "Copied To Clipboard!" : "Copy Referral Link to Invite Friends") : 'Share Referral Link with Friends'}
+			</button>
+
+		</div>
 	);
 };

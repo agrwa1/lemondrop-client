@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import axios from 'axios';
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams, redirect } from 'next/navigation'
 import getAuth from '../functions/getAuth'
 
 
@@ -11,17 +11,7 @@ import getAuth from '../functions/getAuth'
 export default function Page() {
 	let router
 	router = useRouter()
-
-	useEffect(() => {
-		getAuth().then(res => {
-			if (JSON.stringify(res) !== '{}' && typeof window !== 'undefined') {
-				// user is signed in
-				router.push("/bets")
-			}
-		})
-	}, [])
-
-
+	const searchParams = useSearchParams()
 
 	const [firstName, setFirstName] = useState('');
 	const [lastName, setLastName] = useState('');
@@ -31,6 +21,39 @@ export default function Page() {
 	const [birthday, setBirthday] = useState('');
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
+	const [referredFromCode, setReferredFromCode] = useState('');
+
+	useEffect(() => {
+		getAuth().then(res => {
+			if (JSON.stringify(res) !== '{}' && typeof window !== 'undefined') {
+				// user is signed in
+				// router.push("/bets")
+				redirect("/bets")
+			}
+		})
+	}, [])
+
+	// get code
+	useEffect(() => {
+		const code = searchParams.get('referral_code')
+		if (!code || code.length !== 6) {
+			redirect('/')
+		}
+		setReferredFromCode(convertLettersToUppercase(code))
+	}, [])
+
+	function convertLettersToUppercase(inputString) {
+		let result = '';
+		for (let i = 0; i < inputString.length; i++) {
+			const char = inputString.charAt(i);
+			if (/[a-zA-Z]/.test(char)) {
+				result += char.toUpperCase();
+			} else {
+				result += char;
+			}
+		}
+		return result;
+	}
 
 
 	// Function to format the phone number as users type
@@ -97,11 +120,12 @@ export default function Page() {
 			const url = "https://lemondrop-api.onrender.com/api/users/signup"
 			// const url = "http://localhost:8080/api/users/signup"
 			const response = await axios.post(url, {
-				firstName,
-				lastName,
-				email,
-				password,
-				phoneNumber: phoneNumber.replace(/\D/g, ''), // Remove non-digit characters before sending to the server
+				first_name: firstName,
+				last_name: lastName,
+				email: email,
+				password: password,
+				referred_from_code: referredFromCode,
+				phone_number: phoneNumber.replace(/\D/g, ''), // Remove non-digit characters before sending to the server
 			});
 
 			if (typeof window !== 'undefined') {
@@ -212,19 +236,35 @@ export default function Page() {
 									/>
 								</div>
 
-								<div className="w-1/2" data-te-datepicker-init
-									data-te-input-wrapper-init >
-									<label htmlFor="birthday" className="block mb-2 text-sm font-bold text-gray-100 ">
-										Birthday
+								<div className="w-1/2">
+									<label htmlFor="referral_code" className="block mb-2 text-sm font-bold text-gray-100">
+										Referral Code
 									</label>
-									<input type="date"
+									<input
+										type="text"
+										name="referral_code"
+										id="referral_code"
+										value={referredFromCode}
+										placeholder="Referral Code"
+										disabled
 										className="bg-gray-900 text-white border border-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-ldPurple focus:outline-none block w-full p-2.5"
-										value={birthday}
 										required
-										onChange={e => setBirthday(e.target.value)}
-										id="start" name="birthday" />
-
+									/>
 								</div>
+
+
+							</div>
+							<div className="w-full" data-te-datepicker-init
+								data-te-input-wrapper-init >
+								<label htmlFor="birthday" className="block mb-2 text-sm font-bold text-gray-100 ">
+									Birthday
+								</label>
+								<input type="date"
+									className="bg-gray-900 placeholder-gray-400 text-white border border-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-ldPurple focus:outline-none block w-full p-2.5"
+									value={birthday}
+									required
+									onChange={e => setBirthday(e.target.value)}
+									id="start" name="birthday" />
 
 							</div>
 

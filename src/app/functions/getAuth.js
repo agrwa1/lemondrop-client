@@ -15,15 +15,11 @@ export default function getAuth() {
 		method: 'POST',
 		headers: config.headers,
 	}).then((x) => x.json());
-	// .catch((e) => {});
 
 	// let res = fetch('http://localhost:8080/api/users/login', {
-	// 	method: "POST",
-	// 	headers: {
-	// 		'Bearer-Token': jwt,
-	// 	},
-	// }).then(x => x.json())
-	// res.then(data => console.log(data))
+	// 	method: 'POST',
+	// 	headers: config.headers,
+	// }).then((x) => x.json());
 
 	return res;
 }
