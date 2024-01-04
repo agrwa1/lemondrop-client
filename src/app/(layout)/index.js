@@ -105,7 +105,7 @@ export default async function Layout({ children }) {
 const SidebarLink = ({ link }) => {
 	const { name, photoUrl, endpoint } = link;
 	return (
-		<Link href={endpoint} className='' passHref legacyBehavior>
+		<Link href={endpoint}>
 			<div
 				className={`h-full flex md:flex-row flex-col justify-center items-center rounded-lg md:border-0 md:justify-start md:px-0 py-1 ${
 					photoUrl ? 'px-4' : 'px-1'
