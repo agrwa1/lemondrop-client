@@ -106,7 +106,8 @@ const SidebarLink = ({ link }) => {
 	const { name, photoUrl, endpoint } = link;
 	return (
 		<a>
-			<Link href={endpoint} passhHref prefetch={false}>
+			<Link href={endpoint} passhHref>
+				{/* <Link href={endpoint} passhHref prefetch={false}> */}
 				<a>
 					<div
 						className={`h-full flex md:flex-row flex-col justify-center items-center rounded-lg md:border-0 md:justify-start md:px-0 py-1 ${
