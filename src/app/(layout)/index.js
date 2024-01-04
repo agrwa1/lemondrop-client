@@ -105,7 +105,12 @@ export default async function Layout({ children }) {
 const SidebarLink = ({ link }) => {
 	const { name, photoUrl, endpoint } = link;
 	return (
-		<Link href={endpoint} className='hover:cursor-pointer '>
+		<Link
+			href={endpoint}
+			className='hover:cursor-pointer'
+			passHref
+			legacyBehavior
+		>
 			<a>
 				<div
 					className={`h-full flex md:flex-row flex-col justify-center items-center rounded-lg md:border-0 md:justify-start md:px-0 py-1 ${
