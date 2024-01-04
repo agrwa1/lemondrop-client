@@ -1,8 +1,10 @@
-// _app.js or _app.jsx
+// _app.jsx
 
-import 'fastclick';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
+
+// Import FastClick
+import FastClick from 'fastclick';
 
 function MyApp({ Component, pageProps }) {
 	const router = useRouter();
