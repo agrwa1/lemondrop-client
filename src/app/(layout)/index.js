@@ -107,7 +107,7 @@ const SidebarLink = ({ link }) => {
 	return (
 		<Link
 			href={endpoint}
-			className='md:hover:cursor-pointer'
+			className=' md:hover:cursor-pointer'
 			passHref
 			legacyBehavior
 		>
@@ -128,7 +128,7 @@ const SidebarLink = ({ link }) => {
 					<h3
 						className={`${
 							photoUrl
-								? ' md:ml-2 text-sm text-gray-300 font-semibold '``
+								? ' md:ml-2 text-sm text-gray-300 font-semibold '
 								: 'text-sm text-gray-300 font-bold '
 						}  whitespace-nowrap mt-1 md:mt-0`}
 					>
