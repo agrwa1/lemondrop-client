@@ -32,7 +32,7 @@ export default function Home() {
 					<div className="hero-left">
 						<h3 className="hero-main-topper">The Ball Is In Your Hands.</h3>
 						<h1 className="hero-main-title">BET WITH LEMONDROP.</h1>
-						<h2 className="hero-main-subtitle">Join the Lemondrop Waitlist. Fill Out Your Email And We'll Let You Know When You're In.</h2>
+						<h2 className="hero-main-subtitle">Right Now, Lemondrop is Only Accepting Users with Referral Codes. So Find a Friend Who's In Or Join the Lemondrop Waitlist. Fill Out Your Email And We'll Let You Know When You're In.</h2>
 						<div className="hero-email-list">
 							{/* <TextField ref={inputRef} value={email} onChange={handleEmailChange} id="outlined-basic" sx={{ marginRight: '5em' }} label="Email" variant="outlined" className="hero-email-input" /> */}
 							{/* <button onClick={handleSubmit} className="hero-email-submit" disabled={!emailValid || submitting} >Submit Now</button> */}

@@ -141,7 +141,7 @@ const MarketAccordion = ({ marketName, children }) => {
 };
 
 const PropItem = ({ prop, marketName, home, away, gameId }) => {
-	const [active, setActive] = useState(true)
+	const [active, setActive] = useState(false)
 	const { state, dispatch } = useContext(CounterContext)
 	const [overActive, setOverActive] = useState(false)
 	const [underActive, setUnderActive] = useState(false)

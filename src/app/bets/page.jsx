@@ -55,7 +55,7 @@ export default function Page() {
 
 			<div className="">
 				<FundsSection user={user} />
-				<ShareButton shareUrl={`https://lemondrop.ag/signup?referral_code=${referralCode}`} shareTitle="Lemondrop Sportsbook" />
+				<ShareButton shareUrl={`https://lemondrop.ag/signup?referral_code=${referralCode}`} shareTitle="Join Lemondrop Sportsbook!" />
 				<BetsSection />
 			</div>
 		</div>
@@ -146,7 +146,7 @@ const ShareButton = ({ shareUrl, shareTitle }) => {
 			if (navigator.share) {
 				await navigator.share({
 					title: shareTitle,
-					text: 'Check out this link!',
+					text: "Join the Fun on Lemondrop Sportsbook Today!",
 					url: shareUrl,
 				});
 			} else {
