@@ -107,48 +107,35 @@ const SidebarLink = ({ link }) => {
 	return (
 		<Link
 			href={endpoint}
-			className='hover:cursor-pointer'
+			className='md:hover:cursor-pointer'
 			passHref
 			legacyBehavior
 		>
-			{name}
+			<a>
+				<div
+					className={`h-full flex md:flex-row flex-col justify-center items-center rounded-lg md:border-0 md:justify-start md:px-0 py-1 ${
+						photoUrl ? 'px-4' : 'px-1'
+					} `}
+				>
+					{photoUrl && (
+						<img
+							src={photoUrl}
+							className='p-1 bg-dark4 rounded-3xl md:bg-none'
+							width='24'
+						></img>
+					)}
+					{/* <Image src={league.url} width={50} /> */}
+					<h3
+						className={`${
+							photoUrl
+								? ' md:ml-2 text-sm text-gray-300 font-semibold '``
+								: 'text-sm text-gray-300 font-bold '
+						}  whitespace-nowrap mt-1 md:mt-0`}
+					>
+						{name}
+					</h3>
+				</div>
+			</a>
 		</Link>
 	);
 };
-// const SidebarLink = ({ link }) => {
-// 	const { name, photoUrl, endpoint } = link;
-// 	return (
-// 		<Link
-// 			href={endpoint}
-// 			className='hover:cursor-pointer'
-// 			passHref
-// 			legacyBehavior
-// 		>
-// 			<a>
-// 				<div
-// 					className={`h-full flex md:flex-row flex-col justify-center items-center rounded-lg md:border-0 md:justify-start md:px-0 py-1 ${
-// 						photoUrl ? 'px-4' : 'px-1'
-// 					} `}
-// 				>
-// 					{photoUrl && (
-// 						<img
-// 							src={photoUrl}
-// 							className='p-1 bg-dark4 rounded-3xl md:bg-none'
-// 							width='24'
-// 						></img>
-// 					)}
-// 					{/* <Image src={league.url} width={50} /> */}
-// 					<h3
-// 						className={`${
-// 							photoUrl
-// 								? ' md:ml-2 text-sm text-gray-300 font-semibold '
-// 						``		: 'text-sm text-gray-300 font-bold '
-// 						}  whitespace-nowrap mt-1 md:mt-0`}
-// 					>
-// 						{name}
-// 					</h3>
-// 				</div>
-// 			</a>
-// 		</Link>
-// 	);
-// };
