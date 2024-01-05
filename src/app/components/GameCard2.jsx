@@ -68,7 +68,7 @@ export default function GameCard({ game, raw }) {
 		<div className="w-full my-2 px-3 py-2 border-darkGray" style={{ backgroundColor: "#131313" }} >
 			{(!raw && game.props) && (
 				<div className="flex justify-between w-full">
-					<Link href={`/games/${game.league_id}/${game.id}`} className="font-bold no-underline text-blue-500 text-xs">
+					<Link href={`/games/${game.league_id}/${game.id}`} className="font-bold no-underline text-blue-500 text-xs" prefetch={false} >
 						More Wagers
 					</Link>
 				</div>

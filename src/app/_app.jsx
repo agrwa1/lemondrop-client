@@ -1,10 +1,7 @@
-// _app.jsx
-
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-
-// Import FastClick
 import FastClick from 'fastclick';
+import { CounterContextProvider } from './context/bets.context';
 
 function MyApp({ Component, pageProps }) {
 	const router = useRouter();
@@ -35,7 +32,12 @@ function MyApp({ Component, pageProps }) {
 		};
 	}, [router]);
 
-	return <Component {...pageProps} />;
+	// Wrap your entire application with the CounterContextProvider
+	return (
+		<CounterContextProvider>
+			<Component {...pageProps} />
+		</CounterContextProvider>
+	);
 }
 
 export default MyApp;

@@ -27,11 +27,11 @@ export default function RootLayout({ children }) {
 				<link rel="icon" href="/ld-logo-graphic-yellow.png" />
 			</Head>
 			<body className="min-h-screen bg-dark text-white font-sans" >
-				<div id="root">
-					<CounterContextProvider>
+				<CounterContextProvider >
+					<div id="root">
 						{children}
-					</CounterContextProvider>
-				</div>
+					</div>
+				</CounterContextProvider>
 			</body>
 		</html>
 	)

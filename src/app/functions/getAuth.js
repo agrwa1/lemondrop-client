@@ -11,15 +11,15 @@ export default function getAuth() {
 		},
 	};
 
-	let res = fetch('https://lemondrop-api.onrender.com/api/users/login', {
-		method: 'POST',
-		headers: config.headers,
-	}).then((x) => x.json());
-
-	// let res = fetch('http://localhost:8080/api/users/login', {
+	// let res = fetch('https://lemondrop-api.onrender.com/api/users/login', {
 	// 	method: 'POST',
 	// 	headers: config.headers,
 	// }).then((x) => x.json());
+
+	let res = fetch('http://localhost:8080/api/users/login', {
+		method: 'POST',
+		headers: config.headers,
+	}).then((x) => x.json());
 
 	return res;
 }

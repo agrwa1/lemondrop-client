@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, } from 'react'
 import getAuth from '../functions/getAuth'
-import { redirect } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 import axios from 'axios'
 import BetsSection from './BetsSection';
 
@@ -19,12 +19,17 @@ export default function Page() {
 			setUser(u)
 			setReferralCode(u.referral_code)
 			console.log(u)
+
+			if (!u.details_submitted) {
+				setShowFinishSignup(true)
+			}
 		})
 
 	}, [])
 
-
-
+	const handleLogout = () => {
+		localStorage.setItem("jwt", "")
+	}
 
 	return (
 		<div>
@@ -47,11 +52,17 @@ export default function Page() {
 					</div>
 
 					<div className="p-5 bg-white rounded-lg shadow">
-						<p className="text-gray-500 text-md">Profit</p>
-						<p className="text-xl font-bold text-black">${parseFloat(user.total_profit).toFixed(2)}</p>
+						<p className="text-gray-500 text-md">Availability</p>
+						<p className="text-xl font-bold text-black">${parseFloat(user.current_availability).toFixed(2)}</p>
 					</div>
 				</div>
 			}
+
+
+
+			<div className="border border-white p-2" onClick={handleLogout}>
+				Logout
+			</div>
 
 			<div className="">
 				<FundsSection user={user} />

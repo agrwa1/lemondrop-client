@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useContext, useState, useEffect } from 'react'
 
 // import { Box, Button, Typography, Grid, Table, TableBody } from '@mui/material'
@@ -16,6 +18,7 @@ export default function GameCard({ game, raw }) {
 	// internal active buttons logic
 	const [activeArray, setActiveArray] = useState([false, false, false, false, false, false])
 	const { state, dispatch } = useContext(CounterContext)
+	const href = `/games/${game.league_id}/${game.id}`
 
 	useEffect(() => {
 		// set all to false and then iterate over if game id and away or bet type matches
@@ -132,7 +135,7 @@ export default function GameCard({ game, raw }) {
 					{!raw && (
 						<div className="flex items-center justify-between w-full mb-2 px-1 ">
 							<p className="text-sm  text-gray-500">{startTime}</p>
-							<a href={`/games/${game.league_id}/${game.id}`} className="link-reset">
+							<a href={href} className="link-reset" passHref prefetch={false} >
 								<p className="text-sm text-gray-500 underline">More Wagers</p>
 							</a>
 						</div>
