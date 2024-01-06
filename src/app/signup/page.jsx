@@ -26,10 +26,10 @@ export default function Page() {
 	useEffect(() => {
 		getAuth().then(res => {
 			if (JSON.stringify(res) !== '{}' && typeof window !== 'undefined') {
-				// user is signed in
-				// router.push("/bets")
-				redirect("/bets")
+				router.push('/bets')
 			}
+
+
 		})
 	}, [])
 
@@ -117,8 +117,8 @@ export default function Page() {
 
 		try {
 			setLoading(true);
-			// const url = "https://lemondrop-api.onrender.com/api/users/signup"
-			const url = "http://localhost:8080/api/users/signup"
+			const url = "https://lemondrop-api.onrender.com/api/users/signup"
+			// const url = "http://localhost:8080/api/users/signup"
 			const response = await axios.post(url, {
 				first_name: firstName,
 				last_name: lastName,
@@ -132,7 +132,7 @@ export default function Page() {
 
 			if (typeof window !== 'undefined') {
 				localStorage.setItem('jwt', response.data.jwt)
-				router.push(response.data.redirect_url);
+				router.push("/bets")
 			}
 
 		} catch (error) {

@@ -135,7 +135,7 @@ export default function GameCard({ game, raw }) {
 					{!raw && (
 						<div className="flex items-center justify-between w-full mb-2 px-1 ">
 							<p className="text-sm  text-gray-500">{startTime}</p>
-							<a href={href} className="link-reset" passHref prefetch={false} >
+							<a href={href} className="link-reset">
 								<p className="text-sm text-gray-500 underline">More Wagers</p>
 							</a>
 						</div>

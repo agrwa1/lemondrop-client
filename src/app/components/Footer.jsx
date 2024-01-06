@@ -4,8 +4,8 @@ import WordLogo from './WordLogo'
 
 const Footer = () => {
 	return (
-		<div className="footer-container ">
-			<div className="grid grid-cols- md:grid-cols-3 gap-4">
+		<div className="border-t border-gray-400 px-2">
+			<div className="grid grid-cols- md:grid-cols-3 md:gap-4">
 
 				<div className="">
 					<Link href="/bets" passHref prefetch={false} >
@@ -36,6 +36,9 @@ const Footer = () => {
 				<div className="">
 					<div className="footer-grid-item">
 						<h6 className="font-bold">HELP</h6>
+						<Link href="/contact" prefetch={false}>
+							<p className="underline my-2 text-sm text-gray-500">Send a Message</p>
+						</Link>
 						<p className="my-2 text-sm text-gray-500">contact@lemondrop.ag</p>
 						<p className="my-2 text-sm text-gray-500">1-800-GAMBLER</p>
 					</div>

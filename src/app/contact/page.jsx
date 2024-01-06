@@ -6,20 +6,8 @@ import { useRouter } from 'next/navigation'
 import getAuth from '../functions/getAuth'
 
 export default function Page() {
-	let router
-	router = useRouter()
-
-	useEffect(() => {
-		getAuth().then(res => {
-			if (JSON.stringify(res) !== '{}' && typeof window !== 'undefined') {
-				// user is signed in
-				router.push("/bets")
-			}
-		})
-	}, [])
-
-
-
+	let router = useRouter()
+	const [user, setUser] = useState({})
 	const [firstName, setFirstName] = useState('');
 	const [email, setEmail] = useState('');
 	const [message, setMessage] = useState('');
@@ -27,9 +15,28 @@ export default function Page() {
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
 
+	const [submitted, setSubmitted] = useState(false)
+
+
+	useEffect(() => {
+		getAuth().then(res => {
+			if (JSON.stringify(res) === '{}' && typeof window !== 'undefined') {
+				// user is signed in
+				router.push("/signup")
+			}
+
+			setUser(res)
+		})
+	}, [])
+
+	useEffect(() => {
+		setFirstName(user.first_name)
+		setEmail(user.email)
+	}, [user])
+
 
 	const validateForm = () => {
-		if (!firstName || !email) {
+		if (!firstName || !email || !message) {
 			setError('All fields are required.');
 			return false;
 		}
@@ -47,24 +54,22 @@ export default function Page() {
 
 		try {
 			setLoading(true);
-			const url = "https://lemondrop-api.onrender.com/api/users/signup"
-			// const url = "http://localhost:8080/api/users/signup"
+			const url = "https://lemondrop-api.onrender.com/api/messages/contact"
+			// const url = "http://localhost:8080/api/messages/contact"
 			const response = await axios.post(url, {
-				firstName,
-				email,
+				name: firstName,
+				email: email,
+				message: message,
 			});
 
-			if (typeof window !== 'undefined') {
-				localStorage.setItem('jwt', response.data)
-				router.push('/bets');
-			}
-
 		} catch (error) {
-			setError('Signup failed. Please try again.');
+			setError('Somethign went wrong. Please try again');
 		} finally {
 			setLoading(false);
-			setFirstName('');
-			setEmail('');
+			setSubmitted(true)
+			// setFirstName("")
+			// setEmail("")
+			setMessage("")
 		}
 	};
 
@@ -125,12 +130,23 @@ export default function Page() {
 							/>
 						</div>
 
-						<button
-							type="submit"
-							className="w-full bg-ldPurple focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-						>
-							Submit
-						</button>
+						{
+							!submitted &&
+							<button
+								type="submit"
+								className="w-full bg-ldPurple focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+							>
+								Submit
+							</button>
+						}
+
+						{
+							submitted &&
+							<button disabled className="w-full bg-green-600 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+								Submitted Successfully!
+							</button>
+						}
+
 
 					</form>
 				</div>
