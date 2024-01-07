@@ -82,34 +82,38 @@ export default function GameCard({ game, raw }) {
 			</div>
 
 			<div className="pb-2 grid grid-cols-12 gap-2 ">
-				<div className={styles.cellOuter} onClick={() => onOptionClick(0)}>
-					<p className={`${styles.name} md:hidden `} >
+
+				<div className={activeArray[0] ? styles.cellOuterActive : styles.cellOuter} onClick={() => onOptionClick(0)}>
+					<p className={`${styles.name} md:hidden ${activeArray[0] ? 'text-black' : "text-white"}`} >
 						{game.away_team_name.length > 10
 							? `${game.away_team_name.substring(0, 8)}...`
 							: game.away_team_name}
 					</p>
-					<p className={`${styles.name} hidden md:flex `} >
+
+					<p className={`${styles.name} hidden md:flex ${activeArray[0] ? 'text-black' : "text-white"}`} >
 						{game.away_team_name}
 					</p>
-					<p className={`${styles.moneyline} ${activeArray[0] ? 'font-bold' : 'text-blue-500'}`}>{game.away_moneyline}</p>
+					<p className={`${styles.moneyline} ${activeArray[0] ? 'text-black' : 'text-lightGray'}`}>{game.away_moneyline}</p>
 				</div>
 
-				<div className={styles.cellOuter} onClick={() => onOptionClick(1)}>
-					<p className={`${styles.name} ${activeArray[1] ? 'text-black' : 'text-white'}`}>Draw</p>
-					<p className={`${styles.moneyline} ${activeArray[1] ? '' : 'text-blue-500'}`}>{game.draw_moneyline}</p>
+				<div className={activeArray[1] ? styles.cellOuterActive : styles.cellOuter} onClick={() => onOptionClick(1)}>
+					<p className={`${styles.name} ${activeArray[1] ? 'text-black' : "text-white"}`}>Draw</p>
+					<p className={`${styles.moneyline} ${activeArray[1] ? 'text-black' : 'text-lightGray'}`}>{game.draw_moneyline}</p>
 				</div>
 
-				<div className={styles.cellOuter} onClick={() => onOptionClick(2)}>
-					<p className={`${styles.name} md:hidden `} >
+				<div className={activeArray[2] ? styles.cellOuterActive : styles.cellOuter} onClick={() => onOptionClick(2)}>
+					<p className={`${styles.name} md:hidden ${activeArray[2] ? 'text-black' : "text-white"}`} >
 						{game.home_team_name.length > 10
 							? `${game.home_team_name.substring(0, 8)}...`
 							: game.home_team_name}
 					</p>
-					<p className={`${styles.name} hidden md:flex `} >
+					<p className={`${styles.name} hidden md:flex ${activeArray[2] ? 'text-black' : "text-white"} `} >
 						{game.home_team_name}
 					</p>
-					<p className={`${styles.moneyline} ${activeArray[2] ? '' : 'text-blue-500'}`}>{game.home_moneyline}</p>
+					<p className={`${styles.moneyline} ${activeArray[2] ? 'text-black' : 'text-lightGray'}`}>{game.home_moneyline}</p>
 				</div>
+
+
 			</div>
 		</div>
 	);
@@ -117,6 +121,7 @@ export default function GameCard({ game, raw }) {
 
 const styles = {
 	cellOuter: "col-span-4 w-full flex  justify-center items-center flex-col bg-darkGray sm:flex-row p-2",
-	moneyline: "text-sm sm:ml-2 font-bold text-lightGray",
+	cellOuterActive: "col-span-4 w-full flex  justify-center items-center flex-col bg-darkGray sm:flex-row p-2 bg-yellow",
+	moneyline: "text-sm sm:ml-2 font-bold ",
 	name: "text-sm font-bold"
 }

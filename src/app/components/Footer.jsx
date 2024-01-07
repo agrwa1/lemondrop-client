@@ -4,7 +4,7 @@ import WordLogo from './WordLogo'
 
 const Footer = () => {
 	return (
-		<div className="border-t border-gray-400 px-2">
+		<div className=" border-gray-400 px-2">
 			<div className="grid grid-cols- md:grid-cols-3 md:gap-4">
 
 				<div className="">

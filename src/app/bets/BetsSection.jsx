@@ -51,17 +51,17 @@ export default function BetsSection() {
 			return
 		}
 		setLoading(true)
-		// const url = `https://lemondrop-api.onrender.com/api/bets/bet/user/${user.user_id}`
-		const url = `http://localhost:8080/api/bets/bet/user/${user.user_id}`
+		const url = `https://lemondrop-api.onrender.com/api/bets/bet/user/${user.user_id}`
+		// const url = `http://localhost:8080/api/bets/bet/user/${user.user_id}`
 		axios.get(url).then(res => {
-			setBets(res.data)
+			setBets(res.data.slice(0, 10))
 			setLoading(false)
 		})
 	}, [user])
 
 	if (loading) {
 		return (
-			<div className="text-center" >
+			<div className="text-center mt-8" >
 				<p className="text-xl text-gray-500">Loading...</p>
 			</div>
 		);
@@ -110,7 +110,7 @@ const BetDividedSection = ({ bets }) => {
 			}
 
 			{bets.length === 0 && (
-				<div className="text-center mt-4" >
+				<div className="text-center mt-4 mb-12" >
 					<p className="text-xl text-gray-500">No Bets Here Yet! Place Some Bets and See Them Here.</p>
 				</div>
 			)}
@@ -149,16 +149,26 @@ const Parlay = ({ parlay }) => {
 				</p>
 			</div>
 
-			<div className="mt-2  border-gray-700 pb-2 flex justify-between items-start" >
-				<p className=" text-sm text-gray-300" >{betOnValues}</p>
+			<div className="mt-2  border-gray-700 pb-2 flex justify-between items-start" onClick={() => setOpen(!open)} >
+				<p className=" text-sm text-gray-400"  >{betOnValues}</p>
+
 				<p className="px-1 pt-1" >
 					{
-						open ? <FaAngleDown onClick={() => setOpen(!open)} /> : <FaAngleUp onClick={() => setOpen(!open)} />
+						open ? <FaAngleDown /> : <FaAngleUp />
 					}
 				</p>
 			</div>
 
-			<div className="flex justify-between items-center mt-3">
+
+			{
+				open &&
+				bets.map(bet => <ParlaySubBet bet={bet} key={bet} />)
+			}
+
+			<p className="mt-3 font-bold text-xs text-gray-500" >
+				Placed {startTime}
+			</p>
+			<div className="flex justify-between items-center mt-1">
 				<p className="text-sm font-bold text-gray-600">
 					Bet ${parlay.bet_amount} To Win: ${toWinAmount}
 				</p>
@@ -248,45 +258,40 @@ const ParlaySubBet = ({ bet }) => {
 		return str.toUpperCase()
 	}
 
-	const price = bet.bet_price.charAt(0) == "+" ? parseFloat(bet.bet_price.substring(1)) : parseFloat(-1 * bet.bet_price.substring(1))
-	const decimalOdds = price > 0 ? 1 + (price / 100) : 1 - (100 / price)
-	const startTime = moment(bet.bet_placed_time).calendar()
+	// const price = bet.bet_price.charAt(0) == "+" ? parseFloat(bet.bet_price.substring(1)) : parseFloat(-1 * bet.bet_price.substring(1))
+	// const decimalOdds = price > 0 ? 1 + (price / 100) : 1 - (100 / price)
+	// const startTime = moment(bet.bet_placed_time).calendar()
 
 	return (
-		<div className="flex items-start mt-4" key={`${bet.away_team} ${bet.home_team} ${bet.bet_point} ${bet.bet_price}`}>
+		<div className="flex my-3 pl-1 w-full justify-between" >
+			<div className="w-full" >
+				<div className="flex justify-between items-center" >
+					<p className="font-bold text-sm text-gray-400" >
+						{bet.bet_on.toUpperCase()}
+					</p>
 
-			{/* <StatusIcon status={bet.bet_status} /> */}
-
-			<div className="bets-section-bet-header">
-				<div className="grid grid-cols-12">
-					<div className="col-span-12">
-						<div className="bets-bet-name-container">
-							<p className="font-bold text-base text-white">{toTitleCase(bet.bet_on_team)}</p>
-						</div>
-					</div>
-
-					<div className="col-span-12 mb-2">
-						<div className="bets-bet-name-container">
-							<p className="text-base text-gray-600">{startTime}</p>
-						</div>
-					</div>
-
-					<div className="col-span-12">
-						<div className="flex justify-between items-center">
-							<p className="text-sm uppercase text-gray-500">{bet.away_team} @ {bet.home_team}</p>
-							<p className="font-bold text-base text-gray-700">{bet.bet_price}</p>
-						</div>
-					</div>
-
+					<p className={"font-bold text-sm text-gray-500"} >
+						{bet.odds}
+					</p>
 				</div>
+
+
+				<p className="font-bold text-xs  text-gray-600" >
+					{bet.bet_type.toUpperCase()}
+				</p>
+
+				<p className="mt-2 font-bold text-xs text-gray-500" >
+					{bet.away_team_name} @ {bet.home_team_name}
+				</p>
+
 			</div>
+
 		</div>
 	)
 }
 
 const Bet = ({ bet }) => {
 	const betData = bet.selections[0]
-
 	const price = betData.odds.charAt(0) == "+" ? parseFloat(betData.odds.substring(1)) : parseFloat(-1 * betData.odds.substring(1))
 	const decimalOdds = price > 0 ? 1 + (price / 100) : 1 - (100 / price)
 	const toWinAmount = (Math.floor(100 * parseFloat(bet.bet_amount) * decimalOdds) / 100).toFixed(2)
@@ -307,15 +312,15 @@ const Bet = ({ bet }) => {
 				</div>
 
 
-				<p className="font-bold text-sm  text-gray-400" >
+				<p className="font-bold text-sm  text-gray-600" >
 					{betData.bet_type.toUpperCase()}
 				</p>
 
-				<p className="mt-2 font-bold text-sm text-gray-300" >
+				<p className="mt-2 font-bold text-sm text-gray-400" >
 					{betData.away_team_name} @ {betData.home_team_name}
 				</p>
 
-				<p className="mt-1 font-bold text-xs text-gray-400" >
+				<p className="mt-1 font-bold text-xs text-gray-500" >
 					Placed {startTime}
 				</p>
 

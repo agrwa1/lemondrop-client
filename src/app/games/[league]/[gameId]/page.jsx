@@ -8,10 +8,11 @@ import moment from 'moment'
 import Type1GamesHeader from '../../../components/Type1GamesHeader'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
+import Loading from './loading'
+
+import LockIcon from '@mui/icons-material/Lock';
 
 import { FaArrowLeft } from "react-icons/fa";
-
-
 import { CounterContext } from '../../../context/bets.context'
 
 
@@ -41,43 +42,47 @@ export default function Page() {
 
 
 	//! BUG: adding bet in prop page then going to league page then back to prop page will not register current bets
+	if (Object.keys(game).length > 0) {
+		return (
+			<div className="grid grid-cols-12 mt-8 md:mt-0 gap-4">
+				<div className="col-span-12 md:col-span-8 ">
+					<div className="bets-header">
+						{/* <Link className="flex items-center mb-2" href={`/games/${leagueId}`}>
+							<FaArrowLeft className="text-gray-600 text-sm" />
+							<p className="text-sm ml-1 text-gray-600 underline">	All {leagueParsed} Games</p>
+						</Link> */}
+						<p className="text-sm text-gray-500">{moment(game.start_date).format("LLLL")}</p>
+						<h6 className="text-lg font-bold ">{`${game.away_team_name} @ ${game.home_team_name}`}</h6>
+					</div>
 
-	return (
-		<div className="grid grid-cols-12 mt-8 md:mt-0 gap-4">
-			<div className="col-span-12 md:col-span-8 ">
-				<div className="bets-header">
-					{/* <Link className="flex items-center mb-2" href={`/games/${leagueId}`}>
-						<FaArrowLeft className="text-gray-600 text-sm" />
-						<p className="text-sm ml-1 text-gray-600 underline">	All {leagueParsed} Games</p>
-					</Link> */}
-					<p className="text-sm text-gray-500">{moment(game.start_date).format("LLLL")}</p>
-					<h6 className="text-lg font-bold ">{`${game.away_team_name} @ ${game.home_team_name}`}</h6>
+					<div className="">
+						<Type1GamesHeader leagueName={leagueParsed}
+							sport={game.sport} />
+						<GameCard game={game} raw={true} />
+					</div>
+
+					{
+						game.props &&
+						game.props.map(prop =>
+							<MarketAccordion marketName={prop.name} key={prop.name} >
+								{
+									prop.stats.map(stat => <PropItem prop={stat} key={stat} marketName={prop.name} home={game.home_team_name} away={game.away_team_name} gameId={game.id} />)
+								}
+							</MarketAccordion>)
+					}
+
+
 				</div>
 
-				<div className="">
-					<Type1GamesHeader leagueName={leagueParsed}
-						sport={game.sport} />
-					<GameCard game={game} raw={true} />
+				<div className="col-span-12 md:col-span-4 ">
+					<Betslip />
 				</div>
-
-				{
-					game.props &&
-					game.props.map(prop =>
-						<MarketAccordion marketName={prop.name} key={prop.name} >
-							{
-								prop.stats.map(stat => <PropItem prop={stat} key={stat} marketName={prop.name} home={game.home_team_name} away={game.away_team_name} gameId={game.id} />)
-							}
-						</MarketAccordion>)
-				}
-
-
 			</div>
+		)
+	} else {
+		<Loading />
+	}
 
-			<div className="col-span-12 md:col-span-4 ">
-				<Betslip />
-			</div>
-		</div>
-	)
 }
 
 
@@ -280,6 +285,15 @@ const OverUnderPropItem = ({ prop, marketName, home, away, active, gameId, overA
 }
 
 const PropCell = ({ point, price, dispatch, active }) => {
+
+	if (!price || price == "--") {
+		return (
+			<div className={`border-gray-700 col-span-2 border rounded-lg py-1 flex justify-center items-center flex-col my-1 md:flex-row md:py-3 `} >
+				<LockIcon style={{ color: "#333" }} />
+			</div>
+		)
+	}
+
 	if (point !== "") {
 		return (
 			<div onClick={dispatch} className={`${active ? "bg-yellow border-yellow" : "border-ldPurple"} col-span-2 border rounded-lg py-1 flex justify-center items-center flex-col my-1 md:flex-row md:py-3 `}>
@@ -291,7 +305,7 @@ const PropCell = ({ point, price, dispatch, active }) => {
 
 	return (
 		<div onClick={dispatch} className={`${active ? "bg-yellow border-yellow" : "border-ldPurple"} col-span-2 border rounded-lg py-1 flex justify-center items-center flex-col my-1 md:flex-row md:py-3 `}>
-			<p className={` ${active ? "text-black  font-bold" : "text-gray-300"} text-xs md:ml-2`}>{price}</p>
+			<p className={` ${active ? "text-black  font-bold" : "text-gray-300"} text-sm md:ml-2`}>{price}</p>
 		</div>
 	)
 }

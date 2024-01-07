@@ -12,7 +12,20 @@ import './(css)/terms.css'
 import './(css)/sports-leagues.css'
 
 import { CounterContextProvider } from "./context/bets.context";
+import { AuthContextProvider } from "./context/auth.context";
 import Head from 'next/head'
+
+import { Roboto, Inter } from '@next/font/google'
+
+const inter = Inter({
+	subsets: ['latin'],
+	weight: ['400', '700']
+})
+const roboto = Roboto({
+	subsets: ['latin'],
+	weight: ['400', '700'],
+	variable: "--font-roboto"
+})
 
 
 export const metadata = {
@@ -26,12 +39,14 @@ export default function RootLayout({ children }) {
 			<Head>
 				<link rel="icon" href="/ld-logo-graphic-yellow.png" />
 			</Head>
-			<body className="min-h-screen bg-dark text-white font-sans" >
-				<CounterContextProvider >
-					<div id="root">
-						{children}
-					</div>
-				</CounterContextProvider>
+			<body className={`${roboto.className} min-h-screen bg-dark text-white f`} >
+				<AuthContextProvider>
+					<CounterContextProvider >
+						<div id="root">
+							{children}
+						</div>
+					</CounterContextProvider>
+				</AuthContextProvider>
 			</body>
 		</html>
 	)

@@ -33,11 +33,6 @@ export default {
 			red: colors.red,
 			//   yellow: colors.yellow,
 		},
-		extend: {
-			fontFamily: {
-				logo: 'Lobster',
-			},
-		},
 	},
 	plugins: [require('tailwind-scrollbar-hide')],
 };

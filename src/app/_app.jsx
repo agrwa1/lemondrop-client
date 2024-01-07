@@ -2,6 +2,9 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import FastClick from 'fastclick';
 import { CounterContextProvider } from './context/bets.context';
+import { AuthContextProvider } from './context/auth.context'
+
+
 
 function MyApp({ Component, pageProps }) {
 	const router = useRouter();
@@ -34,9 +37,11 @@ function MyApp({ Component, pageProps }) {
 
 	// Wrap your entire application with the CounterContextProvider
 	return (
-		<CounterContextProvider>
-			<Component {...pageProps} />
-		</CounterContextProvider>
+		<AuthContextProvider>
+			<CounterContextProvider>
+				<Component {...pageProps} />
+			</CounterContextProvider>
+		</AuthContextProvider>
 	);
 }
 

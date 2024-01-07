@@ -1,12 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useParams } from 'next/navigation';
 import axios from 'axios';
 import GameCard from '../../components/GameCard';
 import Betslip from '../../components/Betslip';
 import Type1GamesHeader from '../../components/Type1GamesHeader';
 import Type2GamesHeader from '../../components/Type2GamesHeader';
+import Loading from './loading';
 
 export default function Page() {
 	const params = useParams();
@@ -31,7 +32,7 @@ export default function Page() {
 			{/* {
 				loading &&
 				<div style={{ display: 'flex', justifyContent: 'center' }} >
-					<CircularProgress />
+				<CircularProgress />
 				</div>
 			} */}
 

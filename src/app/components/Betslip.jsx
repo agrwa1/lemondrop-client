@@ -8,9 +8,11 @@ import getAuth from '../functions/getAuth';
 import Link from 'next/link'
 
 import { CounterContext } from "../context/bets.context";
+import { AuthContext } from "../context/auth.context";
 
 const Betslip = () => {
 	const { state, dispatch } = useContext(CounterContext)
+
 
 	const [user, setUser] = useState({})
 	const [userIsSignedIn, setUserIsSignedIn] = useState(false)
@@ -23,6 +25,28 @@ const Betslip = () => {
 
 	const [mobileBets, setMobileBets] = useState(state.bets)
 
+	const [submitSuccess, setSubmitSuccess] = useState(false)
+	const [submitError, setSubmitError] = useState(false)
+
+	useEffect(() => {
+		if (!submitSuccess) {
+			return
+		}
+
+		setTimeout(() => {
+			setSubmitSuccess(false)
+		}, 5000)
+	}, [submitSuccess])
+
+	useEffect(() => {
+		if (!submitError) {
+			return
+		}
+
+		setTimeout(() => {
+			setSubmitError(false)
+		}, 5000)
+	}, [submitError])
 
 	useEffect(() => {
 		getAuth().then(u => {
@@ -149,11 +173,12 @@ const Betslip = () => {
 
 		// console.log(allBets)
 		axios.post(url, allBets).then(() => {
-			console.log(isParlay ? "parlay placed" : "bet placed");
-			// navigate to bet placed success
+			dispatch({ type: "deleteAll" })
+			setSubmitSuccess(true)
 		}).catch((err) => {
 			console.error(err);
 			// show bet placed error
+			setSubmitError(true)
 		})
 			.finally(() => {
 				setSubmitting(false);
@@ -426,6 +451,13 @@ const Betslip = () => {
 					)}
 				</div>
 			)}
+
+			<div className={`fixed bottom-4 left-4 bg-green-700 text-white p-4 ${submitSuccess ? 'block' : 'hidden'}`}>
+				Bet Placed Successfully!
+			</div>
+			<div className={`fixed bottom-4 left-4 bg-red-700 text-white p-4 ${submitError ? 'block' : 'hidden'}`}>
+				Error: Bet Suspended.
+			</div>
 		</div>
 
 	)
