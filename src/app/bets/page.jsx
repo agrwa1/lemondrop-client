@@ -96,7 +96,7 @@ export default function Page() {
 						Logout
 					</div>
 
-					<ShareButton shareUrl={`https://lemondrop.ag/signup?referral_code=${referralCode}`} shareTitle="Join Lemondrop Sportsbook!" />
+					<ShareButton shareUrl={`https://lemondrop.ag/signup?c=${referralCode}`} shareTitle="Join Lemondrop Sportsbook!" />
 
 
 					<div className="flex justify-between items-center font-bold rounded-md bg-ldPurple p-2 text-sm">

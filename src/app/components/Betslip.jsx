@@ -22,11 +22,26 @@ const Betslip = () => {
 	const [parlayWagerAmt, setParlayWagerAmt] = useState(10)
 	const [parlayWinAmt, setParlayWinAmt] = useState(0)
 	const [submitting, setSubmitting] = useState(false)
-
+	const [singlesSubmitDisabled, setSinglesSubmitDisabled] = useState(true)
 	const [mobileBets, setMobileBets] = useState(state.bets)
-
 	const [submitSuccess, setSubmitSuccess] = useState(false)
 	const [submitError, setSubmitError] = useState(false)
+
+	useEffect(() => {
+		let singlesHasZero = false
+		state.bets.forEach(bet => {
+			if (bet.amount == 0) {
+				singlesHasZero = true
+			}
+		})
+
+		if (singlesHasZero) {
+			setSinglesSubmitDisabled(true)
+		} else {
+			setSinglesSubmitDisabled(false)
+		}
+
+	}, [state.bets])
 
 	useEffect(() => {
 		if (!submitSuccess) {
@@ -143,6 +158,8 @@ const Betslip = () => {
 
 		// singles	
 		else {
+
+
 			state.bets.forEach((bet) => {
 				const singleBet = {
 					user_id: user.user_id,
@@ -305,7 +322,7 @@ const Betslip = () => {
 						<button
 							className="w-full bg-yellow text-dark font-bold py-2"
 							onClick={submitBets}
-							disabled={submitting || !((!isParlay) || (isParlay && state.bets.length >= 2 && parlayWagerAmt > 0))}
+							disabled={singlesSubmitDisabled || submitting || !((!isParlay) || (isParlay && state.bets.length >= 2 && parlayWagerAmt > 0))}
 						>
 							Submit Bets
 						</button>
@@ -392,6 +409,7 @@ const Betslip = () => {
 														className="border border-gray-600 bg-bgdGray focus:ring-transparent outline-none text-gray-100 text-sm rounded-lg block w-full p-2.5"
 														placeholder={(isNaN(parseFloat(parlayWagerAmt)) || parseFloat(parlayWagerAmt) > 300 ? 300 : parseFloat(parlayWagerAmt)).toFixed(2)}
 														style={{ appearance: 'none' }}
+														inputMode="numeric"
 														required
 													/>
 												</div>
@@ -435,7 +453,7 @@ const Betslip = () => {
 									<button
 										className="w-full bg-yellow text-dark font-bold py-2 my-2"
 										onClick={submitBets}
-										disabled={submitting || !((!isParlay) || (isParlay && state.bets.length >= 2 && parlayWagerAmt > 0))}
+										disabled={singlesSubmitDisabled || submitting || !((!isParlay) || (isParlay && state.bets.length >= 2 && parlayWagerAmt > 0))}
 									>
 										Submit Bets
 									</button>

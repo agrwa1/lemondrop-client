@@ -19,6 +19,7 @@ export default function Page() {
 	const [password, setPassword] = useState('');
 	const [phoneNumber, setPhoneNumber] = useState('');
 	const [birthday, setBirthday] = useState('');
+	const [venmo, setVenmo] = useState('');
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
 	const [referredFromCode, setReferredFromCode] = useState('');
@@ -35,7 +36,7 @@ export default function Page() {
 
 	// get code
 	useEffect(() => {
-		const code = searchParams.get('referral_code')
+		const code = searchParams.get('c')
 		if (!code || code.length !== 6) {
 			redirect('/')
 		}
@@ -126,9 +127,8 @@ export default function Page() {
 				password: password,
 				referred_from_code: referredFromCode,
 				phone_number: phoneNumber.replace(/\D/g, ''), // Remove non-digit characters before sending to the server
+				venmo_account: venmo,
 			});
-
-			console.log(response)
 
 			if (typeof window !== 'undefined') {
 				localStorage.setItem('jwt', response.data.jwt)
@@ -253,22 +253,42 @@ export default function Page() {
 										required
 									/>
 								</div>
+							</div>
+
+							<div className="flex space-x-2">
+								<div className="w-1/2" data-te-datepicker-init
+									data-te-input-wrapper-init >
+									<label htmlFor="birthday" className="block mb-2 text-sm font-bold text-gray-100 ">
+										Birthday
+									</label>
+									<input type="date"
+										className="bg-gray-900 placeholder-gray-400 text-white border border-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-ldPurple focus:outline-none block w-full p-2.5"
+										value={birthday}
+										required
+										onChange={e => setBirthday(e.target.value)}
+										id="start" name="birthday" />
+								</div>
+
+								<div className="w-1/2">
+									<label htmlFor="venmo" className="block mb-2 text-sm font-bold text-gray-100">
+										Your Venmo
+									</label>
+									<input
+										type="text"
+										name="venmo"
+										id="venmo"
+										value={venmo}
+										onChange={(e) => setVenmo(e.target.value)}
+										className="bg-gray-900 text-white border border-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-ldPurple focus:outline-none block w-full p-2.5"
+										placeholder="@venmoaccount9"
+										required
+									/>
+								</div>
 
 
 							</div>
-							<div className="w-full" data-te-datepicker-init
-								data-te-input-wrapper-init >
-								<label htmlFor="birthday" className="block mb-2 text-sm font-bold text-gray-100 ">
-									Birthday
-								</label>
-								<input type="date"
-									className="bg-gray-900 placeholder-gray-400 text-white border border-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-ldPurple focus:outline-none block w-full p-2.5"
-									value={birthday}
-									required
-									onChange={e => setBirthday(e.target.value)}
-									id="start" name="birthday" />
 
-							</div>
+
 
 
 							<button
