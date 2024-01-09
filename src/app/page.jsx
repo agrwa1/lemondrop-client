@@ -1,8 +1,25 @@
+'use client'
+
+import React, {useEffect} from 'react'
+import {useRouter} from 'next/navigation'
+
 import Header from './components/Header';
 import ProLogos from './pro-logos.png'
 import LandingForm from './LandingForm'
 
+import getAuth from './functions/getAuth'
+
 export default function Home() {
+  const router = useRouter()
+
+  useEffect(() => {
+    getAuth().then(u => {
+      if (Object.keys(u).length > 0 && u.email) {
+        router.push("/leagues/all")
+      }
+    })
+  }, []) 
+
 	return (
 		<main className="landing-main">
 
