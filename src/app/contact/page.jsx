@@ -62,7 +62,7 @@ export default function Page() {
         message: message,
       }, {
         headers: {
-          "lemondrop_api_key": process.env.LEMONDROP_API_KEY
+          "lemondrop_api_key": ""
         }
       });
 

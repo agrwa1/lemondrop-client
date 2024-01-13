@@ -187,13 +187,13 @@ const Betslip = () => {
             });
         }
 
-        console.log("all bets: ", allBets)
+        // console.log(allBets)
         axios.post(url, allBets).then(() => {
             dispatch({ type: "deleteAll" })
             setSubmitSuccess(true)
         }).catch((err) => {
-            console.log("error")
             console.error(err);
+            // show bet placed error
             setSubmitError(true)
         })
             .finally(() => {

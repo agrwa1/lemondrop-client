@@ -11,7 +11,7 @@ export default function Page() {
   useEffect(() => {
     // const url = `http://localhost:8080/api/leagues/${sport}`
     const url = `https://:8080/api/leagues/${sport}`
-    axios.get(url, { headers: { "lemondrop_api_key": process.env.LEMONDROP_API_KEY } }).then(res => {
+    axios.get(url, { headers: { "lemondrop_api_key": "" } }).then(res => {
       console.log(res)
       setLeagues(res.data)
     })
@@ -25,7 +25,7 @@ export default function Page() {
   function toTitleCase(str) {
     return str.replace(
       /\w\S*/g,
-      function(txt) {
+      function (txt) {
         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
       }
     );

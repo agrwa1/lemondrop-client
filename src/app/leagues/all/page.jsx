@@ -6,7 +6,7 @@ async function getData() {
   const res = await fetch(url, {
     cache: "no-cache",
     headers: {
-      "lemondrop_api_key": process.env.LEMONDROP_API_KEY
+      "lemondrop_api_key": ""
     },
   });
 
