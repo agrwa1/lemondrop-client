@@ -75,7 +75,7 @@ export default function Page() {
           <p className="text-gray-400 text-md">Balance</p>
           {
             Object.keys(user).length > 0 ?
-              <p className="text-xl font-bold text-white">${parseFloat(user.current_balance).toFixed(2)}</p> : <p className="text-xl font-bold text-white">$</p>
+              <p className={`${parseFloat(user.current_balance) < 0 ? "text-red-600" : (parseFloat(user.current_balance) == 0.0 ? "text-white" : "text-green-600")} text-xl font-bold `}>{parseFloat(user.current_balance) >= 0 ? `$${parseFloat(user.current_balance).toFixed(2)}` : `-$${parseFloat(user.current_balance).toFixed(2) * -1}`}</p> : <p className="text-xl font-bold text-white">$</p>
           }
         </div>
       </div>
@@ -96,7 +96,7 @@ export default function Page() {
             Logout
           </div>
 
-          <ShareButton shareUrl={`https://lemondrop.ag/signup?c=${referralCode}`} shareTitle="Join Lemondrop Sportsbook!" />
+          <ShareButton shareUrl={`https://lemondrop.bet/signup?c=${referralCode}`} shareTitle="Join Lemondrop Sportsbook!" />
 
 
           <div className="flex justify-between items-center font-bold rounded-md bg-ldPurple p-2 text-sm">

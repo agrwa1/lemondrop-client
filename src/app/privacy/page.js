@@ -17,7 +17,7 @@ export default function PrivacyPage() {
 				accessing or using Lemondrop, you agree to the terms outlined in
 				this Privacy Policy. Please take a moment to review our
 				practices, and if you have any questions or concerns, feel free
-				to contact us at privacy@lemondrop.ag.
+				to contact us at privacy@lemondrop.bet.
 			</p>
 
 			<h5 className='tos-section-header text-2xl font-bold mb-4'>
@@ -103,7 +103,7 @@ export default function PrivacyPage() {
 				You have the right to access, correct, or delete your personal
 				information. You can manage your communication preferences and
 				opt-out of promotional emails by contacting us at
-				privacy@lemondrop.ag.
+				privacy@lemondrop.bet.
 			</p>
 
 			<h5 className='tos-section-header text-2xl font-bold mb-4'>
@@ -123,7 +123,7 @@ export default function PrivacyPage() {
 			<p className='tos-p mb-2 leading-relaxed'>
 				If you have any questions, concerns, or requests regarding your
 				privacy or this Privacy Policy, please contact our privacy team
-				at privacy@lemondrop.ag. Thank you for choosing Lemondrop! We
+				at privacy@lemondrop.bet. Thank you for choosing Lemondrop! We
 				are committed to providing a secure and enjoyable sports betting
 				experience while respecting your privacy.
 			</p>

@@ -39,7 +39,7 @@ const Footer = () => {
 						<Link href="/contact" prefetch={false}>
 							<p className="underline my-2 text-sm text-gray-500">Send a Message</p>
 						</Link>
-						<p className="my-2 text-sm text-gray-500">contact@lemondrop.ag</p>
+						<p className="my-2 text-sm text-gray-500">contact@lemondrop.bet</p>
 						<p className="my-2 text-sm text-gray-500">1-800-GAMBLER</p>
 					</div>
 				</div>
