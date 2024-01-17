@@ -162,7 +162,7 @@ const Betslip = () => {
             state.bets.forEach((bet) => {
                 const singleBet = {
                     user_id: user.user_id,
-                    
+
                     bet_amount: String(bet.amount),
                     is_parlay: false,
                     jwt: localStorage.getItem('jwt'),

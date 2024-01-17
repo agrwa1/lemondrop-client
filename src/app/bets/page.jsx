@@ -46,12 +46,19 @@ export default function Page() {
 
   return (
     <div>
-      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-8 ">
-        <div className="p-5 bg-gray-900 rounded-lg shadow">
+      <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-5 mt-8 ">
+        {/* <div className="p-5 bg-gray-900 rounded-lg shadow">
           <p className="text-gray-400 text-md">Availability</p>
           {
             Object.keys(user).length > 0 ?
               <p className="text-xl font-bold text-white">${parseFloat(user.current_availability).toFixed(2)}</p> : <p className="text-xl font-bold text-white">$</p>
+          }
+        </div> */}
+        <div className="p-5 bg-gray-900 rounded-lg shadow">
+          <p className="text-gray-400 text-md">Balance</p>
+          {
+            Object.keys(user).length > 0 ?
+              <p className={`${parseFloat(user.current_balance) < 0 ? "text-red-600" : (parseFloat(user.current_balance) == 0.0 ? "text-white" : "text-green-600")} text-xl font-bold `}>{parseFloat(user.current_balance) >= 0 ? `$${parseFloat(user.current_balance).toFixed(2)}` : `-$${parseFloat(user.current_balance).toFixed(2) * -1}`}</p> : <p className="text-xl font-bold text-white">$</p>
           }
         </div>
 
@@ -71,16 +78,7 @@ export default function Page() {
           }
         </div>
 
-        <div className="p-5 bg-gray-900 rounded-lg shadow">
-          <p className="text-gray-400 text-md">Balance</p>
-          {
-            Object.keys(user).length > 0 ?
-              <p className={`${parseFloat(user.current_balance) < 0 ? "text-red-600" : (parseFloat(user.current_balance) == 0.0 ? "text-white" : "text-green-600")} text-xl font-bold `}>{parseFloat(user.current_balance) >= 0 ? `$${parseFloat(user.current_balance).toFixed(2)}` : `-$${parseFloat(user.current_balance).toFixed(2) * -1}`}</p> : <p className="text-xl font-bold text-white">$</p>
-          }
-        </div>
       </div>
-
-
 
 
       <div className="">
@@ -102,7 +100,7 @@ export default function Page() {
           <div className="flex justify-between items-center font-bold rounded-md bg-ldPurple p-2 text-sm">
             <a target="_blank" rel="noopener noreferrer" href="https://venmo.com/u/Sohum-Agrawal" className="w-full flex justify-items-center" >
               <div className="w-full flex justify-center items-center">
-                Pay Balance
+                Add Funds
               </div>
             </a>
 
@@ -184,9 +182,23 @@ const InformationModal = ({ isOpen, onClose }) => {
         }`}
     >
       <div className="bg-dark p-4 rounded-md max-w-md mx-4">
-        <p className="font-light" >Resetting every Monday at 12 am, the Lemondrop week includes your balance and availability.
+        <p className="font-light" >
+          <a className="font-bold">IMPORTANT:</a>
+          Do not add any information about betting or sportsbooks in the description of your payment. Alternatives could be: food, tickets, etc. <br /><br />
+
+          <a className='font-bold'>General :</a>
+          To start betting with Lemondrop, add funds to your account by clicking the Add Funds button and venmoing the account linked.
+          As soon as we get your payment, you're account will be updated with your payment. Payouts are made weekly on Tuesdays. <br /> <br />
+
+          <a className="font-bold">Questions: </a>
+          <Link href="/contact" className="underline">Click Here</Link> to fill out a contact form about any questions
+
+        </p>
+
+
+        {/* <p className="font-light" >Resetting every Monday at 12 am, the Lemondrop week includes your balance and availability.
           For losses, payments are due on Monday; for gains, payment occurs on Tuesday.
-          Failure to make a payment results in account inactivity until settled, with possible additional fees.</p>
+          Failure to make a payment results in account inactivity until settled, with possible additional fees.</p> */}
 
 
         <button onClick={onClose} className="w-full border border-gray mt-4 bg-blue-500 text-white px-4 py-2 rounded-md">

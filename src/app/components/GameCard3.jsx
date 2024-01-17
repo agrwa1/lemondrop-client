@@ -6,7 +6,8 @@ import { CounterContext } from '../context/bets.context';
 
 export default function GameCard({ game, raw, removeDraw }) {
 	const { state, dispatch } = useContext(CounterContext);
-	const startTime = moment(game.start_date).format('dddd h:mmA');
+	const startTime = moment(game.start_date).calendar();
+	// const startTime = moment(game.start_date).format("l");
 	const [activeArray, setActiveArray] = useState([false, false, false]);
 
 	useEffect(() => {
@@ -96,11 +97,6 @@ export default function GameCard({ game, raw, removeDraw }) {
 					<p className={`${styles.moneyline} ${activeArray[0] ? 'text-black' : 'text-lightGray'}`}>{game.away_moneyline}</p>
 				</div>
 
-				<div className={activeArray[1] ? styles.cellOuterActive : styles.cellOuter} onClick={() => onOptionClick(1)}>
-					<p className={`${styles.name} ${activeArray[1] ? 'text-black' : "text-white"}`}>Draw</p>
-					<p className={`${styles.moneyline} ${activeArray[1] ? 'text-black' : 'text-lightGray'}`}>{game.draw_moneyline}</p>
-				</div>
-
 				<div className={activeArray[2] ? styles.cellOuterActive : styles.cellOuter} onClick={() => onOptionClick(2)}>
 					<p className={`${styles.name} md:hidden ${activeArray[2] ? 'text-black' : "text-white"}`} >
 						{game.home_team_name.length > 10
@@ -120,8 +116,8 @@ export default function GameCard({ game, raw, removeDraw }) {
 }
 
 const styles = {
-	cellOuter: "col-span-4 w-full flex  justify-center items-center flex-col bg-darkGray sm:flex-row p-2",
-	cellOuterActive: "col-span-4 w-full flex  justify-center items-center flex-col bg-darkGray sm:flex-row p-2 bg-yellow",
+	cellOuter: "col-span-6 w-full flex  justify-center items-center flex-col bg-darkGray sm:flex-row p-2",
+	cellOuterActive: "col-span-6 w-full flex  justify-center items-center flex-col bg-darkGray sm:flex-row p-2 bg-yellow",
 	moneyline: "text-sm sm:ml-2 font-bold ",
 	name: "text-sm font-bold"
 }

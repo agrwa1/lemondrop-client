@@ -43,7 +43,7 @@ const AuthedComp = () => {
             </Link>
             <Link href="/bets" prefetch={false} >
                 <div className=" py-2 rounded-xl hover:underline px-1 cursor-pointer text-lightGray font-semibold " >
-                    My Bets
+                    Bets
                 </div>
             </Link>
         </div>
@@ -60,7 +60,7 @@ const UnAuthedComp = () => {
             </Link>
             <Link href="/" prefetch={false} >
                 <div className=" py-2 rounded-xl hover:underline px-1 cursor-pointer text-lightGray font-semibold " >
-                    Join Now
+                    Join
                 </div>
             </Link>
             {/* <div className="py-2 px-8 rounded-lg text-gray-900">
