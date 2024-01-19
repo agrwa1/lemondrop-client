@@ -8,7 +8,7 @@ import Image from 'next/image';
 async function getData() {
 	let res = await fetch(
 		'https://lemondrop-api.onrender.com/api/leagues/all',
-		{ cache: 'force-cache' }
+		{ cache: 'no-store' }
 		// 'http://localhost:8080/api/leagues/all',
 		// { cache: 'no-store' }
 	);
