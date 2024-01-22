@@ -10,7 +10,7 @@ export default function Page() {
 
   useEffect(() => {
     // const url = `http://localhost:8080/api/leagues/${sport}`
-    const url = `https://:8080/api/leagues/${sport}`
+    const url = `https://lemondrop-api.onrender.com/api/leagues/${sport}`
     axios.get(url, { headers: { "lemondrop_api_key": "" } }).then(res => {
       console.log(res)
       setLeagues(res.data)
